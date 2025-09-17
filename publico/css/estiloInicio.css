@@ -1,0 +1,197 @@
+.seccion-inicio{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.seccion-categorias{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 3em 0;
+}
+.subtitulos-principales{
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    color: var(--fondo-blanco);
+    width: 100%;
+    font-size: 4em;
+    font-family: "Bebas";
+    text-align: center;
+    padding: 0.5em 0;
+}
+.contenedor-categoria{
+    width: 10em;
+    max-height: 15em;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transform: scale(1);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.15);
+    transition: transform .3s ease, box-shadow .3s ease;
+    margin-top: 1em;
+}
+.contenedor-categoria:hover{
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.2);
+    transform: scale(1.1);
+
+}
+.contenedor-de-las-categorias{
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+}
+.imagen-categoria{
+    width: 100%;
+}
+.titulo-categoria{
+    margin: 0;
+    position: absolute;
+    display: inline-block;
+    font-size: 1.6em;
+    text-align: center;
+    font-family: "Bebas";
+    color: var(--fondo-blanco);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.filtro-categoria{
+    background-color: #1119;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+.contenedor-horizontal{
+    display: flex;
+    width: 80%;
+    margin: auto;
+    margin-top: 3em;
+}
+.seccion-busqueda-visualizacion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.subtitulos-principales-sin-fondo{
+    width: 100%;
+    text-align: center;
+}
+.seccion-filtros-busquedas{
+    width: 30%;
+    margin-right: 20px;
+}
+.formulario-filtro{
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+}
+.contenedor-slider{
+    width: 80%;
+    margin: auto;
+    margin-top: 1em;
+}
+.campos{
+    margin: 10px 0;
+    border-right: solid 1px #9E9E9E;
+}
+.seccion-productos{
+    width: 70%;
+}
+.seccion-introducir-busqueda{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.formulario-busqueda{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.diseño-entrada-busuqeda{
+    height: 2em;
+    display: flex;
+    justify-content: center;
+}
+.imagen-lupa{
+    width: 1.9em;
+    border: solid 1px #000;
+    border-left:none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; 
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+.imagen-lupa:hover{
+    background-color: #EEEEEE;
+}
+.etiqueta-de-busuqeda{
+    font-size: 1.3em;
+}
+.entrada-busqueda{
+    width: 25em;
+    padding: 10px;
+    border: solid 1px #000;
+    border-right:none;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-left: 10px;
+}
+.boton-busqueda{
+    background-color: var(--verde-profundo);
+    color: var(--fondo-blanco);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 1em;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: inherit;
+    font-family: inherit;
+}
+.conteendor-productos{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+    justify-items: center; 
+}
+.contenedor-info-producto{
+    width: 12em;
+    border-radius: 5px;
+    margin-top: 1em;
+    overflow: hidden;
+    background-color: var(--fondo-blanco2);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform .3s ease, box-shadow .3s ease;
+    cursor: pointer;
+}
+.contenedor-info-producto:hover{
+    transform: scale(1.01);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.1);
+}
+.imagen-del-producto{
+    width: 100%;
+    max-height: 14em;
+    object-fit: cover;/* mantiene proporción, recorta si sobra */
+}
+.contenedor-informacion-productos{
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.texto-info-producto{
+    margin: 10px 0;
+}

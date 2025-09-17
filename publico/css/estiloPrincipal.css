@@ -1,0 +1,126 @@
+html{
+    min-height: 100%;
+    background:linear-gradient(to bottom, var(--fondo-blanco2), var(--fondo-blanco));
+}
+body{
+    min-height: 100%;
+    margin: 0;
+    font-family: "Anton";
+    color: #000;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    max-width: 1920px;
+    margin: auto;
+}
+main{
+    flex:1;
+    font-family: "Roboto";
+}
+.encabezado{
+    height: 6em;
+    min-height: 6em;
+    width: 100%;
+    background-color: var(--fondo-blanco2);
+    border-bottom: solid 4px var(--verde-profundo);
+    color: var(--fondo-blanco2);
+}
+.navegador{
+    font-family: "Roboto";
+    font-weight: 600;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+.navegador::after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: url(../carpeta_imagenes/web/fondobodeja.jpg);
+    background-position: center;
+    background-size: cover;
+    inset: 0;
+    z-index: -10;
+}
+.lista-principal{
+    display: flex;
+    height: 100%;
+    padding-left: 10px;
+}
+.lista-principal-padding-invertido{
+    padding-left: 0;
+    padding-right: 10px;
+}
+.items-principales{
+    display: flex;
+    font-size: 1.15em;
+    align-self: center;
+    padding: 0 5px;
+}
+.items-principales-icono{
+    display: flex;
+    align-self: center;
+}
+.icono-separador{
+    width: 8px;
+}
+.titulo-marca{
+    font-family: "Anton";
+    margin: 0;
+    font-size: 4em;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.links-principales-finos{
+    position: relative;
+}
+.links-principales-finos::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--verde-intermedio);
+    transition: width 0.4s ease;
+}
+.links-principales-finos:hover::after{
+    width: 100%;
+}
+.pie {
+    width: 100%;
+    padding: 5px;
+    margin-top: 3em;  
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    border-top: solid 4px var(--verde-profundo);
+    min-height: 6em;
+    font-family: "Roboto";
+}
+.secciones-pie{
+    margin: 0 10px;
+}
+.items-secundarios{
+    display: flex;
+    margin: 10px 0;
+}
+.etiquetas-pie-redes{
+    margin: 0;
+}
+.parrafos-pie-horarios{
+    margin: 0;
+}
+.links-pie-redes{
+    display: inline-block;
+    margin-left: 3px;
+    color: #000;
+}

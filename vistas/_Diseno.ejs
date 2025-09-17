@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= TITULO %>></title>
+    <link rel="stylesheet" href="/css/fuentes.css">
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="/css/estiloPrincipal.css">
+</head>
+<body>
+    <header class="encabezado">
+        <nav class="navegador">
+            <div class="filtro-negro-global"></div>
+            <ul class="listas-generales lista-principal">
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/">Inicio</a></li>
+                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/#importados">Importados</a></li>
+                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="">Contacto</a></li>
+            </ul>
+            <h1 class="titulo-marca">SABORES VINOTECA</h1>
+            <ul class="listas-generales lista-principal lista-principal-padding-invertido">
+                
+                <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
+                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/cargar-productos-categorias">Cargar productos</a></li>
+                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/editar-productos">Editar productos</a></li>
+                    <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <% } %>
+                <% if(F_UsuarioActivo(Usuario)) { %>
+                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png"></li>
+                <% } else { %>
+                
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+      <%- body %>
+    </main>
+    <footer class="pie">
+        <article class="secciones-pie seccion-horarios">
+            <h2 class="subtitulos-pie">Vinoteca y Horarios</h2>
+            <ul class="listas-generales lista-secundarias">
+                <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Vinoteca:</strong></br>Barrio: Ameghino Sud.</br>Calle: Aaron Castellanos Nº2273.</br>Córdoba, Argentina 5010</p></li>
+                <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Lunes a Sabados:</strong></br>11:00 - 23:00</p></li>
+            </ul>
+        </article>
+        <article class="secciones-pie seccion-Redes">
+            <h2 class="subtitulos-pie">Redes</h2>
+            <ul class="listas-generales lista-secundarias">
+                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Instagram:</strong></p><a class="links-generales links-pie-redes"> @Insta</a></li>
+                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Whatsapp:</strong></p><a class="links-generales links-pie-redes"> 3512223333</a></li>
+                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Email:</strong></p><a class="links-generales links-pie-redes"> mail_ml@gmail.com</a></li>
+            </ul>
+        </article>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,63 @@
+:root{
+    --fondo-blanco: #ffffff;
+    --fondo-blanco2: #f8f7f4;
+    --dorado: #c9a646;
+    --bronce: #8c6239;
+    /*Whisky*/
+    --whisky-claro: #F5E6D3;
+    --whisky-intermedio: #B87B2E;
+    --whisky-intermedio-t: #B87B2E;
+    --whisky-oscuro: #5C3A21;
+    /*Verde*/
+    --verde-claro: #B7E4C7;
+    --verde-intermedio: #40916C;
+    --verde-profundo: #1E3932;
+    --verde-profundo-t: #1E393299;
+    --gris-profundo-neutral: #1E1E1E;
+}
+fieldset{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+}
+.listas-generales{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+.links-generales{
+    color: var(--fondo-blanco2);
+    text-decoration: none;
+}
+.links-generales:link{
+    color: var(--fondo-blanco2);
+}
+.links-generales:visited{
+    color: var(--fondo-blanco2);
+}
+.iconos-principales{
+    width: 3em;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.iconos-principales:hover{
+    background-color: #40916C90;
+}
+.filtro-negro-global{
+    background-color: #0009;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -5;
+}
+.etiquetas{
+    font-weight: 600;
+    font-size: 1.2em;
+}
+.entradas{
+    width: 95%;
+    
+    font-size: inherit;
+    font-family: inherit;
+}

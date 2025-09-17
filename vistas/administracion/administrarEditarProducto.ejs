@@ -1,0 +1,141 @@
+<link rel="stylesheet" href="/css/estiloEditarProductos.css">
+<section class="seccion-editar-productos-categorias">
+    <h2 class="subtitulo-administrar">Editar productos</h2>
+    <section class="seccion-seleccionar-edicion">
+        <h3>Selecciona qué deseas cargar:</h3>
+        <button class="boton boton-elegir" id="botonCargarCategoria">Editar categoria</button>
+        <button class="boton boton-elegir" id="botonCargarMarca">Editar marca</button>
+    </section>
+    <section class="buscar-productos">
+        <h3 class="subtitulo-administrar">Busqueda</h3>
+        <section class="seccion-introducir-busqueda">
+            <form class="formulario-busqueda">
+                <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
+                <div class="diseño-entrada-busuqeda">
+                    <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" placeholder="Vinos malbec">
+                    <img class="imagen-lupa" src="/carpeta_imagenes/web/buscar.png">
+                </div>
+                <fieldset class="campos">
+                    <label class="etiquetas" for="entradaCategorias">Filtrar por categoria</label>
+                    <select class="entradas" id="entradaCategorias">
+                        <option>Sin filtro</option>
+                        <option>Vinos</option>
+                        <option>Whiskies</option>
+                        <option>Cervezas</option>
+                        <option>Ron</option>
+                        <option>Vodka</option>
+                    </select>
+                </fieldset>
+                <fieldset class="campos">
+                    <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
+                    <select class="entradas" id="entradaMarcas">
+                        <option>Sin filtro</option>
+                        <option>Absolut</option>
+                        <option>Blue label</option>
+                        <option>SmirnOff</option>
+                        <option>Havana club</option>
+                        <option>Bombay Sapphire</option>
+                    </select>
+                </fieldset>
+                <button class="boton boton-busqueda boton-elegir" type="button">Buscar</button>
+            </form>
+        </section>
+        <section class="seccion-productos">
+            <section class="conteendor-productos">
+                <article class="contenedor-info-producto">
+                    <img class="imagen-del-producto" src="/carpeta_imagenes/web/smirnof.jpg">
+                    <div class="contenedor-informacion-productos">
+                        <p class="texto-info-producto nombre-del-producto"><strong>Vodka smirnof 1.5L</strong></p>
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Smirnof</p>
+                        <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
+                    </div>
+                </article>
+                <article class="contenedor-info-producto">
+                    <img class="imagen-del-producto" src="/carpeta_imagenes/web/whiskyProducto.jpg">
+                    <div class="contenedor-informacion-productos">
+                        <p class="texto-info-producto nombre-del-producto"><strong>Whisky Jack Daniels  1L</strong></p>
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Jack Daniels</p>
+                        <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
+                    </div>
+                </article>
+                <article class="contenedor-info-producto">
+                    <img class="imagen-del-producto" src="/carpeta_imagenes/web/vinoProducto.jpg">
+                    <div class="contenedor-informacion-productos">
+                        <p class="texto-info-producto nombre-del-producto"><strong>Vino 1.5L</strong></p>
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Malbec</p>
+                        <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
+                    </div>
+                </article>
+                <article class="contenedor-info-producto">
+                    <img class="imagen-del-producto" src="/carpeta_imagenes/web/vodkaProducto.jpg">
+                    <div class="contenedor-informacion-productos">
+                        <p class="texto-info-producto nombre-del-producto"><strong>Vodka absolut 1L</strong></p>
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Absolut</p>
+                        <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
+                    </div>
+                </article>
+                <article class="contenedor-info-producto">
+                    <img class="imagen-del-producto" src="/carpeta_imagenes/web/smirnof.jpg">
+                    <div class="contenedor-informacion-productos">
+                        <p class="texto-info-producto nombre-del-producto"><strong>Vodka smirnof 1.5L</strong></p>
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Smirnof</p>
+                        <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
+                    </div>
+                </article>
+                <article class="contenedor-info-producto">
+                    <img class="imagen-del-producto" src="/carpeta_imagenes/web/whiskyProducto.jpg">
+                    <div class="contenedor-informacion-productos">
+                        <p class="texto-info-producto nombre-del-producto"><strong>Whisky Jack Daniels  1L</strong></p>
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Jack Daniels</p>
+                        <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
+                    </div>
+                </article>
+            </section>
+        </section>
+    </section>
+    <section class="editar-datos">
+        <h3 class="subtitulo-administrar">Editar</h3>
+        <form class="datos datos-principales">
+            <label class="etiquetas" for="">Nombre del producto</label>
+            <input type="text" class="entradas" min="3" placeholder="Vino Malbec 2L" required>
+            <label class="etiquetas" for="">Precio del producto</label>
+            <input type="number" class="entradas" placeholder="10000" required>
+            <button type="submit" class="boton boton-elegir">Guardar</button>
+        </form>
+        <form class="datos datos-categoricos">
+            <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
+                <select class="entradas" id="entradaCategoriaProducto" name="categoria" required>
+                    <option>Ninguno</option>
+                    <option>Prueba1</option>
+                    <option>Prueba2</option>
+                </select>
+                <label class="etiquetas" for="entradaMarca">Marca del producto:</label>
+                <select class="entradas" id="entradaMarca" name="marca" required>
+                    <option>Ninguno</option>
+                    <option>Prueba1</option>
+                    <option>Prueba2</option>
+                </select>
+            <button type="submit" class="boton boton-elegir">Guardar</button>
+        </form>
+        <form class="datos datos-categoricos">
+            <label class="etiquetas" for="entradaDeImagenesProducto">Seleccionar imagen:</label>
+            <input class="entradas" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
+            <label class="etiquetas">Imagen seleccionada: </label>
+            <div class="contenedor-info-producto" id="vistaPreviaProducto">
+                <img class="imagen-del-producto" id="imagenVistaPreviaProducto" alt="Imagen del producto a subir">
+                <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto"><strong id="etiquetaNombreProducto">Nombre</strong></p>
+                    <div class="texto-marca-precio">
+                        <p class="texto-info-producto marca-del-producto"><strong>Marca: </strong> </p>
+                        <p class="texto-info-producto marca-del-producto valor-producto" id="etiquetaMarcaProducto"></p>
+                    </div>
+                    <div class="texto-marca-precio">
+                        <p class="texto-info-producto precio-del-producto texto-marca-precio"><strong>Precio: </strong> </p>
+                        <p class="texto-info-producto marca-del-producto valor-producto" id="etiquetaPrecioProducto"></p>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="boton boton-elegir">Guardar</button>
+        </form>
+    </section>
+</section>
