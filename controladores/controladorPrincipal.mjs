@@ -5,13 +5,19 @@ if(process.env.NODE_ENV = 'development'){
 }else{
     urlMadre = 'https://saboresvinoteca.com';
 }
-const VistaPrincipal = (req, res) =>{
+const tituloInicio = 'SaboresVinoteca';
+const tituloCargar = 'Cargar productos y categorias';
+const tituloEditar = 'Editar productos';
+const tituloError = 'Error';
+
+const VistaInicio = (req, res) =>{
     res.render('inicio', {
         TITULO: 'SaboresVinoteca',
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre : urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
     });
 }
 const VistaCargar = async (req, res) =>{
@@ -22,6 +28,7 @@ const VistaCargar = async (req, res) =>{
         URLMadre: urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
     });
 }
 const VistaEditarProductos = (req, res) =>{
@@ -31,18 +38,28 @@ const VistaEditarProductos = (req, res) =>{
         URLMadre : urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
     });
 }
 const VistaError = (req, res)=>{
     const mensaje = req.query.mensaje;
     res.render('error', {
-        TITULO: 'Editar productos',
+        TITULO: 'Error',
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
         Error: mensaje, 
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
     });
+}
+
+function DetectarJavaScript(titulo){
+    switch(titulo){
+        case tituloInicio: return {js:'/js/dist/inicio.bundle.js', existe: true };
+        case tituloCargar: return {js:'/js/dist/cargar.bundle.js', existe: true };
+        default: return { existe: false }; 
+    }
 }
 
 function UsuarioActivo(Usuario){
@@ -56,6 +73,6 @@ function AdminActivo(Jerarquia){
     return false;
 }
 export default { 
-    VistaPrincipal, VistaCargar, VistaEditarProductos,
+    VistaInicio, VistaCargar, VistaEditarProductos,
     VistaError
 };

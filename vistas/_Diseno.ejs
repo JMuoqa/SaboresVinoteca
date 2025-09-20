@@ -56,8 +56,11 @@
             </ul>
         </article>
     </footer>
-</body>
 <script>
     const URLMadre = "<%= URLMadre %>";
 </script>
+<% const scripts = F_DetectarJavaScript(TITULO); if(scripts.existe) { %>
+    <script src="<%= scripts.js %>"></script>
+<% } %>
+</body>
 </html>

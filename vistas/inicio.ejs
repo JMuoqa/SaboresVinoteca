@@ -8,6 +8,7 @@
             <section class="seccion-filtros-busquedas">
                 <form class="formulario-filtro" id="formularioFiltro">
                     <input type="hidden" id="entracaOcultaBusqueda" name="busqueda">
+                    <input type="hidden" id="entradaPagina" name="pagina">
                     <fieldset class="campos">
                         <label class="etiquetas" for="entradaCategorias">Filtrar por categoria</label>
                         <select class="entradas" id="entradaCategorias" name="categoria">
@@ -15,7 +16,7 @@
                     </fieldset>
                     <fieldset class="campos">
                         <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
-                        <select class="entradas" id="entradaMarcas" name="marca">
+                        <select class="entradas" id="entradaMarcas" name="marca" >
                         </select>
                     </fieldset>
                     <fieldset class="campos">
@@ -25,6 +26,9 @@
                             </div>
                         </div>
                         <p>Precio: $<span id="min"></span> — $<span id="max"></span></p>
+                    </fieldset>
+                    <fieldset class="campos">
+                        <p id="paginaLimite"></p>
                     </fieldset>
                 </form>
             </section>
@@ -42,6 +46,11 @@
                 <section class="conteendor-productos" id="contenedorProductos">
                     
                 </section>
+                <section class="seccion-cambiar-pagina">
+                    <img class="imagen-flecha-cambiar-pagina" id="indiceAnterior" src="/carpeta_imagenes/web/flecha-izquierda.png">
+                    <p class="indice-de-pagina"><span id="numeroDePagina">1</span></p> 
+                    <img class="imagen-flecha-cambiar-pagina" id="indiceSiguiente" src="/carpeta_imagenes/web/flecha-derecha.png">
+                </section>
             </section>
         </section>
     </section>
@@ -57,28 +66,17 @@
             <h2 class="subtitulos-principales-sin-fondo">Catálogo | Importados</h2>
         <section class="contenedor-horizontal">
             <section class="seccion-filtros-busquedas">
-                <form class="formulario-filtro" id="formularioFiltro">
-                    <input type="hidden" name="busqueda">
+                <form class="formulario-filtro" id="formularioFiltroImport">
+                    <input type="hidden" id="entracaOcultaBusquedaImport" name="busqueda">
+                    <input type="hidden" id="entradaPaginaImport" name="pagina">
                     <fieldset class="campos">
-                        <label class="etiquetas" for="">Filtrar por categoria</label>
-                        <select class="entradas" id="">
-                            <option>Sin filtro</option>
-                            <option>Vinos</option>
-                            <option>Whiskies</option>
-                            <option>Cervezas</option>
-                            <option>Ron</option>
-                            <option>Vodka</option>
+                        <label class="etiquetas" for="entradaCategoriasImport">Filtrar por categoria</label>
+                        <select class="entradas" name="categoria" id="entradaCategoriasImport">
                         </select>
                     </fieldset>
                     <fieldset class="campos">
-                        <label class="etiquetas" for="">Filtrar por Marca</label>
-                        <select class="entradas" id="">
-                            <option>Sin filtro</option>
-                            <option>Absolut</option>
-                            <option>Blue label</option>
-                            <option>SmirnOff</option>
-                            <option>Havana club</option>
-                            <option>Bombay Sapphire</option>
+                        <label class="etiquetas" for="entradaMarcasImport">Filtrar por Marca</label>
+                        <select class="entradas" name="marca" id="entradaMarcasImport">
                         </select>
                     </fieldset>
                     <fieldset class="campos">
@@ -89,6 +87,9 @@
                         </div>
                         <p>Precio: $<span id="min-import"></span> — $<span id="max-import"></span></p>
                     </fieldset>
+                    <fieldset class="campos">
+                        <p id="paginaLimiteImport"></p>
+                    </fieldset>
                 </form>
             </section>
             <section class="seccion-productos">
@@ -96,14 +97,19 @@
                     <form class="formulario-busqueda">
                         <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
                         <div class="diseño-entrada-busuqeda">
-                            <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" placeholder="Vinos malbec">
+                            <input class="entradas entrada-busqueda" type="text" id="entradaValorBusquedaImport" placeholder="Vinos malbec">
                             <img class="imagen-lupa" src="/carpeta_imagenes/web/buscar.png">
-                            <button class="boton boton-busqueda" type="button">Buscar</button>
+                            <button class="boton boton-busqueda" type="button" id="buscarProductosImport">Buscar</button>
                         </div>
                     </form>
                 </section>
                 <section class="conteendor-productos" id="conteendorProductosImportados">
                     
+                </section>
+                <section class="seccion-cambiar-pagina">
+                    <img class="imagen-flecha-cambiar-pagina" id="indiceAnteriorImport" src="/carpeta_imagenes/web/flecha-izquierda.png">
+                    <p class="indice-de-pagina"><span id="numeroDePaginaImport">1</span></p> 
+                    <img class="imagen-flecha-cambiar-pagina" id="indiceSiguienteImport" src="/carpeta_imagenes/web/flecha-derecha.png">
                 </section>
             </section>
         </section>
@@ -111,4 +117,3 @@
     </section>
 </section>
 <script src="https://cdn.jsdelivr.net/npm/nouislider@15.6.1/dist/nouislider.min.js" defer></script>
-<script src="/js/inicio.js" defer></script>

@@ -1,7 +1,7 @@
 import { 
     Con_InsertarMarca, Con_InsertarCategoria, Con_ObtenerMarcas,
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria, 
-    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros } from "../solicitudes/admin/solicitudesAdmin.mjs"
+    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos } from "../solicitudes/admin/solicitudesAdmin.mjs"
 import convert from "heic-convert";
 import fs from 'fs';
 import path from "path";
@@ -119,7 +119,7 @@ const ObtenerMarcas = async (req, res) =>{
         return res.json({ estado: 'exitoso', Marcas: marcas });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}]});
+        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error});
     }
 }
 const ObtenerCategorias = async (req, res) =>{
@@ -133,12 +133,12 @@ const ObtenerCategorias = async (req, res) =>{
         return res.json({ estado: 'exitoso', Categorias: categorias });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Categorias: [{Categoria: 'No hay'}]});
+        return res.json({estado: 'muyMalo', Categorias: [{Categoria: 'No hay'}],mensaje: error});
     }
 }
 const ObtenerProductosConFiltros = async (req, res) =>{
     try{
-        let { categoria, marca, precioMin, precioMax, importado, busqueda} = req.query || {};
+        let { categoria, marca, precioMin, precioMax, importado, busqueda, pagina} = req.query || {};
         if(busqueda){
 
         }else
@@ -167,13 +167,18 @@ const ObtenerProductosConFiltros = async (req, res) =>{
                 }
             }
         }
+        if(!pagina)
+            pagina = 1;
         if(!precioMin)
             precioMin = null;
         if(!precioMax)
             precioMax = null;
         if(!importado)
             importado = null;
-        const solicitud = await Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado)
+        const posicion = (pagina * 10) - 10;
+        console.log(importado);
+        const solicitud = await Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, posicion)
+        console.log(solicitud);
         const obtenerMarcas = await Con_ObtenerMarcas();
         let marcas = obtenerMarcas.Marcas;
         if(!solicitud.estado)
@@ -181,7 +186,18 @@ const ObtenerProductosConFiltros = async (req, res) =>{
         return res.json({ estado: 'exitoso', Productos: solicitud.Productos, Marcas: marcas})
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Productos: []});
+        return res.json({estado: 'muyMalo', Productos: [], mensaje: error});
+    }
+}
+const ObtenerTodosProductos = async (req, res, next)=>{
+    try{
+        const solicitud = await Con_ObtenerTodosProductos();
+        if(!solicitud.estado)
+            throw new Error(solicitud.mensaje);
+        return res.json({ estado: 'exitoso', Productos: solicitud.Productos})
+    }catch(error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', Productos: [], mensaje: error});
     }
 }
 async function ConvertirImagen(imagen, rutaOriginal) {
@@ -201,5 +217,5 @@ async function ConvertirImagen(imagen, rutaOriginal) {
 export default{
     InsertarMarca, InsertarCategoria, ObtenerMarcas,
     ObtenerCategorias, InsertarProducto, ObtenerProductosConFiltros,
-    ObtenerProductosImportadosConFiltros
+    ObtenerTodosProductos
 }

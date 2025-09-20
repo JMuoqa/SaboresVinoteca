@@ -35,4 +35,5 @@ enrutador.post('/guardar-marca', controladorAdmin.InsertarMarca);
 enrutador.get('/obtener-marcas', controladorAdmin.ObtenerMarcas);
 enrutador.get('/obtener-categorias', controladorAdmin.ObtenerCategorias);
 enrutador.get('/obtener-productos', controladorAdmin.ObtenerProductosConFiltros);
+enrutador.get('/obtener-todos-productos', controladorAdmin.ObtenerTodosProductos);
 export default enrutador;

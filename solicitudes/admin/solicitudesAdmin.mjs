@@ -81,18 +81,23 @@ async function Con_ObtenerMarcas() {
         await CerrarConexion(con);
     }
 }
-async function Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado) {
+async function Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, desde) {
     const con = await Conexion();
     try{
+        const limite = 10; 
+        const offset = desde ?? 0;    
+        if (!Number.isInteger(limite) || !Number.isInteger(offset) || limite < 0 || offset < 0) {
+            throw new Error("LIMIT y OFFSET deben ser enteros >= 0");
+        }
         const productoBuscado = busqueda ? `%${busqueda}%` : null;
-        const obtenerProductos = 'SELECT * FROM Productos WHERE (Producto LIKE ? OR ? IS NULL) AND (Importado = ? OR ? IS NULL) AND (IDCategoria = ? OR ? IS NULL) AND (IDMarca = ? OR ? IS NULL) AND (Precio >= ? OR ? IS NULL) AND (Precio <= ? OR ? IS NULL);';
+        const obtenerProductos = `SELECT * FROM Productos WHERE (Producto LIKE ? OR ? IS NULL) AND (Importado = ? OR ? IS NULL) AND (IDCategoria = ? OR ? IS NULL) AND (IDMarca = ? OR ? IS NULL) AND (Precio >= ? OR ? IS NULL) AND (Precio <= ? OR ? IS NULL) LIMIT ${limite} OFFSET ${offset};`;
         const valores = [
            productoBuscado, productoBuscado,
             importado, importado,
             categoria, categoria,
             marca, marca,
             precioMin, precioMin,
-            precioMax, precioMax
+            precioMax, precioMax,
         ];
         const productos = await con.execute(obtenerProductos, valores);
         return { estado: true, mensaje: 'exitoso', Productos: productos[0]}
@@ -103,7 +108,19 @@ async function Con_ObtenerProductosConFiltros(categoria, marca, precioMin, preci
         await CerrarConexion(con);
     }
 }
-
+async function Con_ObtenerTodosProductos() {
+    const con = await Conexion();
+    try{
+        const obtenerProductos = `SELECT * FROM Productos;`;
+        const productos = await con.execute(obtenerProductos);
+        return { estado: true, mensaje: 'exitoso', Productos: productos[0]}
+    }catch(error){
+        console.error(error);
+        return {estado: false, mensaje: `${error}`, Productos:[]};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
 async function Con_ObtenerCategorias() {
     const con = await Conexion();
     try{
@@ -154,5 +171,5 @@ async function Con_ObtenerIDDeMarca(_marca) {
 export {
     Con_InsertarMarca, Con_ObtenerMarcas, Con_InsertarCategoria ,
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria,
-    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros
+    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos
 }

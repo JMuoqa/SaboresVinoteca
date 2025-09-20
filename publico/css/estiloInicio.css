@@ -204,3 +204,22 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+.seccion-cambiar-pagina{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+.imagen-flecha-cambiar-pagina{
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+    border-radius: 3em;
+    margin: 0 1em;
+}
+.indice-de-pagina{
+    font-size: 2em;
+}
+.imagen-flecha-cambiar-pagina:hover{
+    background-color: #ccc;
+}
