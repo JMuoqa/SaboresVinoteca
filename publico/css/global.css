@@ -61,3 +61,8 @@ fieldset{
     font-size: inherit;
     font-family: inherit;
 }
+.texto-centrado{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}

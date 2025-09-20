@@ -7,6 +7,7 @@ import crypto from 'crypto';
 import expressLayouts from 'express-ejs-layouts';
 import minifyHTML from 'express-minify-html';
 import rutasPrincipales from './rutas/rutasPrincipales.mjs';
+import rutasAdmin from './rutas/rutasAdmin.mjs';
 const app = express();
 const __nombreDelArchivo = fileURLToPath(import.meta.url); // Obtiene el archivo actual
 const __nombreDelDirectorio = path.dirname(__nombreDelArchivo);       // Obtiene el directorio actual
@@ -29,13 +30,13 @@ app.use(minifyHTML({
   }
 }));
 app.use('/', rutasPrincipales);
+app.use('/admin', rutasAdmin);
 const PORT = 5111;
 if(process.env.NODE_ENV === 'development'){
-    app.use('/Imagenes', express.static(path.join(__nombreDelDirectorio, 'carpeta_imagenes/subidas')));
+    app.use('/Imagenes', express.static('C:\\Users\\Joaquin\\Desktop\\Proyectos\\Trabajo\\SaboresVinoteca\\ImagenesSubidas'));
 }else{
     app.use('/Imagenes', express.static('/home/joaquin/Imagenes/SaboresVinoteca'));
 }
-
 app.listen(PORT, () => {
     console.log(`Servidor escuchando por el puerto ${PORT}: http://dominio:${PORT}`);
 });

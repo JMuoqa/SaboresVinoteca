@@ -31,22 +31,16 @@
                     </div>
                 </div>
                 <div class="contenedor-importado">
-                    <label class="etiquetas" for="entradaCategoriaProducto">Importado:</label>
-                    <input class="entrada entrada-importado" type="checkbox" name="importado">
+                    <label class="etiquetas" for="entradaImportado">Importado:</label>
+                    <input class="entrada entrada-importado" type="checkbox" name="importado" id="entradaImportado">
                 </div>
             </fieldset>
             <fieldset class="fieldset">
                 <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
                 <select class="entradas" id="entradaCategoriaProducto" name="categoria" required>
-                    <option>Ninguno</option>
-                    <option>Prueba1</option>
-                    <option>Prueba2</option>
                 </select>
                 <label class="etiquetas" for="entradaMarca">Marca del producto:</label>
                 <select class="entradas" id="entradaMarca" name="marca" required>
-                    <option>Ninguno</option>
-                    <option>Prueba1</option>
-                    <option>Prueba2</option>
                 </select>
                 <label class="etiquetas" for="precioProducto">Precio del producto:</label>
                 <input class="entradas" type="text" id="precioProducto" name="precio" placeholder="40000" required>
@@ -54,6 +48,7 @@
                 <input class="entradas" type="number" id="cantidadProducto" name="cantidad" placeholder="10" required>-->
                 <button type="submit" class="boton-admin-cargar boton-elegir">Guardar producto</button>
                 <button type="button" class="boton-admin-cargar boton-elegir">Resetear datos</button>
+                <p id="mensajeDeAlertaProductos"></p>
             </fieldset>
         </form>
     </section>
@@ -62,7 +57,7 @@
         <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaCategorias">
             <fieldset class="fieldset">
                 <label class="etiquetas" for="nombreCategoria">Nombre de la categoria:</label>
-                <input class="entradas" type="text" id="nombreCategoria" name="nombreCategoria" required placeholder="Vinos">
+                <input class="entradas" type="text" id="nombreCategoria" name="categoria" required placeholder="Vinos">
                 <label class="etiquetas" for="entradaDeImagenes">Seleccionar imagen</label>
                 <input class="entradas" type="file" accept="image/*" id="entradaDeImagenes" name="imagen" required>
                 <label class="etiquetas">Imagen seleccionada: </label>
@@ -73,22 +68,23 @@
             <fieldset class="fieldset">
                 <button class="boton boton-admin-cargar boton-elegir" type="submit">Guardar categoria</button>
                 <button type="button" class="boton boton-admin-cargar boton-elegir">Resetear datos</button>
+                <p id="mensajeDeAlertaCategoria"></p>
             </fieldset>
         </form>
     </section>
-    <section class="seccion-contenedor-formulario seccion-contenedor-formulario-categorias">
+    <section class="seccion-contenedor-formulario seccion-contenedor-formulario-marcas">
         <h3 class="subtitulo-administrar">Cargar marca</h3>
         <form class="formulario formulario-carga formulario-carga-marca" id="seccionCargarMarcas">
             <fieldset class="fieldset fieldset-marca">
                 <label class="etiquetas" for="">Nombre de la marca</label>
-                <input class="entradas" type="text" name="marca" required placeholder="Blue label">
+                <input class="entradas" type="text" name="marca" id="entradaCargarMarca" required placeholder="Blue label">
                 <button type="submit" class="boton boton-admin-cargar boton-elegir">Guardar marca</button>
+                <p id="mensajeDeAlertaMarca"></p>
             </fieldset>
         </form>
         <article class="contenedor-listado-de-marcas">
             <h4 class="subtitulo-administrar">Lista de marcas</h4>
-            <ul class="listas-generales listado-marcas">
-                <li class="items-marca"><p><strong>Nombre de la marca: </strong></p><p>Absolute</p></li>
+            <ul class="listas-generales listado-marcas" id="contenedorMarcas">
             </ul>
         </article>
     </section>

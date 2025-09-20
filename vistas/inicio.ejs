@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="/css/animacionesInicio.css">
 <link rel="stylesheet" href="/css/estiloInicio.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.6.1/dist/nouislider.min.css">
 <section class="seccion-inicio">
@@ -6,27 +7,15 @@
         <section class="contenedor-horizontal">
             <section class="seccion-filtros-busquedas">
                 <form class="formulario-filtro" id="formularioFiltro">
-                    <input type="hidden" name="busqueda">
+                    <input type="hidden" id="entracaOcultaBusqueda" name="busqueda">
                     <fieldset class="campos">
                         <label class="etiquetas" for="entradaCategorias">Filtrar por categoria</label>
-                        <select class="entradas" id="entradaCategorias">
-                            <option>Sin filtro</option>
-                            <option>Vinos</option>
-                            <option>Whiskies</option>
-                            <option>Cervezas</option>
-                            <option>Ron</option>
-                            <option>Vodka</option>
+                        <select class="entradas" id="entradaCategorias" name="categoria">
                         </select>
                     </fieldset>
                     <fieldset class="campos">
                         <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
-                        <select class="entradas" id="entradaMarcas">
-                            <option>Sin filtro</option>
-                            <option>Absolut</option>
-                            <option>Blue label</option>
-                            <option>SmirnOff</option>
-                            <option>Havana club</option>
-                            <option>Bombay Sapphire</option>
+                        <select class="entradas" id="entradaMarcas" name="marca">
                         </select>
                     </fieldset>
                     <fieldset class="campos">
@@ -46,96 +35,20 @@
                         <div class="diseño-entrada-busuqeda">
                             <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" placeholder="Vinos malbec">
                             <img class="imagen-lupa" src="/carpeta_imagenes/web/buscar.png">
-                            <button class="boton boton-busqueda" type="button">Buscar</button>
+                            <button class="boton boton-busqueda" type="button" id="buscarProductos">Buscar</button>
                         </div>
                     </form>
                 </section>
-                <section class="conteendor-productos">
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/smirnof.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vodka smirnof 1.5L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Smirnof</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/whiskyProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Whisky Jack Daniels  1L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Jack Daniels</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/vinoProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vino 1.5L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Malbec</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/vodkaProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vodka absolut 1L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Absolut</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/smirnof.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vodka smirnof 1.5L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Smirnof</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/whiskyProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Whisky Jack Daniels  1L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Jack Daniels</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
-                        </div>
-                    </article>
+                <section class="conteendor-productos" id="contenedorProductos">
+                    
                 </section>
             </section>
         </section>
     </section>
     <section class="seccion-categorias">
         <h2 class="subtitulos-principales">Categorias</h2>
-        <section class="contenedor-de-las-categorias">
-            <article class="contenedor-categoria">
-                <img class="imagen-categoria" src="/carpeta_imagenes/web/vinos.jpg">
-                <div class="filtro-categoria"></div>
-                <h3 class="titulo-categoria">Vinos</h3>
-            </article>
-            <article class="contenedor-categoria">
-                <img class="imagen-categoria" src="/carpeta_imagenes/web/whisky.jpg">
-                <div class="filtro-categoria"></div>
-                <h3 class="titulo-categoria">Whiskies</h3>
-            </article>
-            <article class="contenedor-categoria">
-                <img class="imagen-categoria" src="/carpeta_imagenes/web/gin.jpg">
-                <div class="filtro-categoria"></div>
-                <h3 class="titulo-categoria">Gin</h3>
-            </article>
-            <article class="contenedor-categoria">
-                <img class="imagen-categoria" src="/carpeta_imagenes/web/ron.jpg">
-                <div class="filtro-categoria"></div>
-                <h3 class="titulo-categoria">Ron</h3>
-            </article>
-            <article class="contenedor-categoria">
-                <img class="imagen-categoria" src="/carpeta_imagenes/web/Vodka.jpg">
-                <div class="filtro-categoria"></div>
-                <h3 class="titulo-categoria">Vodka</h3>
-            </article>
-            <article class="contenedor-categoria">
-                <img class="imagen-categoria" src="/carpeta_imagenes/web/cigarillos.jpg">
-                <div class="filtro-categoria"></div>
-                <h3 class="titulo-categoria">Cigarrillos</h3>
-            </article>
+        <section class="contenedor-de-las-categorias" id="contenedorDeLasCategorias">
+            
         </section>
     </section>
     <section class="seccion-importados">
@@ -147,8 +60,8 @@
                 <form class="formulario-filtro" id="formularioFiltro">
                     <input type="hidden" name="busqueda">
                     <fieldset class="campos">
-                        <label class="etiquetas" for="entradaCategorias">Filtrar por categoria</label>
-                        <select class="entradas" id="entradaCategorias">
+                        <label class="etiquetas" for="">Filtrar por categoria</label>
+                        <select class="entradas" id="">
                             <option>Sin filtro</option>
                             <option>Vinos</option>
                             <option>Whiskies</option>
@@ -158,8 +71,8 @@
                         </select>
                     </fieldset>
                     <fieldset class="campos">
-                        <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
-                        <select class="entradas" id="entradaMarcas">
+                        <label class="etiquetas" for="">Filtrar por Marca</label>
+                        <select class="entradas" id="">
                             <option>Sin filtro</option>
                             <option>Absolut</option>
                             <option>Blue label</option>
@@ -189,55 +102,8 @@
                         </div>
                     </form>
                 </section>
-                <section class="conteendor-productos">
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/smirnof.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vodka smirnof 1.5L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Smirnof</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/whiskyProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Whisky Jack Daniels  1L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Jack Daniels</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/vinoProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vino 1.5L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Malbec</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/vodkaProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vodka absolut 1L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Absolut</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/smirnof.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Vodka smirnof 1.5L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Smirnof</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $10.000,00</p>
-                        </div>
-                    </article>
-                    <article class="contenedor-info-producto">
-                        <img class="imagen-del-producto" src="/carpeta_imagenes/web/whiskyProducto.jpg">
-                        <div class="contenedor-informacion-productos">
-                            <p class="texto-info-producto nombre-del-producto"><strong>Whisky Jack Daniels  1L</strong></p>
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong> Jack Daniels</p>
-                            <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong> $20.000,00</p>
-                        </div>
-                    </article>
+                <section class="conteendor-productos" id="conteendorProductosImportados">
+                    
                 </section>
             </section>
         </section>

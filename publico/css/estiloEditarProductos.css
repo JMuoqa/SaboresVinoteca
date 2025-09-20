@@ -9,7 +9,7 @@
     padding: 10px;
     height: 2.4em;
     color: var(--fondo-blanco);
-    margin: 0 10px;
+    margin: 0.5em 10px;
     border: none;
     background: linear-gradient(to top, var(--verde-profundo), #203d35);
     cursor: pointer;
@@ -81,14 +81,17 @@
     box-sizing: border-box;
 }
 .diseño-entrada-busuqeda{
-    height: 2em;
+    height: 100%;
     display: flex;
     justify-content: center;
 }
 .imagen-lupa{
-    width: 1.9em;
+    width:  1.8em;
+    height: 1.8em;
     border: solid 1px #000;
     border-left:none;
+    padding: 10px;
+    margin: 0.5em 0;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px; 
     cursor: pointer;
@@ -102,6 +105,7 @@
 }
 .entrada-busqueda{
     width: 25em;
+    height: 1.8em;
     padding: 10px;
     border: solid 1px #000;
     border-right:none;
