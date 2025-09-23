@@ -1,14 +1,14 @@
-document.addEventListener('DOMContentLoaded', async function(){
-    await MostrarGaleriaDeImagenesParaCategoria();
-    await ActualizarListaMarcas();
-    await ActualizarListaCategorias();
-    await MostrarGaleriaDeImagenesParaProducto();
+document.addEventListener('DOMContentLoaded', function(){
+    MostrarGaleriaDeImagenesParaCategoria();
+    ActualizarListaMarcas();
+    ActualizarListaCategorias();
+    MostrarGaleriaDeImagenesParaProducto();
     EventosChangeDeEntradas();
-    await CargarMarca();
-    await CargarCategoria();
-    await CargarProducto();
+    CargarMarca();
+    CargarCategoria();
+    CargarProducto();
 });
-async function MostrarGaleriaDeImagenesParaCategoria(){
+function MostrarGaleriaDeImagenesParaCategoria(){
     const entrada = document.getElementById('entradaDeImagenes')
     const elementoImagen = document.getElementById('imagenVistaPrevia')
     let imagenSeleccionada = null;
@@ -53,7 +53,7 @@ async function MostrarGaleriaDeImagenesParaCategoria(){
         elementoImagen.style.display = 'block';
     }
 }
-async function MostrarGaleriaDeImagenesParaProducto(){
+function MostrarGaleriaDeImagenesParaProducto(){
     const entrada = document.getElementById('entradaDeImagenesProducto')
     const elementoImagen = document.getElementById('imagenVistaPreviaProducto')
     let imagenSeleccionada = null;
@@ -112,7 +112,7 @@ function EventosChangeDeEntradas(){
     const entradaMarca = document.getElementById('entradaMarca');
     const etiquetaMarcaProducto = document.getElementById('etiquetaMarcaProducto');
     entradaMarca.addEventListener('change', function(){
-        if(entradaMarca.value.trim() === '' || entradaMarca.value.trim() === 'No seleccionado' || entradaMarca.value.trim() === 'No hay')
+        if(entradaMarca.value.trim() === '' || entradaMarca.value.trim() === 'No seleccionado' || entradaMarca.value.trim() === 'No hay' || entradaMarca.value.trim() === 'Selecciona una categoria para buscar marcas')
             etiquetaMarcaProducto.innerText = '';
         else
             etiquetaMarcaProducto.innerText = entradaMarca.value.trim();
@@ -126,7 +126,7 @@ function EventosChangeDeEntradas(){
             etiquetaPrecioProducto.innerText = ConseguirFormatoDelPrecioOriginal(precioProducto.value.trim());
     });
 }
-async function CargarMarca(){
+function CargarMarca(){
     const formulario = document.getElementById('seccionCargarMarcas');
     formulario.addEventListener('submit', async function(event){
         event.preventDefault();
@@ -146,8 +146,8 @@ async function CargarMarca(){
                 throw new Error('Error en la solicitud');
             return respuesta.json()
         }).then(async respuesta => {
-            await VaciarSeccionMarca();
-            await ActualizarListaMarcas();
+            VaciarSeccionMarca();
+            ActualizarListaMarcas();
             if(!respuesta){
                 throw new Error('Error en la solicitud');
             }
@@ -175,7 +175,7 @@ async function CargarMarca(){
         })
     });
 }
-async function CargarCategoria(){
+function CargarCategoria(){
     const formulario = document.getElementById('seccionCargaCategorias');
     formulario.addEventListener('submit', async function(event){
         event.preventDefault();
@@ -217,7 +217,7 @@ async function CargarCategoria(){
         })
     }); 
 }
-async function CargarProducto() {
+function CargarProducto() {
     const formulario = document.getElementById('seccionCargaProductos');
     formulario.addEventListener('submit', function(event){
         event.preventDefault();
@@ -258,7 +258,7 @@ async function CargarProducto() {
         })
     });
 }
-async function VaciarSeccionCategoria(){
+function VaciarSeccionCategoria(){
     const nombreCategoria = document.getElementById('nombreCategoria');
     const entradaArchivos = document.getElementById('entradaDeImagenes')
     const elementoImagen = document.getElementById('imagenVistaPrevia')
@@ -266,11 +266,13 @@ async function VaciarSeccionCategoria(){
     nombreCategoria.value = '';
     elementoImagen.src = '';
 }
-async function VaciarSeccionMarca(){
+function VaciarSeccionMarca(){
     const entrada = document.getElementById('entradaCargarMarca')
+    const seccMarca_EntCategoria = document.getElementById('seccMarca_EntCategoria');
     entrada.value = '';
+    seccMarca_EntCategoria.selectedIndex = 0;
 }
-async function VaciarSeccionProductos() {
+function VaciarSeccionProductos() {
     const nombreProducto = document.getElementById('nombreProducto');
     const entradaDeImagenesProducto = document.getElementById('entradaDeImagenesProducto');
     const imagenVistaPreviaProducto = document.getElementById('imagenVistaPreviaProducto');
@@ -292,43 +294,48 @@ async function VaciarSeccionProductos() {
     entradaCategoriaProducto.selectedIndex = 0;
     entradaMarca.selectedIndex = 0;
 }
-async function ActualizarListaMarcas() {
-    const contenedorMarcas = document.getElementById('contenedorMarcas');
-    const entradaMarca = document.getElementById('entradaMarca')
-    fetch('admin/obtener-marcas').then(respuesta => {
-        if(!respuesta.ok)
-            throw new Error('Error en la solicitud');
-        return respuesta.json()
-    }).then(respuesta =>{
-        const Marcas = respuesta['Marcas'];
-        contenedorMarcas.innerHTML = '';
-        entradaMarca.innerHTML = '<option>No seleccionado</option>';
-        for(let i = 0; i < Marcas.length; i++){
-            let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
-            entradaMarca.innerHTML += opcionesDeMarcas;
-            let listaDeMarcas = `<li class="items-marca"><p><strong>Nombre de la marca: </strong></p><p class="parrafo-nombre-marca">${Marcas[i].Marca}</p></li>`;
-            contenedorMarcas.innerHTML += listaDeMarcas;
+function ActualizarListaMarcas() {
+    const entradaCategoriaProducto = document.getElementById('entradaCategoriaProducto');
+    entradaCategoriaProducto.addEventListener('change', function(){
+        const entradaMarca = document.getElementById('entradaMarca')
+        const categoria = entradaCategoriaProducto.value;
+        if(categoria != 'No seleccionada'){
+            fetch(`admin/obtener-marcas-por-categoria?categoria=${categoria}`).then(respuesta => {
+                if(!respuesta.ok)
+                    throw new Error('Error en la solicitud');
+                return respuesta.json()
+            }).then(({Marcas}) =>{
+                entradaMarca.innerHTML = '<option>No seleccionado</option>';
+                for(let i = 0; i < Marcas.length; i++){
+                    let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
+                    entradaMarca.innerHTML += opcionesDeMarcas;
+                }
+
+            })
+        }else{
+            entradaMarca.innerHTML = '<option>Selecciona una categoria para buscar marcas</option>';
         }
-        
-    })
+    });
 }
-async function ActualizarListaCategorias() {
+function ActualizarListaCategorias() {
     const entradaCategoriaProducto = document.getElementById('entradaCategoriaProducto')
+    const seccMarca_EntCategoria = document.getElementById('seccMarca_EntCategoria');
     fetch('admin/obtener-categorias').then(respuesta => {
         if(!respuesta.ok)
             throw new Error('Error en la solicitud');
         return respuesta.json()
     }).then(respuesta =>{
         const Categorias = respuesta['Categorias'];
-        entradaCategoriaProducto.innerHTML = '<option>No seleccionado</option>';
+        entradaCategoriaProducto.innerHTML = '<option>No seleccionada</option>';
+        seccMarca_EntCategoria.innerHTML = '<option>No seleccionada</option>';
         for(let i = 0; i < Categorias.length; i++){
             let opcionesDeCategorias = `<option>${Categorias[i].Categoria}</option>`;
             entradaCategoriaProducto.innerHTML += opcionesDeCategorias;
+            seccMarca_EntCategoria.innerHTML += opcionesDeCategorias;
         }
         
     })
 }
-
 function ConseguirFormatoDelPrecioOriginal(precio){
     let precioFinal = precio;
     const arregloDeNumeros = precioFinal.toString().split('');

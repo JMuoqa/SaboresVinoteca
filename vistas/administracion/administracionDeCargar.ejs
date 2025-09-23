@@ -14,7 +14,7 @@
                 <label class="etiquetas" for="nombreProducto">Nombre del producto:</label>
                 <input class="entradas" type="text" id="nombreProducto" name="nombreProducto" min="3" placeholder="Vino Malbec 1L" required>
                 <label class="etiquetas" for="entradaDeImagenesProducto">Seleccionar imagen:</label>
-                <input class="entradas" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
+                <input class="entradas entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
                 <label class="etiquetas">Imagen seleccionada: </label>
                 <div class="contenedor-info-producto" id="vistaPreviaProducto">
                     <img class="imagen-del-producto" id="imagenVistaPreviaProducto" alt="Imagen del producto a subir">
@@ -41,6 +41,7 @@
                 </select>
                 <label class="etiquetas" for="entradaMarca">Marca del producto:</label>
                 <select class="entradas" id="entradaMarca" name="marca" required>
+                    <option>Selecciona una categoria para buscar marcas</option>
                 </select>
                 <label class="etiquetas" for="precioProducto">Precio del producto:</label>
                 <input class="entradas" type="text" id="precioProducto" name="precio" placeholder="40000" required>
@@ -59,7 +60,7 @@
                 <label class="etiquetas" for="nombreCategoria">Nombre de la categoria:</label>
                 <input class="entradas" type="text" id="nombreCategoria" name="categoria" required placeholder="Vinos">
                 <label class="etiquetas" for="entradaDeImagenes">Seleccionar imagen</label>
-                <input class="entradas" type="file" accept="image/*" id="entradaDeImagenes" name="imagen" required>
+                <input class="entradas entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenes" name="imagen" required>
                 <label class="etiquetas">Imagen seleccionada: </label>
                 <div class="vista-previa" id="vistaPreviaCategoria">
                     <img class="imagen-vista-previa" id="imagenVistaPrevia">
@@ -76,8 +77,12 @@
         <h3 class="subtitulo-administrar">Cargar marca</h3>
         <form class="formulario formulario-carga formulario-carga-marca" id="seccionCargarMarcas">
             <fieldset class="fieldset fieldset-marca">
-                <label class="etiquetas" for="">Nombre de la marca</label>
+                <label class="etiquetas" for="entradaCargarMarca">Nombre de la marca</label>
                 <input class="entradas" type="text" name="marca" id="entradaCargarMarca" required placeholder="Blue label">
+                <label class="etiquetas" for="seccMarca_EntCategoria">Categoria a la que pertenece</label>
+                <select class="entradas" name="categoria" id="seccMarca_EntCategoria" required>
+
+                </select>
                 <button type="submit" class="boton boton-admin-cargar boton-elegir">Guardar marca</button>
                 <p id="mensajeDeAlertaMarca"></p>
             </fieldset>

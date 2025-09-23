@@ -1,14 +1,14 @@
 import { Conexion, CerrarConexion } from "../../modelos/conexionSaboresVinoteca.mjs";
 
-async function Con_InsertarMarca(Marca) {
+async function Con_InsertarMarca(marca, IDCategoria) {
     const con = await Conexion();
     try{
-        const comprobarExistencia = 'SELECT Marca FROM Marcas WHERE Marca = ?';
-        const valor = [Marca]
+        const comprobarExistencia = 'SELECT Marca FROM Marcas WHERE Marca = ? AND IDCategoria = ?';
+        const valor = [marca, IDCategoria]
         const marcas = await con.execute(comprobarExistencia,valor);
         if(marcas[0].length > 0)
-            throw new Error('Esa marca ya existe');
-        const insertarMarca = 'INSERT INTO Marcas (Marca) VALUES(?)';
+            throw new Error('Esa marca ya existe con esa categoria');
+        const insertarMarca = 'INSERT INTO Marcas (Marca, IDCategoria) VALUES(?, ?)';
         await con.query(insertarMarca, valor, (error, resultado)=>{
             if (error) {
                 throw new Error('Error al cargar la marca: ', error)
@@ -49,7 +49,6 @@ async function Con_InsertarCategoria(nombre, imagen) {
 async function Con_InsertarProducto(nombre, categoria, marca, precio, esImportado, imagen) {
     const con = await Conexion();
     try{
-        console.log(categoria);
         const insertarProducto = 'INSERT INTO Productos (Producto, Imagen, Importado, IDCategoria, IDMarca, Precio) VALUES( ?, ?, ?, ?, ?, ?);'
         const valores = [nombre, imagen, esImportado, categoria, marca, precio];
         await con.query(insertarProducto, valores, (error, resultado)=>{
@@ -65,7 +64,6 @@ async function Con_InsertarProducto(nombre, categoria, marca, precio, esImportad
         await CerrarConexion(con);
     }
 }
-
 async function Con_ObtenerMarcas() {
     const con = await Conexion();
     try{
@@ -81,16 +79,32 @@ async function Con_ObtenerMarcas() {
         await CerrarConexion(con);
     }
 }
-async function Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, desde) {
+async function Con_ObtenerMarcasPorCategoria(categoria) {
     const con = await Conexion();
     try{
-        const limite = 10; 
+        const obtenerMarcas = 'SELECT * FROM Marcas WHERE IDCategoria = ? ORDER BY ID ASC;';
+        const valor = [categoria];
+        const marcas = await con.execute(obtenerMarcas, valor);
+        if(marcas[0].length == 0)
+            return {estado: false, mensaje: 'No hay categorias cargadas'};
+        return {estado: true, mensaje: 'exitoso', Marcas: marcas[0]};
+    }catch(error){
+        console.error(error)
+        return {estado: false, mensaje: `${error}`};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
+async function Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, desde, limite) {
+    const con = await Conexion();
+    try{
+        const _limite = limite; 
         const offset = desde ?? 0;    
         if (!Number.isInteger(limite) || !Number.isInteger(offset) || limite < 0 || offset < 0) {
             throw new Error("LIMIT y OFFSET deben ser enteros >= 0");
         }
         const productoBuscado = busqueda ? `%${busqueda}%` : null;
-        const obtenerProductos = `SELECT * FROM Productos WHERE (Producto LIKE ? OR ? IS NULL) AND (Importado = ? OR ? IS NULL) AND (IDCategoria = ? OR ? IS NULL) AND (IDMarca = ? OR ? IS NULL) AND (Precio >= ? OR ? IS NULL) AND (Precio <= ? OR ? IS NULL) LIMIT ${limite} OFFSET ${offset};`;
+        const obtenerProductos = `SELECT * FROM Productos WHERE (Producto LIKE ? OR ? IS NULL) AND (Importado = ? OR ? IS NULL) AND (IDCategoria = ? OR ? IS NULL) AND (IDMarca = ? OR ? IS NULL) AND (Precio >= ? OR ? IS NULL) AND (Precio <= ? OR ? IS NULL) LIMIT ${_limite} OFFSET ${offset};`;
         const valores = [
            productoBuscado, productoBuscado,
             importado, importado,
@@ -113,6 +127,20 @@ async function Con_ObtenerTodosProductos() {
     try{
         const obtenerProductos = `SELECT * FROM Productos;`;
         const productos = await con.execute(obtenerProductos);
+        return { estado: true, mensaje: 'exitoso', Productos: productos[0]}
+    }catch(error){
+        console.error(error);
+        return {estado: false, mensaje: `${error}`, Productos:[]};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
+async function Con_ObtenerProductoPorID(ID) {
+    const con = await Conexion();
+    try{
+        const obtenerProductos = `SELECT * FROM Productos WHERE ID = ?;`;
+        const valor = [ID];
+        const productos = await con.execute(obtenerProductos, valor);
         return { estado: true, mensaje: 'exitoso', Productos: productos[0]}
     }catch(error){
         console.error(error);
@@ -152,11 +180,11 @@ async function Con_ObtenerIDDeCategoria(_categoria) {
         await CerrarConexion(con);
     }
 }
-async function Con_ObtenerIDDeMarca(_marca) {
+async function Con_ObtenerIDDeMarca(_marca, IDCategoria) {
     const con = await Conexion();
     try{
-        const obtenerCategorias = 'SELECT ID FROM Marcas WHERE Marca = ?;';
-        const valor = [_marca];
+        const obtenerCategorias = 'SELECT ID FROM Marcas WHERE Marca = ? AND IDCategoria = ?;';
+        const valor = [_marca, IDCategoria];
         const marca = await con.execute(obtenerCategorias, valor);
         if(marca[0].length == 0)
             return {estado: false, mensaje: 'No se encontro ninguna marca'};
@@ -168,8 +196,58 @@ async function Con_ObtenerIDDeMarca(_marca) {
         await CerrarConexion(con);
     }
 }
+async function Con_CambiarDatosPrincipales(nombre, precio, ID) {
+    const con = await Conexion();
+    try{
+        const cambiarDatos = 'UPDATE Productos SET Producto = ?, Precio = ? WHERE ID = ?';
+        const valores = [nombre, precio, ID];
+        const res = await con.execute(cambiarDatos, valores);
+        if(res.affectedRows > 0)
+            return {estado: true, mensaje: 'Se guardo con exito'};
+        return {estado: false, mensaje: `No se puedo guardar la información`};
+    }catch(error){
+        console.error(error)
+        return {estado: false, mensaje: `${error}`};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
+async function Con_CambiarDatosCategoricos(categoria, marca, ID) {
+    const con = await Conexion();
+    try{
+        const cambiarDatos = 'UPDATE Productos SET IDCategoria = ?, IDMarca = ? WHERE ID = ?';
+        const valores = [categoria, marca, ID];
+        const res = await con.execute(cambiarDatos, valores);
+        if(res.affectedRows > 0)
+            return {estado: true, mensaje: 'Se guardo con exito'};
+        return {estado: false, mensaje: `No se puedo guardar la información`};
+    }catch(error){
+        console.error(error)
+        return {estado: false, mensaje: `${error}`};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
+async function Con_CambiarImagenDelProducto(imagen, ID) {
+    const con = await Conexion();
+    try{
+        const cambiarDatos = 'UPDATE Productos SET Imagen = ? WHERE ID = ?';
+        const valores = [imagen, ID];
+        const res = await con.execute(cambiarDatos, valores);
+        if(res.affectedRows > 0)
+            return {estado: true, mensaje: 'Se guardo con exito'};
+        return {estado: false, mensaje: `No se puedo guardar la información`};
+    }catch(error){
+        console.error(error)
+        return {estado: false, mensaje: `${error}`};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
 export {
     Con_InsertarMarca, Con_ObtenerMarcas, Con_InsertarCategoria ,
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria,
-    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos
+    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
+    Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
+    Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto
 }

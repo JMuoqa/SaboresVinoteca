@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= TITULO %></title>
     <link rel="stylesheet" href="/css/fuentes.css">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/estiloPrincipal.css">
+    <link rel="icon" href="/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
+    <title><%= TITULO %></title>
 </head>
 <body>
     <header class="encabezado">
@@ -15,7 +16,9 @@
             <ul class="listas-generales lista-principal">
                 <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/">Inicio</a></li>
                 <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/#importados">Importados</a></li>
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="<%= URLMadre %>/#tituloCategorias">Productos</a></li>
+                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="<%= URLMadre %>/#importados">Importados</a></li>
                 <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                 <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="">Contacto</a></li>
             </ul>
@@ -34,8 +37,13 @@
                 
                 <% } %>
             </ul>
+            <img class="imagen-logo-principal" src="/carpeta_imagenes/web/Logo540saboresvinoteca.png" id="logoPrincipal">
         </nav>
     </header>
+    <!--<div class="imagen-presentacion-principal">
+        <div class="filtro-negro-global"></div>
+            <h1 class="titulo-marca">SABORES VINOTECA</h1>
+    </div>-->
     <main>
       <%- body %>
     </main>
@@ -50,7 +58,7 @@
         <article class="secciones-pie seccion-Redes">
             <h2 class="subtitulos-pie">Redes</h2>
             <ul class="listas-generales lista-secundarias">
-                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Instagram:</strong></p><a class="links-generales links-pie-redes"> @Insta</a></li>
+                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Instagram:</strong></p><a class="links-generales links-pie-redes" href="https://www.instagram.com/vinoteca.sabores.arg/"> @vinoteca.sabores.arg</a></li>
                 <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Whatsapp:</strong></p><a class="links-generales links-pie-redes"> 3512223333</a></li>
                 <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Email:</strong></p><a class="links-generales links-pie-redes"> mail_ml@gmail.com</a></li>
             </ul>
@@ -59,6 +67,7 @@
 <script>
     const URLMadre = "<%= URLMadre %>";
 </script>
+<script src="/js/principal.js"></script>
 <% const scripts = F_DetectarJavaScript(TITULO); if(scripts.existe) { %>
     <script src="<%= scripts.js %>"></script>
 <% } %>

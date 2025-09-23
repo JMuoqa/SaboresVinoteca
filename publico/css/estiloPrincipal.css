@@ -20,12 +20,12 @@ main{
     font-family: "Roboto";
 }
 .encabezado{
-    height: 6em;
-    min-height: 6em;
+    height: 35em;
+    min-height: 35em;
     width: 100%;
     background-color: var(--fondo-blanco2);
-    border-bottom: solid 4px var(--verde-profundo);
     color: var(--fondo-blanco2);
+    border-bottom: solid 4px var(--verde-profundo);
 }
 .navegador{
     font-family: "Roboto";
@@ -42,15 +42,55 @@ main{
     width: 100%;
     height: 100%;
     position: absolute;
-    background: url(../carpeta_imagenes/web/fondobodeja.jpg);
+    background: url(../carpeta_imagenes/web/fondobodeja.jpg) fixed;
     background-position: center;
     background-size: cover;
     inset: 0;
     z-index: -10;
 }
+.imagen-presentacion-principal{
+    font-family: "Roboto";
+    font-weight: 600;
+    width: 100%;
+    height: 35em;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    border-bottom: solid 4px var(--verde-profundo);
+}
+.imagen-presentacion-principal::after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: url(../carpeta_imagenes/web/fondobodeja.jpg) fixed;
+    background-position: center;
+    background-size: cover;
+    inset: 0;
+    z-index: -10;
+}
+.imagen-logo-principal{
+    width: 7em;
+    height: 7em;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    color: var(--fondo-blanco2);
+    border-radius: 5em;
+    cursor:  pointer;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.15);
+    transition: transform .5s ease, box-shadow .5s ease;
+}
+.imagen-logo-principal:hover{
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.1);
+}
 .lista-principal{
     display: flex;
-    height: 100%;
+    height: 6em;
     padding-left: 10px;
 }
 .lista-principal-padding-invertido{
@@ -75,9 +115,11 @@ main{
     margin: 0;
     font-size: 4em;
     position: absolute; 
-    top: 50%;
+    top: 0.7em;
     left: 50%;
     transform: translate(-50%, -50%);
+    color: var(--fondo-blanco2);
+    cursor:  pointer;
 }
 .links-principales-finos{
     position: relative;
@@ -122,5 +164,11 @@ main{
 .links-pie-redes{
     display: inline-block;
     margin-left: 3px;
+    color: #000;
+}
+.links-pie-redes:link{
+    color: #000;
+}
+.links-pie-redes:visited{
     color: #000;
 }

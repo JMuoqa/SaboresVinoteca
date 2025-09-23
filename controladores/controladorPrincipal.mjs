@@ -58,6 +58,7 @@ function DetectarJavaScript(titulo){
     switch(titulo){
         case tituloInicio: return {js:'/js/dist/inicio.bundle.js', existe: true };
         case tituloCargar: return {js:'/js/dist/cargar.bundle.js', existe: true };
+        case tituloEditar: return {js:'/js/dist/editar.bundle.js', existe: true };
         default: return { existe: false }; 
     }
 }

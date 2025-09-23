@@ -20,10 +20,8 @@ function ActualizarProductos() {
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
-    }).then(async respuesta => {
-      if(respuesta['Productos']){
-        const Productos = respuesta['Productos'];
-        const Marcas = respuesta['Marcas'];
+    }).then(async ({Productos, Marcas}) => {
+      if(Productos){
         contenedorProductos.innerHTML = '';
         if(Productos.length == 0){
           let html = '<p><strong>No se encontraron productos</strong></p>';
@@ -529,13 +527,10 @@ async function ObtenerTodosLosProductos(){
     if(!respuesta.ok)
       throw new Error('Error en la solicitud'); 
     return respuesta.json();    
-  }).then(async respuesta => {
-      if(respuesta['Productos']){
-        const Productos = respuesta['Productos'];
+  }).then(async ({Productos})=> {
+      if(Productos && Productos.length > 0){
         CargarSlider(Productos);
         CargarSliderImportados(Productos);
-      }else{
-        throw new Error('Hubo un error en la cosulta')
       }
     }).catch( error => {
         console.error(error);

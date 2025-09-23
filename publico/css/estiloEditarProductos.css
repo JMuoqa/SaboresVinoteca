@@ -108,7 +108,9 @@
     height: 1.8em;
     padding: 10px;
     border: solid 1px #000;
-    border-right:none;
+    border-right: none;
+    box-sizing:inherit;
+    border-radius: 0;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     margin-left: 10px;
@@ -146,12 +148,15 @@
     box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
     display: flex;
     flex-direction: column;
-    transition: transform .3s ease, box-shadow .3s ease;
+    transition: transform .5s ease, box-shadow .5s ease;
     cursor: pointer;
 }
 .contenedor-info-producto:hover{
     transform: scale(1.01);
     box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.1);
+}
+.animar-contenedor-info-producto{
+    animation: aparecerProductos .5s ease none;
 }
 .imagen-del-producto{
     width: 100%;
@@ -163,6 +168,46 @@
     padding: 5px;
     box-sizing: border-box;
 }
+.nombre-del-producto{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 .texto-info-producto{
     margin: 10px 0;
+}
+
+.seccion-cambiar-pagina{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+.imagen-flecha-cambiar-pagina{
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+    border-radius: 3em;
+    margin: 0 1em;
+}
+.indice-de-pagina{
+    font-size: 2em;
+}
+.imagen-flecha-cambiar-pagina:hover{
+    background-color: #ccc;
+}
+.contenedor-espiral{
+    margin: auto;
+    display: none;
+    align-items: center;
+}
+.animacion-espiral{
+    margin-left: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.1); /* borde gris clarito/transparente */
+    border-top: 2px solid var(--verde-profundo);        /* color de la parte "que gira" */
+    border-radius: 50%;                   /* lo hace circular */
+    width: 1em;
+    height: 1em;
+    animation: espiral 1s linear infinite;   /* animación infinita */
+    background: transparent;   
 }

@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="/css/animacionesGenerales.css">
+<link rel="stylesheet" href="/css/animacionesInicio.css">
 <link rel="stylesheet" href="/css/estiloEditarProductos.css">
 <section class="seccion-editar-productos-categorias">
     <h2 class="subtitulo-administrar">Editar productos</h2>
@@ -9,35 +11,24 @@
     <section class="buscar-productos">
         <h3 class="subtitulo-administrar">Busqueda</h3>
         <section class="seccion-introducir-busqueda">
-            <form class="formulario-busqueda">
+            <form class="formulario-busqueda" id="formularioFiltro">
                 <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
                 <div class="diseño-entrada-busuqeda">
-                    <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" placeholder="Vinos malbec">
+                    <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" name="busqueda" placeholder="Vinos malbec">
                     <img class="imagen-lupa" src="/carpeta_imagenes/web/buscar.png">
                 </div>
                 <fieldset class="campos">
                     <label class="etiquetas" for="entradaCategorias">Filtrar por categoria</label>
-                    <select class="entradas" id="entradaCategorias">
-                        <option>Sin filtro</option>
-                        <option>Vinos</option>
-                        <option>Whiskies</option>
-                        <option>Cervezas</option>
-                        <option>Ron</option>
-                        <option>Vodka</option>
+                    <select class="entradas" id="entradaCategorias" name="categoria">
                     </select>
                 </fieldset>
                 <fieldset class="campos">
                     <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
-                    <select class="entradas" id="entradaMarcas">
-                        <option>Sin filtro</option>
-                        <option>Absolut</option>
-                        <option>Blue label</option>
-                        <option>SmirnOff</option>
-                        <option>Havana club</option>
-                        <option>Bombay Sapphire</option>
+                    <select class="entradas" id="entradaMarcas" name="marca">
+                        <option>Selecciona una categoria para buscar marcas</option>
                     </select>
                 </fieldset>
-                <button class="boton boton-busqueda boton-elegir" type="button">Buscar</button>
+                <button class="boton boton-busqueda boton-elegir" type="submit">Buscar</button>
             </form>
         </section>
         <section class="seccion-productos">
@@ -52,57 +43,64 @@
         </section>
     </section>
     <section class="editar-datos">
-        <h3 class="subtitulo-administrar">Editar</h3>
+        <h3 class="subtitulo-administrar" id="ver-edicion">Editar</h3>
         <div class="datos datos-principales">
+            <div class="contenedor-espiral"  id="animacionDeCarga">
+                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+            </div>
             <p><strong>Datos del producto a editar</strong></p>
             <div>
-                <p><strong>Nº: </strong></p>Ninguno<p></p>
+                <p><strong>Nº: </strong></p><p id="numeroProducto" class="texto-naranja-edicion">Ninguno</p>
             </div>
             <div>
-                <p><strong>Nombre de producto: </strong></p><p>Ninguno</p>
+                <p><strong>Nombre de producto: </strong></p><p id="nombreProducto" class="texto-naranja-edicion">Ninguno</p>
             </div>
         </div>
-        <form class="datos datos-principales">
-            <label class="etiquetas" for="">Nombre del producto</label>
-            <input type="text" class="entradas" min="3" placeholder="Vino Malbec 2L" required>
-            <label class="etiquetas" for="">Precio del producto</label>
-            <input type="number" class="entradas" placeholder="10000" required>
-            <button type="submit" class="boton boton-elegir">Guardar</button>
+        <form class="datos datos-principales" id="formularioDatosPrincipales">
+            <div class="contenedor-espiral" >
+                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+            </div>
+            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" >
+            <label class="etiquetas" for="entradaNombre">Nombre del producto</label>
+            <input type="text" class="entradas texto-naranja-edicion" min="3" placeholder="Vino Malbec 2L" id="entradaNombre" name="nombre" required>
+            <label class="etiquetas" for="entradaPrecio">Precio del producto</label>
+            <input type="number" class="entradas texto-naranja-edicion" placeholder="10000" id="entradaPrecio" name="precio" required>
+            <button type="submit" class="boton boton-elegir">Guardar nombre y precio</button>
+            <p id="textoEdicionPrincipal"></p>
         </form>
-        <form class="datos datos-categoricos">
+        <form class="datos datos-categoricos" id="formularioDatosCategoricos">
+            <input type="hidden" class="entrada-oculta-id-seleccionado">
             <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
-                <select class="entradas" id="entradaCategoriaProducto" name="categoria" required>
-                    <option>Ninguno</option>
-                    <option>Prueba1</option>
-                    <option>Prueba2</option>
-                </select>
-                <label class="etiquetas" for="entradaMarca">Marca del producto:</label>
-                <select class="entradas" id="entradaMarca" name="marca" required>
-                    <option>Ninguno</option>
-                    <option>Prueba1</option>
-                    <option>Prueba2</option>
-                </select>
-            <button type="submit" class="boton boton-elegir">Guardar</button>
+            <select class="entradas texto-naranja-edicion" id="editarEntradaCategoria" name="categoria" required>
+            </select>
+            <label class="etiquetas" for="editarEntradaMarcas">Marca del producto:</label>
+            <select class="entradas texto-naranja-edicion" id="editarEntradaMarcas" name="marca" required>
+                <option>Selecciona una categoria para buscar marcas</option>
+            </select>
+            <button type="submit" class="boton boton-elegir">Guardar categoria y marca</button>
+            <p id="textoEdicionCategorica"></p>
         </form>
-        <form class="datos datos-categoricos">
+        <form class="datos dato-imagen" id="formularioDatoImagen">
+            <input type="hidden" class="entrada-oculta-id-seleccionado">
             <label class="etiquetas" for="entradaDeImagenesProducto">Seleccionar imagen:</label>
-            <input class="entradas" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
+            <input class="entradas texto-naranja-edicion entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
             <label class="etiquetas">Imagen seleccionada: </label>
             <div class="contenedor-info-producto" id="vistaPreviaProducto">
                 <img class="imagen-del-producto" id="imagenVistaPreviaProducto" alt="Imagen del producto a subir">
                 <div class="contenedor-informacion-productos">
-                    <p class="texto-info-producto nombre-del-producto"><strong id="etiquetaNombreProducto">Nombre</strong></p>
+                    <p class="texto-info-producto nombre-del-producto"><strong id="editarEtiquetaNombreProducto">Nombre</strong></p>
                     <div class="texto-marca-precio">
                         <p class="texto-info-producto marca-del-producto"><strong>Marca: </strong> </p>
-                        <p class="texto-info-producto marca-del-producto valor-producto" id="etiquetaMarcaProducto"></p>
+                        <p class="texto-info-producto marca-del-producto valor-producto" id="editarEtiquetaMarcaProducto"></p>
                     </div>
                     <div class="texto-marca-precio">
                         <p class="texto-info-producto precio-del-producto texto-marca-precio"><strong>Precio: </strong> </p>
-                        <p class="texto-info-producto marca-del-producto valor-producto" id="etiquetaPrecioProducto"></p>
+                        <p class="texto-info-producto marca-del-producto valor-producto" id="editarEtiquetaPrecioProducto"></p>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="boton boton-elegir">Guardar</button>
+            <button type="submit" class="boton boton-elegir">Guardar imagen</button>
+            <p id="textoEditarImagen"></p>
         </form>
     </section>
 </section>

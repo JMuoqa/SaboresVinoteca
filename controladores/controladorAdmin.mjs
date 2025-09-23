@@ -1,7 +1,10 @@
 import { 
     Con_InsertarMarca, Con_InsertarCategoria, Con_ObtenerMarcas,
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria, 
-    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos } from "../solicitudes/admin/solicitudesAdmin.mjs"
+    Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
+    Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
+    Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto,
+} from "../solicitudes/admin/solicitudesAdmin.mjs"
 import convert from "heic-convert";
 import fs from 'fs';
 import path from "path";
@@ -17,13 +20,17 @@ else{
 }
 const InsertarMarca = async (req, res, next) =>{
     try{
-        let { marca } = req.body;
+        let { marca, categoria } = req.body;
         const regex = /^[a-zA-Z0-9 @._-]+$/; //hay un espacio(' ' en -> '9 @'), para que permita los espacios ya que es una marca
         if (!marca || !regex.test(marca)) {
             return res.json({ estado: 'malo', mensaje: 'La marca contiene caracteres inválidos o está vacía'});
         }
-        marca = marca.trim(); 
-        const solicitud = await Con_InsertarMarca(marca);
+        marca = marca.trim();
+        categoria = categoria.trim();
+        console.log(marca, categoria);
+        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
+        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
+        const solicitud = await Con_InsertarMarca(marca, IDCategoria);
         if(!solicitud.estado)
             return res.json({ estado: 'malo', mensaje: solicitud.mensaje});
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje });
@@ -81,10 +88,8 @@ const InsertarProducto = async (req, res) => {
         else
             esImportado = 0;
         const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
-        const solicitarIDMarca = await Con_ObtenerIDDeMarca(marca);
-        console.log(solicitarIDCatecoria)
         const IDCategoria = solicitarIDCatecoria.Categoria.ID;
-        console.log(solicitarIDMarca)
+        const solicitarIDMarca = await Con_ObtenerIDDeMarca(marca, IDCategoria);
         const IDMarca = solicitarIDMarca.Marca.ID;
         const solicitud = await Con_InsertarProducto(nombreProducto, IDCategoria, IDMarca, precio, esImportado, imagenProcesada);
         if(!solicitud.estado)
@@ -122,6 +127,23 @@ const ObtenerMarcas = async (req, res) =>{
         return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error});
     }
 }
+const ObtenerMarcasPorCategoria= async (req, res)=>{
+    try{
+        const categoria = req.query.categoria;
+        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
+        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
+        const obtenerMarcas = await Con_ObtenerMarcasPorCategoria(IDCategoria);
+        let marcas;
+        if(obtenerMarcas.Marcas)
+            marcas = obtenerMarcas.Marcas
+        else
+            marcas = [{Marca: 'No hay'}];
+        return res.json({ estado: 'exitoso', Marcas: marcas });
+    }catch(error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error});
+    }
+}
 const ObtenerCategorias = async (req, res) =>{
     try{
         const obtenerCategorias = await Con_ObtenerCategorias();
@@ -138,7 +160,7 @@ const ObtenerCategorias = async (req, res) =>{
 }
 const ObtenerProductosConFiltros = async (req, res) =>{
     try{
-        let { categoria, marca, precioMin, precioMax, importado, busqueda, pagina} = req.query || {};
+        let { categoria, marca, precioMin, precioMax, importado, busqueda, pagina, limite} = req.query || {};
         if(busqueda){
 
         }else
@@ -155,7 +177,7 @@ const ObtenerProductosConFiltros = async (req, res) =>{
                 }
             }
         }
-        if(!marca || marca === 'Sin filtro')
+        if(!marca || marca === 'Sin filtro' || marca === 'Selecciona una categoria para buscar marcas')
             marca = null;
         else{
             const obtenerMarcasParaBusqueda = await Con_ObtenerMarcas();
@@ -175,10 +197,12 @@ const ObtenerProductosConFiltros = async (req, res) =>{
             precioMax = null;
         if(!importado)
             importado = null;
+        if(!limite)
+            limite = 10
+        limite = parseInt(limite);
         const posicion = (pagina * 10) - 10;
-        console.log(importado);
-        const solicitud = await Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, posicion)
-        console.log(solicitud);
+        console.log(categoria, marca, precioMin, precioMax, importado, busqueda, pagina, posicion, limite)
+        const solicitud = await Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, posicion, limite)
         const obtenerMarcas = await Con_ObtenerMarcas();
         let marcas = obtenerMarcas.Marcas;
         if(!solicitud.estado)
@@ -200,6 +224,50 @@ const ObtenerTodosProductos = async (req, res, next)=>{
         return res.json({estado: 'muyMalo', Productos: [], mensaje: error});
     }
 }
+const ObtenerProductoPorID = async (req, res, next)=>{
+    try{
+        const ID = req.query.ID;
+        const solicitud = await Con_ObtenerProductoPorID(ID);
+        const obtenerMarcas = await Con_ObtenerMarcas();
+        let marcas;
+        if(obtenerMarcas.Marcas)
+            marcas = obtenerMarcas.Marcas
+        else
+            marcas = [{Marca: 'No hay'}];
+        const obtenerCategorias = await Con_ObtenerCategorias();
+        let categorias;
+        if(obtenerCategorias.Categorias)
+            categorias = obtenerCategorias.Categorias;
+        else
+            categorias = [{Categoria: 'No hay'}];
+        if(!solicitud.estado)
+            throw new Error(solicitud.mensaje);
+        return res.json({ estado: 'exitoso', Producto: solicitud.Productos, Marcas: marcas, Categorias: categorias})
+    }catch{
+        console.error(error);
+        return res.json({estado: 'muyMalo', Producto: [], mensaje: error});
+    }
+}
+const CambiarDatosPrincipalesDelProducto = async (req, res, next)=>{
+    try{
+        const { nombre, precio, ID } = req.body;
+        await Con_CambiarDatosPrincipales(nombre, precio, ID);
+        return res.json({estado: 'exitoso', mensaje: 'Se guardo correctamente'});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error});
+    }
+}
+const CambiarDatosCategoricos = async (req, res, next) =>{
+    try{
+        const { categoria, marca, ID } = req.body;
+        await Con_CambiarDatosCategoricos(categoria, marca, ID);
+        return res.json({estado: 'exitoso', mensaje: 'Se guardo correctamente'});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error});
+    }
+}
 async function ConvertirImagen(imagen, rutaOriginal) {
     const nuevoNombre = imagen.filename.replace(/\.heic$/i,'.jpg');
     const nuevaRuta = path.join(rutaDeLaCarpeta, nuevoNombre);
@@ -213,9 +281,9 @@ async function ConvertirImagen(imagen, rutaOriginal) {
     fs.unlinkSync(rutaOriginal);//Esto borra la imagen .heic que se subio.
     return nuevoNombre
 }
-
 export default{
     InsertarMarca, InsertarCategoria, ObtenerMarcas,
     ObtenerCategorias, InsertarProducto, ObtenerProductosConFiltros,
-    ObtenerTodosProductos
+    ObtenerTodosProductos, ObtenerProductoPorID, ObtenerMarcasPorCategoria,
+    CambiarDatosPrincipalesDelProducto
 }
