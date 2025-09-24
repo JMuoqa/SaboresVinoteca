@@ -161,4 +161,8 @@ function EditarOtros(){
     botonEditarProductos.addEventListener('click', function(){
         window.location.href = `${URLMadre}/editar-productos`;
     });
+    const botonEditarMarca = document.getElementById('botonEditarMarca');
+    botonEditarMarca.addEventListener('click', function(){
+      window.location.href = `${URLMadre}/editar-marcas`;
+    });
 }

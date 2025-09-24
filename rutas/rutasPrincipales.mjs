@@ -5,5 +5,6 @@ enrutador.get('/', controladorPrincipal.VistaInicio);
 enrutador.get('/cargar-productos-categorias', controladorPrincipal.VistaCargar);
 enrutador.get('/editar-productos', controladorPrincipal.VistaEditarProductos);
 enrutador.get('/error', controladorPrincipal.VistaError);
-enrutador.get('/editar-categorias', controladorPrincipal.VistaEditarCategorias)
+enrutador.get('/editar-categorias', controladorPrincipal.VistaEditarCategorias);
+enrutador.get('/editar-marcas', controladorPrincipal.VistaEditarMarcas);
 export default enrutador;

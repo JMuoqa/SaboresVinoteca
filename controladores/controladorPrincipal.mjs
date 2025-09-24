@@ -8,6 +8,7 @@ const tituloInicio = 'SaboresVinoteca';
 const tituloCargar = 'Cargar productos y categorias';
 const tituloEditar = 'Editar productos';
 const tituloEditarCategorias = 'Editar Categoria';
+const tituloEditarMarcas = 'Editar Marcas';
 const tituloError = 'Error';
 const VistaInicio = (req, res) =>{
     res.render('inicio', {
@@ -62,11 +63,23 @@ const VistaEditarCategorias = (req, res) =>{
         F_DetectarJavaScript: DetectarJavaScript,
     });
 }
+const VistaEditarMarcas = (req, res)=>{
+    res.render('administracion/adminEditarMarcas', {
+        TITULO: tituloEditarMarcas,
+        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        URLMadre: urlMadre,
+        F_UsuarioActivo: UsuarioActivo,
+        F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
+    });
+}
+
 function DetectarJavaScript(titulo){
     switch(titulo){
         case tituloInicio: return {js:'/js/dist/inicio.bundle.js', existe: true };
         case tituloCargar: return {js:'/js/dist/cargar.bundle.js', existe: true };
         case tituloEditar: return {js:'/js/dist/editar.bundle.js', existe: true };
+        case tituloEditarMarcas: return {js:'/js/dist/editarMarcas.bundle.js', existe: true };
         case tituloEditarCategorias: return {js:'/js/dist/editarCategorias.bundle.js', existe: true };
         default: return { existe: false }; 
     }
@@ -82,5 +95,6 @@ function AdminActivo(Jerarquia){
     return false;
 }
 export default { 
-    VistaInicio, VistaCargar, VistaEditarProductos, VistaError, VistaEditarCategorias,
+    VistaInicio, VistaCargar, VistaEditarProductos,
+    VistaError, VistaEditarCategorias, VistaEditarMarcas,
 };
