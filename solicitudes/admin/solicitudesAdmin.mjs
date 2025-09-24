@@ -178,6 +178,20 @@ async function Con_ObtenerCategoriaPorID(ID) {
         await CerrarConexion(con);
     }
 }
+async function Con_ObtenerMarcaPorID(ID) {
+    const con = await Conexion();
+    try{
+        const obtenerMarca = 'SELECT * FROM Marcas WHERE ID = ?';
+        const valor = [ID];
+        const marca = await con.execute(obtenerMarca, valor);
+        return { estado: true, mensaje: 'exitoso', Marca: marca[0]};
+    }catch(error){
+        console.error(error);
+        return {estado: false, mensaje: `${error}`, Marca:[]};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
 async function Con_ObtenerIDDeCategoria(_categoria) {
     const con = await Conexion();
     try{
@@ -282,12 +296,28 @@ async function Con_CabmiarDatosDeUnaCategoria(imagen, categoria, ID) {
         await CerrarConexion(con);
     }
 }
+async function Con_CambiarDatosDeUnaMarca(marca, IDCategoria, ID) {
+    const con = await Conexion();
+    try{
+        const cambiarDatos = 'UPDATE Marcas SET Marca = ?, IDCategoria = ? WHERE ID = ?';
+        const valores = [marca, IDCategoria, ID];
+        const res = await con.execute(cambiarDatos, valores);
+        if(res[0].affectedRows > 0)
+            return {estado: true, mensaje: 'Se guardo con exito'};
+        return {estado: false, mensaje: `No se puedo guardar la información`};
+    }catch(error){
+        console.error(error)
+        return {estado: false, mensaje: `${error}`};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
 export {
     Con_InsertarMarca, Con_ObtenerMarcas, Con_InsertarCategoria ,
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria,
     Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
     Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
-    Con_CabmiarDatosDeUnaCategoria, 
-
+    Con_CabmiarDatosDeUnaCategoria, Con_ObtenerMarcaPorID, Con_CambiarDatosDeUnaMarca,
+    
 }

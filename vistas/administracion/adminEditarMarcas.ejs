@@ -11,44 +11,39 @@
             <form class="formulario formulario-editar-marcas" id="buscarMarcas">
                 <fieldset class="fieldset field-tamaño-definido">
                     <label class="etiquetas" for="entradaCategoriasBusqueda">Categoria</label>
-                    <select class="entradas "  id="entradaCategoriasBusqueda">
+                    <select class="entradas" name="categoria" id="entradaCategoriasBusqueda">
 
                     </select>
                 </fieldset>
                 <button type="submit" class="boton boton-busqueda">Seleccionar categoria</button>
             </form>
         </section>
-        <section class="seccion-mostrar-marcas carrusel">
-            <img class="imagen-flecha-cambiar-pagina" id="indiceAnterior" src="/carpeta_imagenes/web/flecha-izquierda.png">
-            <section class="contenedor-marcas">
-                <!--<div class="pista">
-                  <div class="slide"><P>BLUE LABEL</P></div>
-                  <div class="slide"><P>JACK DANIELS</P></div>
-                  <div class="slide"><P>MALBEC</P></div>
-                  <div class="slide"><P>FIGURA</P></div>
-                  <div class="slide"><P>COCACOLA</P></div>
-                  <div class="slide"><P>PEPSI</P></div>
-                  <div class="slide"><P>VINAZO</P></div>
-                  <div class="slide"><P>FERNET</P></div>
-                  <div class="slide"><P>BRAHMA</P></div>
-                  <div class="slide"><P>MANAOS</P></div>
-                  <div class="slide"><P>MONSTER</P></div>
-                </div>-->
+        <section>
+            <h3 class="texto-centrado margen-arriba">Marcas</h3>
+            <section class="seccion-mostrar-marcas carrusel">
+                <img class="imagen-flecha-cambiar-pagina" id="indiceAnterior" src="/carpeta_imagenes/web/flecha-izquierda.png">
+                <section class="contenedor-marcas" id="contenedorSlider">
+                    
+                </section>
+                <img class="imagen-flecha-cambiar-pagina" id="indiceSiguiente" src="/carpeta_imagenes/web/flecha-derecha.png">
             </section>
-            <img class="imagen-flecha-cambiar-pagina" id="indiceSiguiente" src="/carpeta_imagenes/web/flecha-derecha.png">
         </section>
     </section>
     <section class="seccion-editar-marcas">
-        <h3 class="subtitulo-administrar">Cargar marca</h3>
-        <form class="formulario formulario-carga formulario-carga-marca" id="seccionCargarMarcas">
-            <fieldset class="fieldset fieldset-marca">
+        <h3 class="subtitulo-administrar">Editar marca</h3>
+        <form class="formulario formulario-carga formulario-carga-marca" id="formularioMarca">
+            <fieldset class="fieldset fieldset-marca" >
+                <div class="contenedor-espiral"  id="animacionDeCarga">
+                    <p><strong>Editando datos</strong></p> <div class="animacion-espiral"></div>
+                </div>
+                <input type="hidden" name="ID" id="entradaIDMarca" required>
                 <label class="etiquetas" for="entradaCargarMarca">Nombre de la marca</label>
                 <input class="entradas" type="text" name="marca" id="entradaCargarMarca" required placeholder="Blue label">
                 <label class="etiquetas" for="seccMarca_EntCategoria">Categoria a la que pertenece</label>
                 <select class="entradas" name="categoria" id="seccMarca_EntCategoria" required>
                 </select>
                 <button type="submit" class="boton boton-admin-cargar boton-elegir">Guardar marca</button>
-                <p id="mensajeDeAlertaMarca"></p>
+                <p id="textoEdicionMarca"></p>
             </fieldset>
         </form>
     </section>

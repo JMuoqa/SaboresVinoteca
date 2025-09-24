@@ -4,13 +4,12 @@ import {
     Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
     Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
-    Con_CabmiarDatosDeUnaCategoria, 
+    Con_CabmiarDatosDeUnaCategoria, Con_ObtenerMarcaPorID, Con_CambiarDatosDeUnaMarca
 } from "../solicitudes/admin/solicitudesAdmin.mjs"
 import convert from "heic-convert";
 import fs from 'fs';
 import path from "path";
 import sharp from 'sharp';
-
 let rutaDeLaCarpeta = '';
 if(process.env.NODE_ENV === 'development'){
     rutaDeLaCarpeta = 'C:\\Users\\Joaquin\\Desktop\\Proyectos\\Trabajo\\SaboresVinoteca\\ImagenesSubidas';
@@ -26,6 +25,8 @@ const InsertarMarca = async (req, res, next) =>{
         if (!marca || !regex.test(marca)) {
             return res.json({ estado: 'malo', mensaje: 'La marca contiene caracteres inválidos o está vacía'});
         }
+        if(categoria == 'No seleccionada')
+            return res.json({ estado: 'malo', mensaje: 'Selecciona la categoria a la que pertenece la marca'});
         marca = marca.trim();
         categoria = categoria.trim();
         console.log(marca, categoria);
@@ -260,6 +261,18 @@ const ObtenerCategoriaPorID = async (req, res, next) =>{
         return res.json({estado: 'muyMalo', Categorias: [], mensaje: error});
     }
 }
+const ObtenerMarcaPorID = async (req, res, next)=>{
+    try{
+        const ID = req.query.ID;
+        const solicitud = await Con_ObtenerMarcaPorID(ID);
+        if(!solicitud.estado)
+            throw new Error(solicitud.mensaje);
+        return res.json({estado: 'exitoso', Marca: solicitud.Marca});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error});
+    }
+}
 const CambiarDatosPrincipalesDelProducto = async (req, res, next)=>{
     try{
         const { nombre, precio, ID } = req.body;
@@ -332,6 +345,20 @@ const CambiarDatosDeUnaCategoria = async (req, res, next)=>{
         return res.json({estado: 'muyMalo', mensaje: error});
     }
 }
+const CambiarDatosDeUnaMarca = async (req, res, next)=>{
+    try{
+        const { marca, categoria, ID } = req.body;
+        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
+        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
+        const solicitud = await Con_CambiarDatosDeUnaMarca(marca, IDCategoria, ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error});
+    }
+}
 async function ConvertirImagen(imagen, rutaOriginal) {
     const nuevoNombre = imagen.filename.replace(/\.heic$/i,'.jpg');
     const nuevaRuta = path.join(rutaDeLaCarpeta, nuevoNombre);
@@ -350,5 +377,6 @@ export default{
     ObtenerCategorias, InsertarProducto, ObtenerProductosConFiltros,
     ObtenerTodosProductos, ObtenerProductoPorID, ObtenerMarcasPorCategoria,
     CambiarDatosPrincipalesDelProducto, CambiarDatosCategoricos, CambiarImagenDelProducto,
-    ObtenerCategoriaPorID, CambiarDatosDeUnaCategoria,
+    ObtenerCategoriaPorID, CambiarDatosDeUnaCategoria, ObtenerMarcaPorID,
+    CambiarDatosDeUnaMarca,
 }

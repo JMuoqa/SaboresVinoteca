@@ -56,13 +56,13 @@
 }
 .animacion-espiral{
     margin-left: 5px;
-    border: 2px solid rgba(0, 0, 0, 0.1); /* borde gris clarito/transparente */
-    border-top: 2px solid var(--verde-profundo);        /* color de la parte "que gira" */
-    border-radius: 50%;                   /* lo hace circular */
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--verde-profundo);
+    border-radius: 50%;
     width: 1em;
     height: 1em;
-    animation: espiral 1s linear infinite;   /* animación infinita */
-    background: transparent;   
+    animation: espiral 1s linear infinite;
+    background: transparent;
 }
 .entradas, .etiquetas{
     margin: 0.5em 0;
@@ -122,7 +122,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 3em 0;
+    margin-bottom: 3em;
 }
 .contenedor-marcas{
     overflow: hidden;
@@ -143,10 +143,15 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0 10px;
 }
 .slide:hover{
     transform: scale(1.1);
 }
 .slide:hover{
     font-weight: 600;
+}
+.margen-arriba{
+    margin-top: 2em;
+    font-size: 1.5em;
 }

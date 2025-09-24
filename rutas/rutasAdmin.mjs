@@ -40,7 +40,9 @@ enrutador.get('/obtener-productos', controladorAdmin.ObtenerProductosConFiltros)
 enrutador.get('/obtener-todos-productos', controladorAdmin.ObtenerTodosProductos);
 enrutador.get('/obtener-producto-por-ID', controladorAdmin.ObtenerProductoPorID);
 enrutador.get('/obtener-categoria-por-ID', controladorAdmin.ObtenerCategoriaPorID);
+enrutador.get('/obtener-marca-por-ID', controladorAdmin.ObtenerMarcaPorID);
 enrutador.get('/obtener-marcas-por-categoria', controladorAdmin.ObtenerMarcasPorCategoria);
 enrutador.post('/cambiar-datos-principales', controladorAdmin.CambiarDatosPrincipalesDelProducto);
 enrutador.post('/cambiar-datos-categoricos', controladorAdmin.CambiarDatosCategoricos);
+enrutador.post('/cambiar-datos-de-marca', controladorAdmin.CambiarDatosDeUnaMarca);
 export default enrutador;
