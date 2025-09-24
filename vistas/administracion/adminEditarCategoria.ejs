@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/css/animacionesGenerales.css">
+<link rel="stylesheet" href="/css/animacionesInicio.css">
+<link rel="stylesheet" href="/css/estiloEditarCategorias.css">
+<section class="seccion-editar-productos-categorias">
+    <h2 class="subtitulo-administrar">Editar productos</h2>
+    <section class="seccion-seleccionar-edicion">
+        <h3>Selecciona qué deseas editar:</h3>
+        <button class="boton boton-elegir" id="botonEditarMarca">Editar marcas</button>
+        <button class="boton boton-elegir" id="botonEditarProductos">Editar productos</button>
+    </section>
+    <section class="seccion-categorias">
+        <section class="contenedor-de-las-categorias" id="contenedorDeLasCategorias">
+            
+        </section>
+    </section>
+    <section class="editar-datos">
+        <section class="seccion-contenedor-formulario seccion-contenedor-formulario-categorias">
+        <h3 class="subtitulo-administrar">Editar categoria</h3>
+        <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaCategorias">
+            <fieldset class="fieldset">
+                <div class="contenedor-espiral"  id="animacionDeCarga">
+                    <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+                </div>
+                <input type="hidden" id="entradaOcultaID" name="ID">
+                <label class="etiquetas" for="nombreCategoria">Nombre de la categoria:</label>
+                <input class="entradas" type="text" id="nombreCategoria" name="categoria" required placeholder="Vinos">
+                <label class="etiquetas" for="entradaDeImagenes">Seleccionar imagen</label>
+                <input class="entradas entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenes" name="imagen">
+                <label class="etiquetas">Imagen seleccionada: </label>
+                <div class="vista-previa" id="vistaPreviaCategoria">
+                    <img class="imagen-vista-previa" id="imagenVistaPrevia">
+                </div>
+            </fieldset>
+            <fieldset class="fieldset">
+                <button class="boton boton-admin-cargar boton-elegir" type="submit">Guardar categoria</button>
+                <button type="button" class="boton boton-admin-cargar boton-elegir">Resetear datos</button>
+                <p id="textoEdicion"></p>
+            </fieldset>
+        </form>
+    </section>
+    </section>
+</section>

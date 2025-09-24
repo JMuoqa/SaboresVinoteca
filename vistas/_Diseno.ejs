@@ -67,9 +67,9 @@
 <script>
     const URLMadre = "<%= URLMadre %>";
 </script>
-<script src="/js/principal.js"></script>
+<script src="/js/principal.js" defer></script>
 <% const scripts = F_DetectarJavaScript(TITULO); if(scripts.existe) { %>
-    <script src="<%= scripts.js %>"></script>
+    <script src="<%= scripts.js %>" defer></script>
 <% } %>
 </body>
 </html>

@@ -1,13 +1,72 @@
 document.addEventListener('DOMContentLoaded', function(){
-    ActualizarProductos();
-    ActualizarListaCategorias();
-    ActualizarListaMarcas();
-    BotonBuscarYEventoDelFormulario();
-    EventosChangeDeEntradas();
-    GuardarInformacionPrincipal();
+  AEditarOtros();
+  ActualizarProductos();
+  ActualizarListaCategorias();
+  ActualizarListaMarcas();
+  BotonBuscarYEventoDelFormulario();
+  EventosChangeDeEntradas();
+  GuardarInformacionPrincipal();
+  GuardarInformacionCategorica();
+  GuardarImagen();
+  MostrarGaleriaDeImagenesParaCategoria();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
+}
+function AEditarOtros(){
+  const botonEditarCategoria = document.getElementById('botonEditarCategoria');
+  botonEditarCategoria.addEventListener('click', function(){
+    window.location.href = `${URLMadre}/editar-categorias`;
+  });
+  const botonEditarMarca = document.getElementById('botonEditarMarca');
+  botonEditarMarca.addEventListener('click', function(){
+    window.location.href = `${URLMadre}/editar-marcas`;
+  });
+}
+function MostrarGaleriaDeImagenesParaCategoria(){
+    const entrada = document.getElementById('entradaDeImagenesProducto')
+    const elementoImagen = document.getElementById('imagenVistaPreviaProducto')
+    let imagenSeleccionada = null;
+    entrada.addEventListener('change', async function(event){ // Es asincrono por que llama a heic2any
+        try {
+            const archivo = event.target.files[0]; //No existe event.target.file, siempre devuelve un array
+            let archivoFinal = null;
+            if(!archivo)
+                throw new Error ('No se selecciono ningun archivo');
+            if(archivo && archivo.type === 'image/heic' || archivo.name.toLowerCase().endsWith('.heic')){
+                    const blobConvertido = await heic2any({ //HEIC2ANY sirve para convertir heic2any a jpg
+                        blob: archivo,
+                        toType: "image/jpeg",
+                        quality: 0.9
+                    });
+                    // Crear objeto File para que tenga type y name correctos
+                    const archivoConvertido = new File([blobConvertido], file.name.replace(/\.heic$/i, '.jpg'), { type: "image/jpeg" });
+                    archivoFinal = archivoConvertido;
+            }else{
+                archivoFinal = archivo
+            }
+            if(archivoFinal != null && archivoFinal.type.startsWith('image/')){
+                const lector = new FileReader();
+                lector.onload = function(e){ /*
+                    reader.onload = function(e){}; esto le dice como va a ser la funcion 'onload',
+                    que se ejecutara cada ves que termine de leer un archivo*/
+                    imagenSeleccionada = e.target.result;
+                    mostrarImagen();
+                };
+                lector.readAsDataURL(archivo);
+            }
+            else{
+                elementoImagen.src='';
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    });
+    function mostrarImagen(){
+        if(imagenSeleccionada === null) return;
+        elementoImagen.src = imagenSeleccionada;
+        elementoImagen.style.display = 'block';
+    }
 }
 function ActualizarProductos() {
     const contenedorProductos = document.getElementById('contenedorProductos');
@@ -272,7 +331,7 @@ function ActualizarListaMarcas() {
                     throw new Error('Error en la solicitud');
                 return respuesta.json()
             }).then(({Marcas}) =>{
-                entradaMarcas.innerHTML = '<option>No seleccionado</option>';
+                entradaMarcas.innerHTML = '<option>Selecciona una categoria para buscar marcas</option>';
                 for(let i = 0; i < Marcas.length; i++){
                     let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
                     entradaMarcas.innerHTML += opcionesDeMarcas;
@@ -346,10 +405,77 @@ function GuardarInformacionPrincipal(){
   });
 }
 function GuardarInformacionCategorica(){
-
+  const formularioFiltro = document.getElementById('formularioFiltro');
+  const formularioDatosCategoricos = document.getElementById('formularioDatosCategoricos');
+  formularioDatosCategoricos.addEventListener('submit', function(event){
+    event.preventDefault();
+    AnimacionAviso(true, 2)
+    const datosDelFormulario = new FormData(this);
+    const datos = {};
+    datosDelFormulario.forEach((valor, campo)=>{
+      datos[campo] = valor;
+    });
+    fetch('admin/cambiar-datos-categoricos',{
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(datos)
+    }).then(respuesta => {
+      if(!respuesta.ok)
+        throw new Error('Error en la solicitud')
+      return respuesta.json();
+    }).then(({estado, mensaje})=>{
+      AnimacionAviso(false, 2)
+      const p = document.getElementById('textoEdicionCategorica');
+      if(estado == 'exitoso')
+        p.style = 'color: #2ea356;';
+      else
+        p.style = 'color: #d7596d;';
+      p.innerText = mensaje;
+      setTimeout(function(){
+          p.innerText = '';
+      },5000);
+      formularioFiltro.dispatchEvent(new Event('submit'));
+    }).catch( error => {
+      console.error(error);
+      AnimacionAviso(false, 2)
+      window.location.href = `${URLMadre}/error?mensaje=${error}`;
+    });
+  });
 }
 function GuardarImagen(){
-
+  const formularioFiltro = document.getElementById('formularioFiltro');
+  const formularioDatoImagen = document.getElementById('formularioDatoImagen');
+  formularioDatoImagen.addEventListener('submit', function(event){
+    event.preventDefault();
+    AnimacionAviso(true, 3)
+    const datosDelFormulario = new FormData(this);
+    fetch('admin/cambiar-imagen-producto',{
+      method: 'POST',
+      body: datosDelFormulario
+    }).then(respuesta => {
+      if(!respuesta.ok)
+        throw new Error('Error en la solicitud')
+      return respuesta.json();
+    }).then(({estado, mensaje})=>{
+      AnimacionAviso(false, 3)
+      const p = document.getElementById('textoEditarImagen');
+      if(estado == 'exitoso')
+        p.style = 'color: #2ea356;';
+      else
+        p.style = 'color: #d7596d;';
+      p.innerText = mensaje;
+      setTimeout(function(){
+          p.innerText = '';
+      },5000);
+      formularioFiltro.dispatchEvent(new Event('submit'));
+    }).catch( error => {
+      console.error(error);
+      AnimacionAviso(false, 3)
+      window.location.href = `${URLMadre}/error?mensaje=${error}`;
+    });
+  });
 }
 function ConseguirFormatoDelPrecioOriginal(precio){
     let precioFinal = Math.round(precio);

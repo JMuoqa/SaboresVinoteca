@@ -149,6 +149,7 @@
     padding: 10px;
     border: solid 1px #000;
     border-right:none;
+    border-radius:0;
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
     margin-left: 10px;

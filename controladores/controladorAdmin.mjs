@@ -3,7 +3,8 @@ import {
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria, 
     Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
-    Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto,
+    Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
+    Con_CabmiarDatosDeUnaCategoria, 
 } from "../solicitudes/admin/solicitudesAdmin.mjs"
 import convert from "heic-convert";
 import fs from 'fs';
@@ -201,7 +202,6 @@ const ObtenerProductosConFiltros = async (req, res) =>{
             limite = 10
         limite = parseInt(limite);
         const posicion = (pagina * 10) - 10;
-        console.log(categoria, marca, precioMin, precioMax, importado, busqueda, pagina, posicion, limite)
         const solicitud = await Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, posicion, limite)
         const obtenerMarcas = await Con_ObtenerMarcas();
         let marcas = obtenerMarcas.Marcas;
@@ -248,11 +248,25 @@ const ObtenerProductoPorID = async (req, res, next)=>{
         return res.json({estado: 'muyMalo', Producto: [], mensaje: error});
     }
 }
+const ObtenerCategoriaPorID = async (req, res, next) =>{
+    try{
+        const ID = req.query.ID;
+        const solicitud = await Con_ObtenerCategoriaPorID(ID);
+        if(!solicitud.estado)
+            throw new Error(solicitud.mensaje);
+        return res.json({estado: 'exitoso', Categoria: solicitud.Categoria});
+    }catch{
+        console.error(error);
+        return res.json({estado: 'muyMalo', Categorias: [], mensaje: error});
+    }
+}
 const CambiarDatosPrincipalesDelProducto = async (req, res, next)=>{
     try{
         const { nombre, precio, ID } = req.body;
-        await Con_CambiarDatosPrincipales(nombre, precio, ID);
-        return res.json({estado: 'exitoso', mensaje: 'Se guardo correctamente'});
+        const solicitud = await Con_CambiarDatosPrincipales(nombre, precio, ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
         return res.json({estado: 'muyMalo', mensaje: error});
@@ -261,8 +275,58 @@ const CambiarDatosPrincipalesDelProducto = async (req, res, next)=>{
 const CambiarDatosCategoricos = async (req, res, next) =>{
     try{
         const { categoria, marca, ID } = req.body;
-        await Con_CambiarDatosCategoricos(categoria, marca, ID);
-        return res.json({estado: 'exitoso', mensaje: 'Se guardo correctamente'});
+        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
+        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
+        const solicitarIDMarca = await Con_ObtenerIDDeMarca(marca, IDCategoria);
+        const IDMarca = solicitarIDMarca.Marca.ID;
+        const solicitud = await Con_CambiarDatosCategoricos(IDCategoria, IDMarca, ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error});
+    }
+}
+const CambiarImagenDelProducto = async (req, res, next)=>{
+    try{
+        const imagen = req.file;
+        let imagenProcesada;
+        if (!imagen)
+            return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
+        const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
+        const extencion = path.extname(imagen.originalname).toLowerCase();
+        if(extencion == '.heic')
+            imagenProcesada = await ConvertirImagen(imagen, rutaOriginal);
+        else
+            imagenProcesada = imagen.filename;
+        const { ID } = req.body;
+        const solicitud = await Con_CambiarImagenDelProducto(imagenProcesada, ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error});
+    }
+}
+const CambiarDatosDeUnaCategoria = async (req, res, next)=>{
+    try{
+        const imagen = req.file;
+        let imagenProcesada = null;
+        if (imagen){
+            const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
+            const extencion = path.extname(imagen.originalname).toLowerCase();
+            if(extencion == '.heic')
+                imagenProcesada = await ConvertirImagen(imagen, rutaOriginal);
+            else
+                imagenProcesada = imagen.filename;
+        }
+        let { categoria, ID } = req.body;
+        const solicitud = await Con_CabmiarDatosDeUnaCategoria(imagenProcesada, categoria.toUpperCase(), ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
         return res.json({estado: 'muyMalo', mensaje: error});
@@ -285,5 +349,6 @@ export default{
     InsertarMarca, InsertarCategoria, ObtenerMarcas,
     ObtenerCategorias, InsertarProducto, ObtenerProductosConFiltros,
     ObtenerTodosProductos, ObtenerProductoPorID, ObtenerMarcasPorCategoria,
-    CambiarDatosPrincipalesDelProducto
+    CambiarDatosPrincipalesDelProducto, CambiarDatosCategoricos, CambiarImagenDelProducto,
+    ObtenerCategoriaPorID, CambiarDatosDeUnaCategoria,
 }

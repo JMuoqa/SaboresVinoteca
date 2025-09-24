@@ -1,4 +1,3 @@
-import { Con_ObtenerMarcas, Con_ObtenerCategorias } from "../solicitudes/admin/solicitudesAdmin.mjs";
 let urlMadre = '';
 if(process.env.NODE_ENV = 'development'){
     urlMadre = 'http://localhost:5111';
@@ -8,11 +7,11 @@ if(process.env.NODE_ENV = 'development'){
 const tituloInicio = 'SaboresVinoteca';
 const tituloCargar = 'Cargar productos y categorias';
 const tituloEditar = 'Editar productos';
+const tituloEditarCategorias = 'Editar Categoria';
 const tituloError = 'Error';
-
 const VistaInicio = (req, res) =>{
     res.render('inicio', {
-        TITULO: 'SaboresVinoteca',
+        TITULO: tituloInicio,
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre : urlMadre,
         F_UsuarioActivo: UsuarioActivo,
@@ -23,7 +22,7 @@ const VistaInicio = (req, res) =>{
 const VistaCargar = async (req, res) =>{
     
     res.render('administracion/administracionDeCargar', {
-        TITULO: 'Cargar productos y categorias',
+        TITULO: tituloCargar,
         Usuario: {Nombre: "Joaquin", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
         F_UsuarioActivo: UsuarioActivo,
@@ -33,7 +32,7 @@ const VistaCargar = async (req, res) =>{
 }
 const VistaEditarProductos = (req, res) =>{
     res.render('administracion/administrarEditarProducto', {
-        TITULO: 'Editar productos',
+        TITULO: tituloEditar,
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre : urlMadre,
         F_UsuarioActivo: UsuarioActivo,
@@ -44,7 +43,7 @@ const VistaEditarProductos = (req, res) =>{
 const VistaError = (req, res)=>{
     const mensaje = req.query.mensaje;
     res.render('error', {
-        TITULO: 'Error',
+        TITULO: tituloError,
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
         Error: mensaje, 
@@ -53,16 +52,25 @@ const VistaError = (req, res)=>{
         F_DetectarJavaScript: DetectarJavaScript,
     });
 }
-
+const VistaEditarCategorias = (req, res) =>{
+    res.render('administracion/adminEditarCategoria', {
+        TITULO: tituloEditarCategorias,
+        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        URLMadre: urlMadre,
+        F_UsuarioActivo: UsuarioActivo,
+        F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
+    });
+}
 function DetectarJavaScript(titulo){
     switch(titulo){
         case tituloInicio: return {js:'/js/dist/inicio.bundle.js', existe: true };
         case tituloCargar: return {js:'/js/dist/cargar.bundle.js', existe: true };
         case tituloEditar: return {js:'/js/dist/editar.bundle.js', existe: true };
+        case tituloEditarCategorias: return {js:'/js/dist/editarCategorias.bundle.js', existe: true };
         default: return { existe: false }; 
     }
 }
-
 function UsuarioActivo(Usuario){
     if(!Usuario)
         return true;
@@ -74,6 +82,5 @@ function AdminActivo(Jerarquia){
     return false;
 }
 export default { 
-    VistaInicio, VistaCargar, VistaEditarProductos,
-    VistaError
+    VistaInicio, VistaCargar, VistaEditarProductos, VistaError, VistaEditarCategorias,
 };

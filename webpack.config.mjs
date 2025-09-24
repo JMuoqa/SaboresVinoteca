@@ -7,6 +7,7 @@ export default {
     cargar: './publico/js/adminCargarProductos.js',
     inicio: './publico/js/inicio.js',
     editar: './publico/js/adminEditarProductos.js',
+    editarCategorias: './publico/js/adminEditarCategorias'
   },
   output: {
     filename: '[name].bundle.js',

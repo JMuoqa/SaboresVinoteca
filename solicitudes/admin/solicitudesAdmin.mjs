@@ -164,6 +164,20 @@ async function Con_ObtenerCategorias() {
         await CerrarConexion(con);
     }
 }
+async function Con_ObtenerCategoriaPorID(ID) {
+    const con = await Conexion();
+    try{
+        const obtenerCategoria = 'SELECT * FROM Categorias WHERE ID = ?;';
+        const valor = [ID];
+        const categoria = await con.execute(obtenerCategoria, valor);
+        return { estado: true, mensaje: 'exitoso', Categoria: categoria[0]}
+    }catch(error){
+        console.error(error);
+        return {estado: false, mensaje: `${error}`, Categoria:[]};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
 async function Con_ObtenerIDDeCategoria(_categoria) {
     const con = await Conexion();
     try{
@@ -202,7 +216,7 @@ async function Con_CambiarDatosPrincipales(nombre, precio, ID) {
         const cambiarDatos = 'UPDATE Productos SET Producto = ?, Precio = ? WHERE ID = ?';
         const valores = [nombre, precio, ID];
         const res = await con.execute(cambiarDatos, valores);
-        if(res.affectedRows > 0)
+        if(res[0].affectedRows > 0)
             return {estado: true, mensaje: 'Se guardo con exito'};
         return {estado: false, mensaje: `No se puedo guardar la información`};
     }catch(error){
@@ -218,7 +232,7 @@ async function Con_CambiarDatosCategoricos(categoria, marca, ID) {
         const cambiarDatos = 'UPDATE Productos SET IDCategoria = ?, IDMarca = ? WHERE ID = ?';
         const valores = [categoria, marca, ID];
         const res = await con.execute(cambiarDatos, valores);
-        if(res.affectedRows > 0)
+        if(res[0].affectedRows > 0)
             return {estado: true, mensaje: 'Se guardo con exito'};
         return {estado: false, mensaje: `No se puedo guardar la información`};
     }catch(error){
@@ -234,7 +248,31 @@ async function Con_CambiarImagenDelProducto(imagen, ID) {
         const cambiarDatos = 'UPDATE Productos SET Imagen = ? WHERE ID = ?';
         const valores = [imagen, ID];
         const res = await con.execute(cambiarDatos, valores);
-        if(res.affectedRows > 0)
+        if(res[0].affectedRows > 0)
+            return {estado: true, mensaje: 'Se guardo con exito'};
+        return {estado: false, mensaje: `No se puedo guardar la información`};
+    }catch(error){
+        console.error(error)
+        return {estado: false, mensaje: `${error}`};
+    }finally{
+        await CerrarConexion(con);
+    }
+}
+async function Con_CabmiarDatosDeUnaCategoria(imagen, categoria, ID) {
+    const con = await Conexion();
+    try{
+        let cambiarDatos;
+        let valores;
+        if(imagen){
+            cambiarDatos = 'UPDATE Categorias SET Imagen = ?, Categoria = ? WHERE ID = ?;';
+            valores = [imagen, categoria, ID];
+        }
+        else{
+            cambiarDatos = 'UPDATE Categorias SET Categoria = ? WHERE ID = ?;';
+            valores = [categoria, ID];
+        }
+        const res = await con.execute(cambiarDatos, valores);
+        if(res[0].affectedRows > 0)
             return {estado: true, mensaje: 'Se guardo con exito'};
         return {estado: false, mensaje: `No se puedo guardar la información`};
     }catch(error){
@@ -249,5 +287,7 @@ export {
     Con_ObtenerCategorias, Con_InsertarProducto, Con_ObtenerIDDeCategoria,
     Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
-    Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto
+    Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
+    Con_CabmiarDatosDeUnaCategoria, 
+
 }

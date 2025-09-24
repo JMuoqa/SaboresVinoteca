@@ -486,7 +486,7 @@ async function CargarSlider(_Productos){
     min.textContent = Math.round(values[0]);
     max.textContent = Math.round(values[1]);
   });
-};
+}
 async function CargarSliderImportados(_Productos){
   let Productos = [..._Productos]
   let precioMin = 0;
@@ -520,7 +520,7 @@ async function CargarSliderImportados(_Productos){
     min.textContent = Math.round(values[0]);
     max.textContent = Math.round(values[1]);
   });
-};
+}
 async function ObtenerTodosLosProductos(){
   fetch('admin/obtener-todos-productos')
   .then(respuesta =>{

@@ -28,6 +28,8 @@ const subir = multer({'storage': almacenamiento,
 });
 enrutador.post('/guardar-categoria', subir.single('imagen'), controladorAdmin.InsertarCategoria);
 enrutador.post('/guardar-producto', subir.single('imagen'), controladorAdmin.InsertarProducto);
+enrutador.post('/cambiar-datos-de-categoria', subir.single('imagen'), controladorAdmin.CambiarDatosDeUnaCategoria);
+enrutador.post('/cambiar-imagen-producto', subir.single('imagen'), controladorAdmin.CambiarImagenDelProducto);
 /*enrutador.post('/subir-ropa', subir.array('Imagenes', 10), (req, res)=>{ ESTO ES PARA VARIAS IMAGENES
     controladorAdministracion.SubirRopa(req, res);
 });*/
@@ -37,6 +39,8 @@ enrutador.get('/obtener-categorias', controladorAdmin.ObtenerCategorias);
 enrutador.get('/obtener-productos', controladorAdmin.ObtenerProductosConFiltros);
 enrutador.get('/obtener-todos-productos', controladorAdmin.ObtenerTodosProductos);
 enrutador.get('/obtener-producto-por-ID', controladorAdmin.ObtenerProductoPorID);
+enrutador.get('/obtener-categoria-por-ID', controladorAdmin.ObtenerCategoriaPorID);
 enrutador.get('/obtener-marcas-por-categoria', controladorAdmin.ObtenerMarcasPorCategoria);
 enrutador.post('/cambiar-datos-principales', controladorAdmin.CambiarDatosPrincipalesDelProducto);
+enrutador.post('/cambiar-datos-categoricos', controladorAdmin.CambiarDatosCategoricos);
 export default enrutador;

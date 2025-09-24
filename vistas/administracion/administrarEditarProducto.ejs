@@ -4,9 +4,9 @@
 <section class="seccion-editar-productos-categorias">
     <h2 class="subtitulo-administrar">Editar productos</h2>
     <section class="seccion-seleccionar-edicion">
-        <h3>Selecciona qué deseas cargar:</h3>
-        <button class="boton boton-elegir" id="botonCargarCategoria">Editar categoria</button>
-        <button class="boton boton-elegir" id="botonCargarMarca">Editar marca</button>
+        <h3>Selecciona qué deseas editar:</h3>
+        <button class="boton boton-elegir" id="botonEditarCategoria">Editar categorias</button>
+        <button class="boton boton-elegir" id="botonEditarMarca">Editar marcas</button>
     </section>
     <section class="buscar-productos">
         <h3 class="subtitulo-administrar">Busqueda</h3>
@@ -69,7 +69,10 @@
             <p id="textoEdicionPrincipal"></p>
         </form>
         <form class="datos datos-categoricos" id="formularioDatosCategoricos">
-            <input type="hidden" class="entrada-oculta-id-seleccionado">
+            <div class="contenedor-espiral" >
+                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+            </div>
+            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID">
             <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
             <select class="entradas texto-naranja-edicion" id="editarEntradaCategoria" name="categoria" required>
             </select>
@@ -81,7 +84,10 @@
             <p id="textoEdicionCategorica"></p>
         </form>
         <form class="datos dato-imagen" id="formularioDatoImagen">
-            <input type="hidden" class="entrada-oculta-id-seleccionado">
+            <div class="contenedor-espiral" >
+                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+            </div>
+            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID">
             <label class="etiquetas" for="entradaDeImagenesProducto">Seleccionar imagen:</label>
             <input class="entradas texto-naranja-edicion entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
             <label class="etiquetas">Imagen seleccionada: </label>
