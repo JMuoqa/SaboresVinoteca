@@ -424,9 +424,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
   });
 }
 function CambiarPaginas(){
-  console.log('prueba')
   const indiceSiguiente = document.getElementById('indiceSiguientePagina');
-  console.log(indiceSiguiente)
   indiceSiguiente.addEventListener('click', function(){
     const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
     const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);

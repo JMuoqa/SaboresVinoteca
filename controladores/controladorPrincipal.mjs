@@ -88,12 +88,12 @@ const VistaCategoriaSeleccionada = (req, res)=>{
     })
 }
 const VistaIndividualProducto = (req, res)=>{
-    const _IDCategoria = req.query.IDC;
-    res.render('cliente/categoriaSelec', {
+    const _IDProducto = req.query.IDP;
+    res.render('cliente/vistaIndividual', {
         TITULO: tituloProductoIndividual,
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
-        IDCategoria: _IDCategoria,
+        IDProducto: _IDProducto,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -112,7 +112,7 @@ function DetectarJavaScript(titulo){
     }
 }
 function UsuarioActivo(Usuario){
-    if(!Usuario)
+    if(Usuario)
         return true;
     return false;
 }
@@ -124,5 +124,5 @@ function AdminActivo(Jerarquia){
 export default { 
     VistaInicio, VistaCargar, VistaEditarProductos,
     VistaError, VistaEditarCategorias, VistaEditarMarcas,
-    VistaCategoriaSeleccionada,
+    VistaCategoriaSeleccionada, VistaIndividualProducto,
 };

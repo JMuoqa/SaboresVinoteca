@@ -354,6 +354,13 @@ const CambiarDatosDeUnaCategoria = async (req, res, next)=>{
 const CambiarDatosDeUnaMarca = async (req, res, next)=>{
     try{
         const { marca, categoria, ID } = req.body;
+        if(!ID)
+            return res.json({estado: 'malo', mensaje: 'No se selecciono ninguna marca'});
+        if(!marca)
+            return res.json({estado: 'malo', mensaje: 'La marca esta vacia'});
+        if(!categoria)
+            return res.json({estado: 'malo', mensaje: 'No hay una categoria seleccionada'});
+
         const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
         const IDCategoria = solicitarIDCatecoria.Categoria.ID;
         const solicitud = await Con_CambiarDatosDeUnaMarca(marca, IDCategoria, ID);

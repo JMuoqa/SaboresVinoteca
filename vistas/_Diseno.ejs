@@ -22,9 +22,17 @@
     <dialog class="menu-desplazable menu-desplazable-principal" id="menuDesPrincipal">
         <section class="menu-hijo-desplazable" id="menuHijoPrincipal">
             <img class="icono-x-absolute" id="cerrarMenuPrincipal" src="/carpeta_imagenes/web/x-button.png">
-            <h2 class="texto-blanco texto-centrado">Menu</h2>
-            <ul class="listas-generales lista-secundario-categorias" id="listaSecundarioCategorias">
+            <section class="secciones-menu-desplasable" id="contenedorMenu">
+                <h2 class="texto-blanco texto-centrado">Menu</h2>
+            </section>
+            <section class="secciones-menu-desplasable" id="contenedorAdmin">
+            <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
+                    <h3 class="texto-blanco texto-centrado">Administracion</h3>
+            <% }%>
+            <ul class="listas-generales lista-principal lista-principal-variable" id="listaResponsivaAdmin">
+            
             </ul>
+            </section>
         </section>
     </dialog>
     <header class="encabezado">
@@ -32,34 +40,33 @@
             <div class="filtro-negro-global"></div>
             <div class="contenedor-imagen-menu"><img class="imagen-menu" id="iconoMenuPrincipal" src="/carpeta_imagenes/web/menuSV.png"></div>
             <ul class="listas-generales lista-principal lista-principal-variable" id="listaNav">
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/">Inicio</a></li>
-                <li class="items-generales items-principales"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" id="abrirMenuProductos">Productos</a></li>
-                <li class="items-generales items-principales"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="<%= URLMadre %>/#importados">Importados</a></li>
+                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" href="/">Inicio</a></li>
+                <li class="items-generales items-principales icono-separador-variable"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" id="abrirMenuProductos">Productos</a></li>
+                <li class="items-generales items-principales icono-separador-variable"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" href="<%= URLMadre %>/#importados" id="linkImportados">Importados</a></li>
             </ul>
             <h1 class="titulo-marca" id="tituloMarca">SABORES VINOTECA</h1>
-            <ul class="listas-generales lista-principal lista-principal-padding-invertido lista-principal-visible">
-                
+            <ul class="listas-generales lista-principal lista-principal-padding-invertido lista-principal-visible" id="listaAdmin">
                 <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
-                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/cargar-productos-categorias">Cargar productos</a></li>
-                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/editar-productos">Editar productos</a></li>
+                    <li class="items-generales items-principales items-principales-variables items-principales-admin"><a class="links-generales links-principales-finos links-principales-variables" href="/cargar-productos-categorias">Cargar productos</a></li>
+                    <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador1"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                    <li class="items-generales items-principales items-principales-variables items-principales-admin" ><a class="links-generales links-principales-finos links-principales-variables" href="/editar-productos">Editar productos</a></li>
+                    <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador2"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Nombre %>!</a></li>
                     <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <% } %>
-                <% if(F_UsuarioActivo(Usuario)) { %>
-                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png"></li>
+                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
+                <% } else if(F_UsuarioActivo(Usuario)) { %>
+                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Nombre %>!</a></li>
+                    <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
                 <% } else { %>
-                
+                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png"></li>
                 <% } %>
             </ul>
             <img class="imagen-logo-principal" src="/carpeta_imagenes/web/Logo540saboresvinoteca.png" id="logoPrincipal">
         </nav>
     </header>
-    <!--<div class="imagen-presentacion-principal">
-        <div class="filtro-negro-global"></div>
-            <h1 class="titulo-marca">SABORES VINOTECA</h1>
-    </div>-->
     <main>
       <%- body %>
     </main>

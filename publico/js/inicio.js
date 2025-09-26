@@ -34,7 +34,7 @@ function ActualizarProductos() {
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <div class="contenedor-info-producto">
+              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -48,6 +48,7 @@ function ActualizarProductos() {
             articulo.classList.add('animar-contenedor-info-producto');
             await Esperar(50);
           }
+          VerProducto('todos');
         }
       }else{
         throw new Error('Hubo un error en la cosulta')
@@ -57,6 +58,14 @@ function ActualizarProductos() {
         AnimacionAviso(false, 1);
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
+}
+function VerProducto(clase){
+  const contenedores = document.querySelectorAll(`.ver-producto-${clase}`);
+  for(let i = 0; i < contenedores.length; i++){
+    contenedores[i].addEventListener('click', function(){
+        window.location.href = `${URLMadre}/ver-producto?IDP=${contenedores[i].dataset.id}`;
+    });
+  }
 }
 function ActualizarProductosImportados() {
     const conteendorProductosImportados = document.getElementById('conteendorProductosImportados');

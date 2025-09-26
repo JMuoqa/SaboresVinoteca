@@ -71,7 +71,7 @@ fieldset{
     cursor: pointer;
 }
 .iconos-principales:hover{
-    background-color: #40916C90;
+    background-color: #40916d41;
 }
 .filtro-negro-global{
     background-color: #0006;
@@ -160,8 +160,6 @@ fieldset{
 }
 .texto-info-producto{
     margin: 10px 0;
-}
-.nombre-del-producto{
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -170,4 +168,8 @@ fieldset{
     display: flex;
     width: 90%;
     margin: auto;
+}
+/*Menus*/
+.secciones-menu-desplasable{
+    margin-top: 10px;
 }

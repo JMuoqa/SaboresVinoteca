@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', function(){
     CerrarMenus();
     AgregarLinksCategorias();
     MenuPrincipalAdaptable();
+    LinkImportados();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -20,7 +21,7 @@ function AbrirMenus(){
     const abrirMenuProductos = document.getElementById('abrirMenuProductos');
     abrirMenuProductos.addEventListener('click', async function(){
         const dialogoPrincipal = document.getElementById('menuDesPrincipal');
-        if(dialogoPrincipal.dataset.abierto = 'si'){
+        if(dialogoPrincipal.dataset.abierto == 'si'){
           const cerrarMenuPrincipal = document.getElementById('cerrarMenuPrincipal');
           cerrarMenuPrincipal.dispatchEvent(new Event('click'));
           await Esperar(300);
@@ -99,40 +100,46 @@ function AgregarLinksCategorias(){
 }
 function MenuPrincipalAdaptable(){
     window.addEventListener('resize', function () {
-        const listaDelNavegador = document.getElementById('listaNav');
-        listaDelNavegador.style.display = 'none';
-        const ancho = window.innerWidth;
-        const menuSecundario = document.getElementById('menuHijoPrincipal');
-        const padreDeListaNavegador = document.getElementById('navegadorPrincipal');
-        const tituloMarca = this.document.getElementById('tituloMarca');
-        if (ancho <= 1024) {
-            if (listaDelNavegador.parentElement !== menuSecundario) {
-                menuSecundario.appendChild(listaDelNavegador);
-                listaDelNavegador.style.display = 'flex';
-            }
-        } else {
-            if (listaDelNavegador.parentElement !== padreDeListaNavegador) {
-                padreDeListaNavegador.insertBefore(listaDelNavegador, tituloMarca);
-                listaDelNavegador.style.display = 'flex';
-            }
-        }
+        CargarConfiguracionVisual();
     });
 }
 function CargarConfiguracionVisual(){
     const listaDelNavegador = document.getElementById('listaNav');
+    const itemsAdmin = document.querySelectorAll('.items-principales-admin');
+    const listaResponsivaAdmin = document.getElementById('listaResponsivaAdmin');
+    const listaAdminOriginal = document.getElementById('listaAdmin');
+    listaResponsivaAdmin.style.display = 'flex';
+    listaDelNavegador.style.display = 'none';
     const ancho = window.innerWidth;
-    const menuSecundario = document.getElementById('menuHijoPrincipal');
+    const contenedorMenu = document.getElementById('contenedorMenu');
     const padreDeListaNavegador = document.getElementById('navegadorPrincipal');
     const tituloMarca = this.document.getElementById('tituloMarca');
-    if (ancho <= 1024) {
-        if (listaDelNavegador.parentElement !== menuSecundario) {
-            menuSecundario.appendChild(listaDelNavegador);
+    if (ancho <= 1280) {
+        if (listaDelNavegador.parentElement !== contenedorMenu) {
+            contenedorMenu.appendChild(listaDelNavegador);
+            itemsAdmin.forEach(item =>{
+              listaResponsivaAdmin.appendChild(item);
+            })
         }
         listaDelNavegador.style.display = 'flex';
     } else {
         if (listaDelNavegador.parentElement !== padreDeListaNavegador) {
             padreDeListaNavegador.insertBefore(listaDelNavegador, tituloMarca);
+            itemsAdmin.forEach((item, i )=>{
+              const icono = document.getElementById(`iconoSeparador${i+1}`);
+              listaAdminOriginal.insertBefore(item, icono);
+            })
         }
         listaDelNavegador.style.display = 'flex';
     }
+}
+function LinkImportados(){
+  const linkImportados = document.getElementById('linkImportados');
+  linkImportados.addEventListener('click', function(){
+  const cerrarMenuPrincipal = document.getElementById('cerrarMenuPrincipal');
+  const dialogo = document.getElementById('menuDesPrincipal');
+    if(dialogo.dataset.abierto == 'si'){
+      cerrarMenuPrincipal.dispatchEvent(new Event('click'));
+    }
+  })
 }
