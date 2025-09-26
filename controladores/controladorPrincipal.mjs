@@ -1,5 +1,5 @@
 let urlMadre = '';
-if(process.env.NODE_ENV = 'development'){
+if(process.env.NODE_ENV == 'development'){
     urlMadre = 'http://localhost:5111';
 }else{
     urlMadre = 'https://saboresvinoteca.com';
@@ -13,9 +13,10 @@ const tituloCategoriaSelec = 'Categoria seleccionada';
 const tituloProductoIndividual = 'Ver producto';
 const tituloError = 'Error';
 const VistaInicio = (req, res) =>{
+    const usuario = req.user;
     res.render('inicio', {
         TITULO: tituloInicio,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre : urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
@@ -23,10 +24,10 @@ const VistaInicio = (req, res) =>{
     });
 }
 const VistaCargar = async (req, res) =>{
-    
+    const usuario = req.user;
     res.render('administracion/administracionDeCargar', {
         TITULO: tituloCargar,
-        Usuario: {Nombre: "Joaquin", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre: urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
@@ -34,9 +35,10 @@ const VistaCargar = async (req, res) =>{
     });
 }
 const VistaEditarProductos = (req, res) =>{
+    const usuario = req.user;
     res.render('administracion/administrarEditarProducto', {
         TITULO: tituloEditar,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre : urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
@@ -44,10 +46,11 @@ const VistaEditarProductos = (req, res) =>{
     });
 }
 const VistaError = (req, res)=>{
+    const usuario = req.user;
     const mensaje = req.query.mensaje;
     res.render('error', {
         TITULO: tituloError,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre: urlMadre,
         Error: mensaje, 
         F_UsuarioActivo: UsuarioActivo,
@@ -56,9 +59,10 @@ const VistaError = (req, res)=>{
     });
 }
 const VistaEditarCategorias = (req, res) =>{
+    const usuario = req.user;
     res.render('administracion/adminEditarCategoria', {
         TITULO: tituloEditarCategorias,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre: urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
@@ -66,9 +70,10 @@ const VistaEditarCategorias = (req, res) =>{
     });
 }
 const VistaEditarMarcas = (req, res)=>{
+    const usuario = req.user;
     res.render('administracion/adminEditarMarcas', {
         TITULO: tituloEditarMarcas,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre: urlMadre,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
@@ -77,9 +82,10 @@ const VistaEditarMarcas = (req, res)=>{
 }
 const VistaCategoriaSeleccionada = (req, res)=>{
     const _IDCategoria = req.query.IDC;
+    const usuario = req.user;
     res.render('cliente/categoriaSelec', {
         TITULO: tituloCategoriaSelec,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre: urlMadre,
         IDCategoria: _IDCategoria,
         F_UsuarioActivo: UsuarioActivo,
@@ -89,9 +95,10 @@ const VistaCategoriaSeleccionada = (req, res)=>{
 }
 const VistaIndividualProducto = (req, res)=>{
     const _IDProducto = req.query.IDP;
+    const usuario = req.user;
     res.render('cliente/vistaIndividual', {
         TITULO: tituloProductoIndividual,
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario,
         URLMadre: urlMadre,
         IDProducto: _IDProducto,
         F_UsuarioActivo: UsuarioActivo,

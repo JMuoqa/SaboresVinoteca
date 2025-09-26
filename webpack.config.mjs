@@ -11,7 +11,7 @@ export default {
     editarCategorias: './publico/js/adminEditarCategorias',
     editarMarcas: './publico/js/adminEditarMarcas',
     clienteCategoriaSelect: './publico/js/clienteCategoriaSelect.js',
-    tituloProductoIndividual: './publico/js/clienteCategoriaSelect.js',
+    vistaIndividual: './publico/js/clienteVistaIndividual.js',
   },
   output: {
     filename: '[name].bundle.js',

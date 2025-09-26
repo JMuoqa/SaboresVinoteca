@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="/css/estiloVerProducto.css">
+<section class="seccion-ver-producto">
+    <input type="hidden" id="entradaValorID" value="<%= IDProducto %>">
+    <input type="hidden" id="entradaPagina"> 
+    <input type="hidden" id="entradaValorIDCategoria"> 
+    <section class="seccion-producto">
+        <div class="contenedor-espiral"  id="animacionDeCarga">
+            <p><strong>Cargando producto</strong></p> <div class="animacion-espiral"></div>
+        </div>
+        <div class="contenedor-diseño-producto" id="contenedorDiseñoProducto">
+            <h2 class="texto-centrado titulo-producto" id="tituloProducto"></h2>
+            <article class="informacion-producto">
+                <div class="producto-diseño">
+                    <img class="iamgen-prodcuto" id="imagenProducto">
+                </div>
+                <div class="producto-diseño">
+                    <p class="texto-informacion-producto-individual" id="categoriaProducto"></p>
+                    <p class="texto-informacion-producto-individual" id="marcaProducto"></p>
+                    <p class="texto-informacion-producto-individual" id="precioProducto"></p>
+                    <p><strong>¿Dónde comprarla?</strong></p>
+                    <p class="texto-informacion-producto-individual">Acercate a nuestra tienda en Aaron Castellanos Nº2273, Córdoba, Argentina.</p>
+                </div>
+            </article>
+        </div>
+    </section>
+    <section class="seccion-productos-relacionados">
+        <h2 class="subtitulos-principales" id="seccionProductos">Productos relacionados</h2>
+        <div class="contenedor-espiral"  id="animacionDeCarga">
+            <p><strong>Cargando productos</strong></p> <div class="animacion-espiral"></div>
+        </div>
+        <section class="conteendor-productos" id="contenedorProductos">
+        </section>
+        <section class="seccion-cambiar-pagina">
+            <img class="imagen-flecha-cambiar-pagina" id="indiceAnterior" src="/carpeta_imagenes/web/flecha-izquierda.png">
+            <p class="indice-de-pagina"><span id="numeroDePagina">1</span></p> 
+            <img class="imagen-flecha-cambiar-pagina" id="indiceSiguiente" src="/carpeta_imagenes/web/flecha-derecha.png">
+        </section>
+    </section>
+    <section class="seccion-categorias">
+        <h2 class="subtitulos-principales subtitulos-categoorias" id="tituloCategorias">Categorias</h2>
+        <section class="contenedor-de-las-categorias" id="contenedorDeLasCategorias">
+        </section>
+    </section>
+</section>

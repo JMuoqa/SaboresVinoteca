@@ -64,7 +64,7 @@
     animation: espiral 1s linear infinite;   /* animación infinita */
     background: transparent;   
 }
-
+/*Categorias*/
 .seccion-categorias{
     width: 100%;
     display: flex;

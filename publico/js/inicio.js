@@ -89,7 +89,7 @@ function ActualizarProductosImportados() {
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <article class="contenedor-info-producto">
+              <article class="contenedor-info-producto ver-producto-importados" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -103,6 +103,7 @@ function ActualizarProductosImportados() {
             articulo.classList.add('animar-contenedor-info-producto');
             await Esperar(50);
           }
+          VerProducto('importados');
         }
       }else{
           let html = '<p><strong>No se encontraron productos</strong></p>';
@@ -132,7 +133,7 @@ function ActualizarSeccionCategorias() {
       for(let i = 0; i < Categorias.length; i++){
         const articulo = document.createElement('article');
         articulo.innerHTML = `
-        <article class="contenedor-categoria contenedor-categoria-funcional" data-id=${Categorias[i].ID}>
+        <article class="contenedor-categoria contenedor-categoria-funcional" loading="lazy" alt="Imagen de ${Categorias[i].Categoria}" data-id=${Categorias[i].ID}>
           <img class="imagen-categoria" src="${URLMadre}/Imagenes/${Categorias[i].Imagen}">
           <div class="filtro-categoria"></div>
           <h3 class="titulo-categoria">${Categorias[i].Categoria}</h3>
@@ -263,7 +264,7 @@ function BotonBuscarYEventoDelFormulario() {
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <article class="contenedor-info-producto">
+              <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -277,6 +278,7 @@ function BotonBuscarYEventoDelFormulario() {
             articulo.classList.add('animar-contenedor-info-producto');
             await Esperar(50);
           }
+          VerProducto('todos');
         }
       }else{
           let html = '<p><strong>No se encontraron productos</strong></p>';
@@ -342,7 +344,7 @@ function BotonBuscarYEventoDelFormularioImportados(){
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <article class="contenedor-info-producto">
+              <article class="contenedor-info-producto ver-producto-importados" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -356,6 +358,7 @@ function BotonBuscarYEventoDelFormularioImportados(){
             articulo.classList.add('animar-contenedor-info-producto');
             await Esperar(50);
           }
+          VerProducto('importados');
         }
       }else{
           let html = '<p><strong>No se encontraron productos</strong></p>';
@@ -416,7 +419,7 @@ function ObtenerURLConParametrosImport(){
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;
 }
-function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimite, animacion){
+function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimite, animacion, clase){
   fetch(url)
   .then(respuesta =>{
     if(!respuesta.ok)
@@ -441,7 +444,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
         for(let i = 0; i < Productos.length; i++){
           const articulo = document.createElement('article');
           articulo.innerHTML = `
-            <article class="contenedor-info-producto">
+            <article class="contenedor-info-producto ver-producto-${clase}" data-id="${Productos[i].ID}">
               <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
               <div class="contenedor-informacion-productos">
                 <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
@@ -455,6 +458,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
           articulo.classList.add('animar-contenedor-info-producto');
           await Esperar(50);
         }
+        VerProducto(clase)
       }
     }else{
         throw new Error('Hubo un error en la cosulta')
@@ -476,7 +480,7 @@ function CambiarPaginas(){
     const url = ObtenerURLConParametros();
     const contenedor = document.getElementById('contenedorProductos');
     const paginaLimite = document.getElementById('paginaLimite');
-    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1);
+    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1, 'todos');
     const aUrl = new URL(window.location);
     aUrl.hash = 'formComplemetario'
     window.location.href = aUrl.toString();
@@ -494,7 +498,7 @@ function CambiarPaginas(){
     const url = ObtenerURLConParametros();
     const contenedor = document.getElementById('contenedorProductos');
     const paginaLimite = document.getElementById('paginaLimite');
-    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1);
+    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1, 'todos');
     const aUrl = new URL(window.location);
     aUrl.hash = 'formComplemetario'
     window.location.href = aUrl.toString();
@@ -512,7 +516,7 @@ function CambiarPaginasImport(){
     const url = ObtenerURLConParametrosImport();
     const contenedor = document.getElementById('conteendorProductosImportados');
     const paginaLimite = document.getElementById('paginaLimiteImport');
-    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePaginaImport, contenedor, paginaLimite, 2);
+    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePaginaImport, contenedor, paginaLimite, 2, 'importados');
     const aUrl = new URL(window.location);
     aUrl.hash = 'formComplemetarioImport'
     window.location.href = aUrl.toString();
@@ -530,7 +534,7 @@ function CambiarPaginasImport(){
     const url = ObtenerURLConParametrosImport();
     const contenedor = document.getElementById('conteendorProductosImportados');
     const paginaLimite = document.getElementById('paginaLimiteImport');
-    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePaginaImport, contenedor, paginaLimite, 2);
+    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePaginaImport, contenedor, paginaLimite, 2, 'importados');
     const aUrl = new URL(window.location);
     aUrl.hash = 'formComplemetarioImport'
     window.location.href = aUrl.toString();

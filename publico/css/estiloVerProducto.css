@@ -1,0 +1,137 @@
+.informacion-producto{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+.producto-diseño{
+    width: 20em;
+    max-height: 40em;
+    margin: 0 10px;
+}
+.iamgen-prodcuto{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+}
+.texto-informacion-producto-individual{
+    font-weight: 500;
+}
+/*Categorias*/
+.seccion-categorias{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 3em;
+}
+.subtitulos-principales{
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    color: var(--fondo-blanco);
+    width: 100%;
+    font-size: 4em;
+    font-family: "Bebas";
+    text-align: center;
+    padding: 0.5em 0;
+}
+.contenedor-categoria{
+    width: 10em;
+    height: 15em;
+    max-height: 15em;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transform: scale(1);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.15);
+    transition: transform .3s ease, box-shadow .3s ease;
+    margin-top: 1em;
+}
+.contenedor-categoria:hover{
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.2);
+    transform: scale(1.1);
+
+}
+.contenedor-de-las-categorias{
+    width: 60%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+}
+.imagen-categoria{
+    width: 100%;
+}
+.titulo-categoria{
+    margin: 0;
+    position: absolute;
+    display: inline-block;
+    font-size: 1.6em;
+    text-align: center;
+    font-family: "Bebas";
+    color: var(--fondo-blanco);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.filtro-categoria{
+    background-color: #1119;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+.animar-contenedor-info-producto{
+    animation: aparecerProductos .5s ease none;
+}
+/*Animacion esporal*/
+.contenedor-espiral{
+    margin: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 20em;
+    margin: auto;
+}
+.animacion-espiral{
+    margin-left: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--verde-profundo);    
+    border-radius: 50%;               
+    width: 100px;
+    height: 100px;   
+    animation: espiral 1s linear infinite;
+    background: transparent;   
+}
+/*Paginas flechas*/
+
+/*Flechas*/
+.seccion-cambiar-pagina{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+.imagen-flecha-cambiar-pagina{
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+    border-radius: 3em;
+    margin: 0 1em;
+}
+.indice-de-pagina{
+    font-size: 2em;
+}
+.imagen-flecha-cambiar-pagina:hover{
+    background-color: #ccc;
+}
+.conteendor-productos{
+    width: 70%;
+    margin: auto;
+}

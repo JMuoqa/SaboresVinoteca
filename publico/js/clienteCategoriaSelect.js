@@ -184,7 +184,7 @@ function ActualizarProductos(){
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <article class="contenedor-info-producto">
+              <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -198,6 +198,7 @@ function ActualizarProductos(){
             await Esperar(50);
           }
         }
+        VerProducto('todos');
       }else{
         throw new Error('Hubo un error en la cosulta')
       }
@@ -352,7 +353,7 @@ function BuscarProductos(){
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <article class="contenedor-info-producto">
+              <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -365,6 +366,7 @@ function BuscarProductos(){
             articulo.classList.add('animar-contenedor-info-producto');
             await Esperar(50);
           }
+          VerProducto('todos');
         }
       }else{
         throw new Error('Hubo un error en la cosulta')
@@ -400,7 +402,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
         for(let i = 0; i < Productos.length; i++){
           const articulo = document.createElement('article');
           articulo.innerHTML = `
-            <article class="contenedor-info-producto">
+              <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
               <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
               <div class="contenedor-informacion-productos">
                 <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
@@ -414,6 +416,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
           articulo.classList.add('animar-contenedor-info-producto');
           await Esperar(50);
         }
+        VerProducto('todos');
       }
     }else{
         throw new Error('Hubo un error en la cosulta')
@@ -462,10 +465,20 @@ function ObtenerURLConParametros(){
   parametros.set("precioMax", precioMax);
   parametros.set("busqueda", entradaValorBusqueda);
   parametros.set("marca", entradaMarcaProductos);
+  parametros.set("limite", 12);
   parametros.set("categoria", entradaCategoriaProductos);
   parametros.set("pagina", numeroDePagina);
   
   url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;
+}
+
+function VerProducto(clase){
+  const contenedores = document.querySelectorAll(`.ver-producto-${clase}`);
+  for(let i = 0; i < contenedores.length; i++){
+    contenedores[i].addEventListener('click', function(){
+        window.location.href = `${URLMadre}/ver-producto?IDP=${contenedores[i].dataset.id}`;
+    });
+  }
 }

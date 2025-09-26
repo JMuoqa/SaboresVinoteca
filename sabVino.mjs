@@ -12,12 +12,11 @@ import session from 'express-session';
 import passport from './config/passport.mjs';
 
 let urlMadre = '';
-if(process.env.NODE_ENV = 'development'){
+if(process.env.NODE_ENV == 'development'){
     urlMadre = 'http://localhost:5111';
 }else{
     urlMadre = 'https://saboresvinoteca.com';
 }
-
 const app = express();
 const __nombreDelArchivo = fileURLToPath(import.meta.url); // Obtiene el archivo actual
 const __nombreDelDirectorio = path.dirname(__nombreDelArchivo);       // Obtiene el directorio actual
@@ -55,9 +54,7 @@ if(process.env.NODE_ENV === 'development'){
 }
 app.use((req, res, next) => {
     const error = 'Vista no encontrada';
-    console.error(error);
-    console.log('Error: ' + error);
-    res.render('error', {
+    res.status(404).render('error', {
         TITULO: 'Error',
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,

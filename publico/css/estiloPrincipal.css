@@ -93,7 +93,6 @@ main{
     height: 6em;
     padding-left: 10px;
     z-index: 60;
-    user-select: none;
 }
 .lista-principal-visible{
     display: flex;
