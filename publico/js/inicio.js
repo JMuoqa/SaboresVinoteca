@@ -9,18 +9,21 @@ document.addEventListener('DOMContentLoaded', function(){
     ActualizarSeccionCategorias();
     ObtenerTodosLosProductos();
     CambiarPaginasImport();
+    FormulariosComplementarios();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
 }
 function ActualizarProductos() {
     const contenedorProductos = document.getElementById('contenedorProductos');
+    AnimacionAviso(true, 1);
     fetch('admin/obtener-productos')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async ({Productos, Marcas}) => {
+      AnimacionAviso(false, 1);
       if(Productos){
         contenedorProductos.innerHTML = '';
         if(Productos.length == 0){
@@ -31,14 +34,14 @@ function ActualizarProductos() {
           for(let i = 0; i < Productos.length; i++){
             const articulo = document.createElement('article');
             articulo.innerHTML = `
-              <article class="contenedor-info-producto">
+              <div class="contenedor-info-producto">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
                 </div>
-              </article>`;
+              </div>`;
             contenedorProductos.appendChild(articulo)
             // Forzar “reflow” antes de añadir la clase de animación
             articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -51,17 +54,20 @@ function ActualizarProductos() {
       }
     }).catch( error => {
         console.error(error);
+        AnimacionAviso(false, 1);
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
 function ActualizarProductosImportados() {
     const conteendorProductosImportados = document.getElementById('conteendorProductosImportados');
+    AnimacionAviso(true, 2);
     fetch('admin/obtener-productos?importado=1')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async respuesta => {
+      AnimacionAviso(false, 2);
       if(respuesta['Productos']){
         const Productos = respuesta['Productos'];
         const Marcas = respuesta['Marcas'];
@@ -77,9 +83,9 @@ function ActualizarProductosImportados() {
               <article class="contenedor-info-producto">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
                 </div>
               </article>`;
             conteendorProductosImportados.appendChild(articulo)
@@ -90,15 +96,18 @@ function ActualizarProductosImportados() {
           }
         }
       }else{
-        throw new Error('Hubo un error en la cosulta')
+          let html = '<p><strong>No se encontraron productos</strong></p>';
+          conteendorProductosImportados.innerHTML = html;
       }
     }).catch( error => {
         console.error(error);
+        AnimacionAviso(false, 2);
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
 function ActualizarSeccionCategorias() {
   const contenedorDeLasCategorias = document.getElementById('contenedorDeLasCategorias');
+  AnimacionAviso(true, 0);
   fetch('admin/obtener-categorias')
   .then(respuesta =>{
     if(!respuesta.ok)
@@ -106,14 +115,15 @@ function ActualizarSeccionCategorias() {
     return respuesta.json();    
   }).then(async respuesta => {
     const Categorias = respuesta['Categorias'];
+    AnimacionAviso(false, 0);
     if(Categorias.length == 0 || Categorias[0].Categoria == 'No hay'){
       let html = '<p class="texto-centrado"><strong>No se encontraron categorias cargadas</strong></p>';
       contenedorProductos.innerHTML = html;
     }else{
       for(let i = 0; i < Categorias.length; i++){
-      const articulo = document.createElement('article');
+        const articulo = document.createElement('article');
         articulo.innerHTML = `
-        <article class="contenedor-categoria">
+        <article class="contenedor-categoria contenedor-categoria-funcional" data-id=${Categorias[i].ID}>
           <img class="imagen-categoria" src="${URLMadre}/Imagenes/${Categorias[i].Imagen}">
           <div class="filtro-categoria"></div>
           <h3 class="titulo-categoria">${Categorias[i].Categoria}</h3>
@@ -123,8 +133,17 @@ function ActualizarSeccionCategorias() {
         articulo.classList.add('animar-contenedor-info-producto');
         await Esperar(50);
       }
+      AgregarFuncionesACategorias();
     }
   })
+}
+function AgregarFuncionesACategorias(){
+  const categorias = document.querySelectorAll('.contenedor-categoria-funcional');
+  for(let i = 0; i<categorias.length; i++){
+    categorias[i].addEventListener('click', function(){
+      window.location.href = `${URLMadre}/categoria-seleccionada?IDC=${categorias[i].dataset.id}#tituloCategoria`
+    });
+  }
 }
 function ActualizarListaCategorias() {
     const entradaCategorias = document.getElementById('entradaCategorias')
@@ -144,30 +163,57 @@ function ActualizarListaCategorias() {
         }
         
     })
+
 }
 function ActualizarListaMarcas() {
+  const entradaCategorias = document.getElementById('entradaCategorias')
+  entradaCategorias.addEventListener('change', function(){
     const entradaMarcas = document.getElementById('entradaMarcas')
-    const entradaMarcasImport = document.getElementById('entradaMarcasImport')
-    fetch('admin/obtener-marcas').then(respuesta => {
+    const categoria = entradaCategorias.value;
+    if(categoria != 'Sin filtro'){
+      fetch(`admin/obtener-marcas-por-categoria?categoria=${categoria}`).then(respuesta => {
         if(!respuesta.ok)
             throw new Error('Error en la solicitud');
         return respuesta.json()
-    }).then(respuesta =>{
-        const Marcas = respuesta['Marcas'];
+      }).then(({Marcas}) =>{
         entradaMarcas.innerHTML = '<option>Sin filtro</option>';
+        for(let i = 0; i < Marcas.length; i++){
+          let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
+          entradaMarcas.innerHTML += opcionesDeMarcas;
+        }
+      });
+    }else{
+      entradaMarcas.innerHTML = '<option>Selecciona una categoria para buscar marcas</option>';
+    }
+  });
+  const entradaCategoriasImport = document.getElementById('entradaCategoriasImport');
+  entradaCategoriasImport.addEventListener('change', function(){
+    const categoria = entradaCategoriasImport.value;
+    const entradaMarcasImport = document.getElementById('entradaMarcasImport')  
+    if(categoria != 'Sin filtro'){
+      fetch(`admin/obtener-marcas-por-categoria?categoria=${categoria}`).then(respuesta => {
+        if(!respuesta.ok)
+            throw new Error('Error en la solicitud');
+        return respuesta.json()
+      }).then(({Marcas}) =>{
         entradaMarcasImport.innerHTML = '<option>Sin filtro</option>';
         for(let i = 0; i < Marcas.length; i++){
-            let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
-            entradaMarcas.innerHTML += opcionesDeMarcas;
-            entradaMarcasImport.innerHTML += opcionesDeMarcas;
+          let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
+          entradaMarcasImport.innerHTML += opcionesDeMarcas;
         }
-    });
+      });
+    }else{
+      entradaMarcasImport.innerHTML = '<option>Selecciona una categoria para buscar marcas</option>';
+    }
+  });
 }
 function BotonBuscarYEventoDelFormulario() {
   const formularioFiltro = document.getElementById('formularioFiltro');
   formularioFiltro.addEventListener('submit', function(event){
-    const contenedorProductos = document.getElementById('contenedorProductos');
     event.preventDefault();
+    const contenedorProductos = document.getElementById('contenedorProductos');
+    AnimacionAviso(true, 1);
+    contenedorProductos.innerHTML = '';
     const datosDelFormulario = new FormData(this);
     const datos = {};
     datosDelFormulario.forEach((value, key)=>{
@@ -195,10 +241,10 @@ function BotonBuscarYEventoDelFormulario() {
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async respuesta => {
+      AnimacionAviso(false, 1);
       if(respuesta['Productos']){
         const Productos = respuesta['Productos'];
         const Marcas = respuesta['Marcas'];
-        contenedorProductos.innerHTML = '';
         numeroDePagina.innerText = 1;
         if(Productos.length == 0){
           let html = '<p><strong>No se encontraron productos</strong></p>';
@@ -211,9 +257,9 @@ function BotonBuscarYEventoDelFormulario() {
               <article class="contenedor-info-producto">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
                 </div>
               </article>`;
             contenedorProductos.appendChild(articulo)
@@ -224,8 +270,11 @@ function BotonBuscarYEventoDelFormulario() {
           }
         }
       }else{
+          let html = '<p><strong>No se encontraron productos</strong></p>';
+          contenedorProductos.innerHTML = html;
       }
     }).catch( error => {
+        AnimacionAviso(false, 1);
         console.error(error);
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
@@ -244,6 +293,7 @@ function BotonBuscarYEventoDelFormularioImportados(){
   formularioFiltroImport.addEventListener('submit', function(event){
     event.preventDefault();
     const conteendorProductosImportados = document.getElementById('conteendorProductosImportados');
+    AnimacionAviso(true, 2);
     const datosDelFormulario = new FormData(this);
     const datos = {};
     datosDelFormulario.forEach((value, key)=>{
@@ -269,6 +319,7 @@ function BotonBuscarYEventoDelFormularioImportados(){
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async respuesta => {
+      AnimacionAviso(false, 2);
       if(respuesta['Productos']){
         const Productos = respuesta['Productos'];
         const Marcas = respuesta['Marcas'];
@@ -285,9 +336,9 @@ function BotonBuscarYEventoDelFormularioImportados(){
               <article class="contenedor-info-producto">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
                 </div>
               </article>`;
             conteendorProductosImportados.appendChild(articulo)
@@ -298,10 +349,12 @@ function BotonBuscarYEventoDelFormularioImportados(){
           }
         }
       }else{
-        throw new Error('Hubo un error en la cosulta')
+          let html = '<p><strong>No se encontraron productos</strong></p>';
+          contenedorProductos.innerHTML = html;
       }
     }).catch( error => {
         console.error(error);
+        AnimacionAviso(false, 2);
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
   })
@@ -354,20 +407,21 @@ function ObtenerURLConParametrosImport(){
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;
 }
-function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
+function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimite, animacion){
   fetch(url)
   .then(respuesta =>{
     if(!respuesta.ok)
       throw new Error('Error en la solicitud'); 
     return respuesta.json();    
   }).then(async respuesta => {
+    console.log(animacion)
+    AnimacionAviso(false, animacion);
     if(respuesta['Productos']){
       const Productos = respuesta['Productos'];
       const Marcas = respuesta['Marcas'];
       if(Productos.length == 0){
-        const paginaLimite = document.getElementById('paginaLimiteImport');
-        paginaLimite.style = 'color: #d7596d;';
-        paginaLimite.innerText = 'No hay más páginas disponibles. Presiona el botón "Buscar" si actualizaste alguno de los filtros.';
+        avisoPaginaLimite.style = 'color: #d7596d;';
+        avisoPaginaLimite.innerText = 'No hay más páginas disponibles. Presiona el botón "Buscar" si actualizaste alguno de los filtros.';
         setTimeout(function(){
           paginaLimite.innerText = '';
         },5000);
@@ -404,6 +458,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
 function CambiarPaginas(){
   const indiceSiguiente = document.getElementById('indiceSiguiente');
   indiceSiguiente.addEventListener('click', function(){
+    AnimacionAviso(true, 1);
     const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
     const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);
     const numeroSiguiente = numeroDePagina + 1;
@@ -411,10 +466,15 @@ function CambiarPaginas(){
     entradaNumeroDePagina.value = numeroSiguiente;
     const url = ObtenerURLConParametros();
     const contenedor = document.getElementById('contenedorProductos');
-    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor);
+    const paginaLimite = document.getElementById('paginaLimite');
+    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1);
+    const aUrl = new URL(window.location);
+    aUrl.hash = 'formComplemetario'
+    window.location.href = aUrl.toString();
   });
   const indiceAnterior = document.getElementById('indiceAnterior');
   indiceAnterior.addEventListener('click', function(){
+    AnimacionAviso(true, 1);
     const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
     const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);
     let numeroAnterior = numeroDePagina - 1;
@@ -423,13 +483,18 @@ function CambiarPaginas(){
     const entradaNumeroDePagina = document.getElementById('entradaPagina');
     entradaNumeroDePagina.value = numeroAnterior;
     const url = ObtenerURLConParametros();
-    const contenedor = document.getElementById('contenedorProductos');conteendorProductosImportados
-    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor);
+    const contenedor = document.getElementById('contenedorProductos');
+    const paginaLimite = document.getElementById('paginaLimite');
+    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1);
+    const aUrl = new URL(window.location);
+    aUrl.hash = 'formComplemetario'
+    window.location.href = aUrl.toString();
   });
 }
 function CambiarPaginasImport(){
   const indiceSiguienteImport = document.getElementById('indiceSiguienteImport');
   indiceSiguienteImport.addEventListener('click', function(){
+    AnimacionAviso(true, 2);
     const etiquetaNumeroDePaginaImport = document.getElementById('numeroDePaginaImport');
     const numeroDePagina = Number(etiquetaNumeroDePaginaImport.innerText);
     const numeroSiguiente = numeroDePagina + 1;
@@ -437,10 +502,15 @@ function CambiarPaginasImport(){
     entradaPaginaImport.value = numeroSiguiente;
     const url = ObtenerURLConParametrosImport();
     const contenedor = document.getElementById('conteendorProductosImportados');
-    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePaginaImport, contenedor);
+    const paginaLimite = document.getElementById('paginaLimiteImport');
+    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePaginaImport, contenedor, paginaLimite, 2);
+    const aUrl = new URL(window.location);
+    aUrl.hash = 'formComplemetarioImport'
+    window.location.href = aUrl.toString();
   });
   const indiceAnterior = document.getElementById('indiceAnteriorImport');
   indiceAnterior.addEventListener('click', function(){
+    AnimacionAviso(true, 2);
     const etiquetaNumeroDePaginaImport = document.getElementById('numeroDePaginaImport');
     const numeroDePagina = Number(etiquetaNumeroDePaginaImport.innerText);
     let numeroAnterior = numeroDePagina - 1;
@@ -450,7 +520,11 @@ function CambiarPaginasImport(){
     entradaPaginaImport.value = numeroAnterior;
     const url = ObtenerURLConParametrosImport();
     const contenedor = document.getElementById('conteendorProductosImportados');
-    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePaginaImport, contenedor);
+    const paginaLimite = document.getElementById('paginaLimiteImport');
+    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePaginaImport, contenedor, paginaLimite, 2);
+    const aUrl = new URL(window.location);
+    aUrl.hash = 'formComplemetarioImport'
+    window.location.href = aUrl.toString();
   });
 }
 async function CargarSlider(_Productos){
@@ -558,4 +632,34 @@ function ConseguirFormatoDelPrecioOriginal(precio){
     }
     cadenaDeTexto += ',00';
     return cadenaDeTexto;
+}
+function FormulariosComplementarios(){
+  const formComplemetario = document.getElementById('formComplemetario');
+  formComplemetario.addEventListener('submit', function(event){
+    event.preventDefault();
+    const entradaValorBusqueda = document.getElementById('entradaValorBusqueda');
+    const entracaOcultaBusqueda = document.getElementById('entracaOcultaBusqueda');
+    entracaOcultaBusqueda.value = entradaValorBusqueda.value;
+    const formularioFiltro = document.getElementById('formularioFiltro');
+    formularioFiltro.dispatchEvent(new Event('submit'));
+  })
+  
+  const formComplemetarioImport = document.getElementById('formComplemetarioImport');
+  formComplemetarioImport.addEventListener('submit', function(event){
+    event.preventDefault();
+    const entradaValorBusquedaImport = document.getElementById('entradaValorBusquedaImport');
+    const entracaOcultaBusquedaImport = document.getElementById('entracaOcultaBusquedaImport');
+    entracaOcultaBusquedaImport.value = entradaValorBusquedaImport.value;
+    const formularioFiltroImport = document.getElementById('formularioFiltroImport');
+    formularioFiltroImport.dispatchEvent(new Event('submit'));
+  })
+}
+function AnimacionAviso(estado, pos){
+  const index = parseInt(pos, 10); 
+  const animacionDeCarga = document.querySelectorAll('.contenedor-espiral');
+  if(estado){
+    animacionDeCarga[index].style.display = 'flex';
+  }else{
+    animacionDeCarga[index].style.display = 'none';
+  }
 }

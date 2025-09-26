@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/css/animacionesGenerales.css">
-<link rel="stylesheet" href="/css/animacionesInicio.css">
 <link rel="stylesheet" href="/css/estiloEditarProductos.css">
 <section class="seccion-editar-productos-categorias">
     <h2 class="subtitulo-administrar">Editar productos</h2>
@@ -12,6 +10,7 @@
         <h3 class="subtitulo-administrar">Busqueda</h3>
         <section class="seccion-introducir-busqueda">
             <form class="formulario-busqueda" id="formularioFiltro">
+                <input type="hidden" id="entradaPagina" name="pagina">
                 <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
                 <div class="diseño-entrada-busuqeda">
                     <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" name="busqueda" placeholder="Vinos malbec">
@@ -31,7 +30,10 @@
                 <button class="boton boton-busqueda boton-elegir" type="submit">Buscar</button>
             </form>
         </section>
-        <section class="seccion-productos">
+        <section class="seccion-productos">     
+            <div class="contenedor-espiral contenedor-espiral-grande"  id="animacionDeCarga">
+                <p><strong>Cargando productos</strong></p> <div class="animacion-espiral animacion-espiral-grande"></div>
+            </div>
             <section class="conteendor-productos" id="contenedorProductos">
                
             </section>
@@ -40,6 +42,9 @@
                 <p class="indice-de-pagina"><span id="numeroDePagina">1</span></p> 
                 <img class="imagen-flecha-cambiar-pagina" id="indiceSiguiente" src="/carpeta_imagenes/web/flecha-derecha.png">
             </section>
+            <fieldset class="campos">
+                <p id="paginaLimite"></p>
+            </fieldset>
         </section>
     </section>
     <section class="editar-datos">

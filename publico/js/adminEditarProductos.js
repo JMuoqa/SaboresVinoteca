@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', function(){
   GuardarInformacionCategorica();
   GuardarImagen();
   MostrarGaleriaDeImagenesParaCategoria();
+  CambiarPaginas();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -70,12 +71,14 @@ function MostrarGaleriaDeImagenesParaCategoria(){
 }
 function ActualizarProductos() {
     const contenedorProductos = document.getElementById('contenedorProductos');
+    AnimacionAviso(true, 0)
     fetch('admin/obtener-productos?limite=14')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async respuesta => {
+      AnimacionAviso(false, 0)
       if(respuesta['Productos']){
         const Productos = respuesta['Productos'];
         const Marcas = respuesta['Marcas'];
@@ -109,6 +112,7 @@ function ActualizarProductos() {
       AgregarFuncionesProductos();
     }).catch( error => {
         console.error(error);
+        AnimacionAviso(false, 0)
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
@@ -128,6 +132,7 @@ function BotonBuscarYEventoDelFormulario() {
     parametros.set("busqueda", datos['busqueda']);
     parametros.set("marca", datos['marca']);
     parametros.set("categoria", datos['categoria']);
+    parametros.set("limite", 14);
     parametros.set("pagina", 1);
     url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
     url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
@@ -189,7 +194,7 @@ function AgregarFuncionesProductos(){
   productos.forEach((producto)=>{
     producto.addEventListener('click', function(){
       window.location.href = '#ver-edicion'
-      AnimacionAviso(true, 0);
+      AnimacionAviso(true, 1);
       const ID = producto.dataset.id;
       const url = new URL(window.location);
       const parametros = new URLSearchParams(url.search);
@@ -250,7 +255,7 @@ async function CargarFormulario(producto, Marcas, Categorias){
   entradaPrecio.dispatchEvent(new Event('input'));
   entradaNombre.dispatchEvent(new Event('input'));
   editarEntradaMarcas.dispatchEvent(new Event('change'));
-  AnimacionAviso(false, 0);
+  AnimacionAviso(false, 1);
 }
 function EventosChangeDeEntradas(){
     const nombreProducto = document.getElementById('entradaNombre');
@@ -369,7 +374,7 @@ function GuardarInformacionPrincipal(){
   const formularioFiltro = document.getElementById('formularioFiltro');
   formularioDatosPrincipales.addEventListener('submit', function(event){
     event.preventDefault();
-    AnimacionAviso(true, 1)
+    AnimacionAviso(true, 2)
     const datosDelFormulario = new FormData(this);
     const datos = {};
     datosDelFormulario.forEach((valor, campo)=>{
@@ -386,7 +391,7 @@ function GuardarInformacionPrincipal(){
         throw new Error('Error en la solicitud')
       return respuesta.json();
     }).then(({estado, mensaje})=>{
-      AnimacionAviso(false, 1)
+      AnimacionAviso(false, 2)
       const p = document.getElementById('textoEdicionPrincipal');
       if(estado == 'exitoso')
         p.style = 'color: #2ea356;';
@@ -399,7 +404,7 @@ function GuardarInformacionPrincipal(){
       formularioFiltro.dispatchEvent(new Event('submit'));
     }).catch( error => {
       console.error(error);
-      AnimacionAviso(false, 1)
+      AnimacionAviso(false, 2)
       window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
   });
@@ -409,7 +414,7 @@ function GuardarInformacionCategorica(){
   const formularioDatosCategoricos = document.getElementById('formularioDatosCategoricos');
   formularioDatosCategoricos.addEventListener('submit', function(event){
     event.preventDefault();
-    AnimacionAviso(true, 2)
+    AnimacionAviso(true, 3)
     const datosDelFormulario = new FormData(this);
     const datos = {};
     datosDelFormulario.forEach((valor, campo)=>{
@@ -426,7 +431,7 @@ function GuardarInformacionCategorica(){
         throw new Error('Error en la solicitud')
       return respuesta.json();
     }).then(({estado, mensaje})=>{
-      AnimacionAviso(false, 2)
+      AnimacionAviso(false, 3)
       const p = document.getElementById('textoEdicionCategorica');
       if(estado == 'exitoso')
         p.style = 'color: #2ea356;';
@@ -439,7 +444,7 @@ function GuardarInformacionCategorica(){
       formularioFiltro.dispatchEvent(new Event('submit'));
     }).catch( error => {
       console.error(error);
-      AnimacionAviso(false, 2)
+      AnimacionAviso(false, 3)
       window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
   });
@@ -449,7 +454,7 @@ function GuardarImagen(){
   const formularioDatoImagen = document.getElementById('formularioDatoImagen');
   formularioDatoImagen.addEventListener('submit', function(event){
     event.preventDefault();
-    AnimacionAviso(true, 3)
+    AnimacionAviso(true, 4)
     const datosDelFormulario = new FormData(this);
     fetch('admin/cambiar-imagen-producto',{
       method: 'POST',
@@ -459,7 +464,7 @@ function GuardarImagen(){
         throw new Error('Error en la solicitud')
       return respuesta.json();
     }).then(({estado, mensaje})=>{
-      AnimacionAviso(false, 3)
+      AnimacionAviso(false, 4)
       const p = document.getElementById('textoEditarImagen');
       if(estado == 'exitoso')
         p.style = 'color: #2ea356;';
@@ -472,7 +477,7 @@ function GuardarImagen(){
       formularioFiltro.dispatchEvent(new Event('submit'));
     }).catch( error => {
       console.error(error);
-      AnimacionAviso(false, 3)
+      AnimacionAviso(false, 4)
       window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
   });
@@ -498,4 +503,105 @@ function ConseguirFormatoDelPrecioOriginal(precio){
     }
     cadenaDeTexto += ',00';
     return cadenaDeTexto;
+}
+function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimite, animacion){
+  fetch(url)
+  .then(respuesta =>{
+    if(!respuesta.ok)
+      throw new Error('Error en la solicitud'); 
+    return respuesta.json();    
+  }).then(async respuesta => {
+    AnimacionAviso(false, animacion);
+    if(respuesta['Productos']){
+      const Productos = respuesta['Productos'];
+      const Marcas = respuesta['Marcas'];
+      if(Productos.length == 0){
+        avisoPaginaLimite.style = 'color: #d7596d;';
+        avisoPaginaLimite.innerText = 'No hay más páginas disponibles. Presiona el botón "Buscar" si actualizaste alguno de los filtros.';
+        setTimeout(function(){
+          paginaLimite.innerText = '';
+        },5000);
+      }
+      else{
+        etiqueta.innerText = nPagina;
+        contenedor.innerHTML = '';
+        for(let i = 0; i < Productos.length; i++){
+          const articulo = document.createElement('article');
+          articulo.innerHTML = `
+            <article class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
+              <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+              <div class="contenedor-informacion-productos">
+                <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
+                <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+              </div>
+            </article>`;
+          contenedor.appendChild(articulo)
+          // Forzar “reflow” antes de añadir la clase de animación
+          articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
+          articulo.classList.add('animar-contenedor-info-producto');
+          await Esperar(50);
+        }
+      }
+    }else{
+        throw new Error('Hubo un error en la cosulta')
+    }
+    AgregarFuncionesProductos();
+  }).catch( error => {
+      console.error(error);
+      window.location.href = `${URLMadre}/error?mensaje=${error}`;
+  });
+}
+function CambiarPaginas(){
+  const indiceSiguiente = document.getElementById('indiceSiguiente');
+  indiceSiguiente.addEventListener('click', function(){
+    AnimacionAviso(true, 0);
+    const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
+    const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);
+    const numeroSiguiente = numeroDePagina + 1;
+    const entradaNumeroDePagina = document.getElementById('entradaPagina');
+    entradaNumeroDePagina.value = numeroSiguiente;
+    const url = ObtenerURLConParametros();
+    const contenedor = document.getElementById('contenedorProductos');
+    const paginaLimite = document.getElementById('paginaLimite');
+    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 0);
+    const aUrl = new URL(window.location);
+    aUrl.hash = 'formularioFiltro'
+    window.location.href = aUrl.toString();
+  });
+  const indiceAnterior = document.getElementById('indiceAnterior');
+  indiceAnterior.addEventListener('click', function(){
+    AnimacionAviso(true, 0);
+    const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
+    const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);
+    let numeroAnterior = numeroDePagina - 1;
+    if(numeroAnterior <= 0)
+      numeroAnterior 
+    const entradaNumeroDePagina = document.getElementById('entradaPagina');
+    entradaNumeroDePagina.value = numeroAnterior;
+    const url = ObtenerURLConParametros();
+    const contenedor = document.getElementById('contenedorProductos');
+    const paginaLimite = document.getElementById('paginaLimite');
+    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 0);
+    const aUrl = new URL(window.location);
+    aUrl.hash = 'formularioFiltro'
+    window.location.href = aUrl.toString();
+  });
+}
+function ObtenerURLConParametros(){
+  const entradaCategoriaProductos = document.getElementById('entradaCategorias').value;
+  const entradaMarcaProductos = document.getElementById('entradaMarcas').value;
+  const entradaValorBusqueda = document.getElementById('entradaValorBusqueda').value;
+  const numeroDePagina = document.getElementById('entradaPagina').value;
+  const url = new URL(window.location);
+  const parametros = new URLSearchParams(url.search);
+  parametros.set("busqueda", entradaValorBusqueda);
+  parametros.set("marca", entradaMarcaProductos);
+  parametros.set("categoria", entradaCategoriaProductos);
+  parametros.set("pagina", numeroDePagina);
+  parametros.set("limite", 14);
+  
+  url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
+  url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
+  return url;
 }

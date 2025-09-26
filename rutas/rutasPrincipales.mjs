@@ -7,4 +7,5 @@ enrutador.get('/editar-productos', controladorPrincipal.VistaEditarProductos);
 enrutador.get('/error', controladorPrincipal.VistaError);
 enrutador.get('/editar-categorias', controladorPrincipal.VistaEditarCategorias);
 enrutador.get('/editar-marcas', controladorPrincipal.VistaEditarMarcas);
+enrutador.get('/categoria-seleccionada', controladorPrincipal.VistaCategoriaSeleccionada);
 export default enrutador;

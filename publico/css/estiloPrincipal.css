@@ -89,9 +89,14 @@ main{
     box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.1);
 }
 .lista-principal{
-    display: flex;
+    display: none;
     height: 6em;
     padding-left: 10px;
+    z-index: 60;
+    user-select: none;
+}
+.lista-principal-visible{
+    display: flex;
 }
 .lista-principal-padding-invertido{
     padding-left: 0;
@@ -171,4 +176,88 @@ main{
 }
 .links-pie-redes:visited{
     color: #000;
+}
+/*Menu desplazable*/
+.menu-desplazable{
+    position: fixed;
+    border: none;
+    background-color: var(--color-negro-transparente);
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+    z-index: 40;
+}
+.icono-x-absolute{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 1em;
+    height: 1em;
+    z-index: 60;
+    cursor: pointer;
+}
+.menu-hijo-desplazable{
+    background-color: var(--verde-profundo);
+    width: 25%;
+    height: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    transform: translateX(-100%);
+    overflow: auto;
+    transition: transform 0.3s ease-out;
+    z-index: 50;
+    position: relative;
+    user-select: none;
+    font-family: 'Roboto';
+}
+.menu-hijo-desplazable.activo {
+  transform: translateX(0);
+}
+.oculto{
+    display: none;
+}
+.items-secudarios-categorias{
+    width: 100%;
+    box-sizing: border-box;
+    margin: auto;
+    border-bottom: solid 1px var(--verde-claro);
+    padding: 10px 5px;
+    margin: 5px 0;
+}
+.links-secundarios-categorias{
+    user-select: none;
+}
+.items-secudarios-categorias:hover .links-secundarios-categorias{
+    color: var(--verde-claro);
+}
+.contenedor-imagen-menu{
+    height: 6em;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+}
+.imagen-menu{
+    width:  2em;
+    height: 2em;
+    padding-left: 10px;
+}
+@media(max-width: 1280px){
+    .titulo-marca{
+        display: none;
+    }
+}
+@media(max-width: 1024px){
+    .contenedor-imagen-menu{
+        display: flex;
+    }
+    .icono-separador-variable{
+        display: none;
+    }
+    .lista-principal-variable{
+        flex-direction: column;
+    }
 }

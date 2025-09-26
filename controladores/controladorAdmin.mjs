@@ -129,12 +129,18 @@ const ObtenerMarcas = async (req, res) =>{
         return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error});
     }
 }
-const ObtenerMarcasPorCategoria= async (req, res)=>{
+const ObtenerMarcasPorCategoria = async (req, res)=>{
     try{
         const categoria = req.query.categoria;
-        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
-        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
-        const obtenerMarcas = await Con_ObtenerMarcasPorCategoria(IDCategoria);
+        const iDcategoria = req.query.IDC;
+        let obtenerMarcas;
+        if(iDcategoria)
+            obtenerMarcas = await Con_ObtenerMarcasPorCategoria(iDcategoria);
+        else{
+            const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
+            const IDCategoria = solicitarIDCatecoria.Categoria.ID;
+            obtenerMarcas = await Con_ObtenerMarcasPorCategoria(IDCategoria);
+        }
         let marcas;
         if(obtenerMarcas.Marcas)
             marcas = obtenerMarcas.Marcas
@@ -167,9 +173,9 @@ const ObtenerProductosConFiltros = async (req, res) =>{
 
         }else
             busqueda = null
-        if(!categoria || categoria === 'Sin filtro')
+        if((!categoria || categoria === 'Sin filtro'))
             categoria = null;
-        else{
+        else if(isNaN(categoria)){
             const obtenerCategorias = await Con_ObtenerCategorias();
             const categoriasObtenidas = obtenerCategorias.Categorias;
             for(let i = 0; i< categoriasObtenidas.length; i++){
@@ -202,7 +208,7 @@ const ObtenerProductosConFiltros = async (req, res) =>{
         if(!limite)
             limite = 10
         limite = parseInt(limite);
-        const posicion = (pagina * 10) - 10;
+        const posicion = (pagina * limite) - limite;
         const solicitud = await Con_ObtenerProductosConFiltros(categoria, marca, precioMin, precioMax, busqueda, importado, posicion, limite)
         const obtenerMarcas = await Con_ObtenerMarcas();
         let marcas = obtenerMarcas.Marcas;

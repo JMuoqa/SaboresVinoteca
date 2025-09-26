@@ -9,6 +9,8 @@ const tituloCargar = 'Cargar productos y categorias';
 const tituloEditar = 'Editar productos';
 const tituloEditarCategorias = 'Editar Categoria';
 const tituloEditarMarcas = 'Editar Marcas';
+const tituloCategoriaSelec = 'Categoria seleccionada';
+const tituloProductoIndividual = 'Ver producto';
 const tituloError = 'Error';
 const VistaInicio = (req, res) =>{
     res.render('inicio', {
@@ -73,7 +75,30 @@ const VistaEditarMarcas = (req, res)=>{
         F_DetectarJavaScript: DetectarJavaScript,
     });
 }
-
+const VistaCategoriaSeleccionada = (req, res)=>{
+    const _IDCategoria = req.query.IDC;
+    res.render('cliente/categoriaSelec', {
+        TITULO: tituloCategoriaSelec,
+        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        URLMadre: urlMadre,
+        IDCategoria: _IDCategoria,
+        F_UsuarioActivo: UsuarioActivo,
+        F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
+    })
+}
+const VistaIndividualProducto = (req, res)=>{
+    const _IDCategoria = req.query.IDC;
+    res.render('cliente/categoriaSelec', {
+        TITULO: tituloProductoIndividual,
+        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        URLMadre: urlMadre,
+        IDCategoria: _IDCategoria,
+        F_UsuarioActivo: UsuarioActivo,
+        F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
+    })
+}
 function DetectarJavaScript(titulo){
     switch(titulo){
         case tituloInicio: return {js:'/js/dist/inicio.bundle.js', existe: true };
@@ -81,6 +106,8 @@ function DetectarJavaScript(titulo){
         case tituloEditar: return {js:'/js/dist/editar.bundle.js', existe: true };
         case tituloEditarMarcas: return {js:'/js/dist/editarMarcas.bundle.js', existe: true };
         case tituloEditarCategorias: return {js:'/js/dist/editarCategorias.bundle.js', existe: true };
+        case tituloCategoriaSelec: return {js: '/js/dist/clienteCategoriaSelect.bundle.js', existe:true};
+        case tituloProductoIndividual: return {js: '/js/dist/vistaIndividual.bundle.js', existe:true};
         default: return { existe: false }; 
     }
 }
@@ -97,4 +124,5 @@ function AdminActivo(Jerarquia){
 export default { 
     VistaInicio, VistaCargar, VistaEditarProductos,
     VistaError, VistaEditarCategorias, VistaEditarMarcas,
+    VistaCategoriaSeleccionada,
 };

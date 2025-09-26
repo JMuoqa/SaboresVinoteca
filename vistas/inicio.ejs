@@ -1,9 +1,11 @@
-<link rel="stylesheet" href="/css/animacionesInicio.css">
 <link rel="stylesheet" href="/css/estiloInicio.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.6.1/dist/nouislider.min.css">
 <section class="seccion-inicio">
     <section class="seccion-categorias">
-        <h2 class="subtitulos-principales subtitulos-categoorias" id="tituloCategorias">Categorias</h2>
+        <h2 class="subtitulos-principales subtitulos-categoorias" id="tituloCategorias">Categorias</h2>        
+        <div class="contenedor-espiral"  id="animacionDeCarga">
+            <p><strong>Cargando categorias</strong></p> <div class="animacion-espiral"></div>
+        </div>
         <section class="contenedor-de-las-categorias" id="contenedorDeLasCategorias">
             
         </section>
@@ -23,6 +25,7 @@
                     <fieldset class="campos">
                         <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
                         <select class="entradas" id="entradaMarcas" name="marca" >
+                            <option>Selecciona una categoria para buscar marcas</option>
                         </select>
                     </fieldset>
                     <fieldset class="campos">
@@ -31,7 +34,9 @@
                             <div id="slider">
                             </div>
                         </div>
-                        <p>Precio: $<span id="min"></span> — $<span id="max"></span></p>
+                        <div class="texto-flex">
+                            <p>Precio: $</p><p><span id="min"></span></p><p> — $</p><p><span id="max"></span></p>
+                        </div>
                     </fieldset>
                     <fieldset class="campos">
                         <p id="paginaLimite"></p>
@@ -40,7 +45,7 @@
             </section>
             <section class="seccion-productos">
                 <section class="seccion-introducir-busqueda">
-                    <form class="formulario-busqueda">
+                    <form class="formulario-busqueda formulario-complementario-funcional" id="formComplemetario">
                         <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
                         <div class="diseño-entrada-busuqeda">
                             <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" placeholder="Vinos malbec">
@@ -49,6 +54,9 @@
                         </div>
                     </form>
                 </section>
+                <div class="contenedor-espiral"  id="animacionDeCarga">
+                    <p><strong>Cargando productos</strong></p> <div class="animacion-espiral"></div>
+                </div>
                 <section class="conteendor-productos" id="contenedorProductos">
                     
                 </section>
@@ -63,56 +71,61 @@
     <section class="seccion-importados">
         <h2 class="subtitulos-principales" id="importados">Importados</h2>
         <section class="contenedor-de-las-importados">
-            <h2 class="subtitulos-principales-sin-fondo">Catálogo | Importados</h2>
-        <section class="contenedor-horizontal">
-            <section class="seccion-filtros-busquedas">
-                <form class="formulario-filtro" id="formularioFiltroImport">
-                    <input type="hidden" id="entracaOcultaBusquedaImport" name="busqueda">
-                    <input type="hidden" id="entradaPaginaImport" name="pagina">
-                    <fieldset class="campos">
-                        <label class="etiquetas" for="entradaCategoriasImport">Filtrar por categoria</label>
-                        <select class="entradas" name="categoria" id="entradaCategoriasImport">
-                        </select>
-                    </fieldset>
-                    <fieldset class="campos">
-                        <label class="etiquetas" for="entradaMarcasImport">Filtrar por Marca</label>
-                        <select class="entradas" name="marca" id="entradaMarcasImport">
-                        </select>
-                    </fieldset>
-                    <fieldset class="campos">
-                        <label class="etiquetas">Filtrar por Precio</label>
-                        <div class="contenedor-slider">
-                            <div id="slider-import">
+            <section class="contenedor-horizontal">
+                <section class="seccion-filtros-busquedas">
+                    <form class="formulario-filtro" id="formularioFiltroImport">
+                        <input type="hidden" id="entracaOcultaBusquedaImport" name="busqueda">
+                        <input type="hidden" id="entradaPaginaImport" name="pagina">
+                        <fieldset class="campos">
+                            <label class="etiquetas" for="entradaCategoriasImport">Filtrar por categoria</label>
+                            <select class="entradas" name="categoria" id="entradaCategoriasImport">
+                            </select>
+                        </fieldset>
+                        <fieldset class="campos">
+                            <label class="etiquetas" for="entradaMarcasImport">Filtrar por Marca</label>
+                            <select class="entradas" name="marca" id="entradaMarcasImport">
+                                <option>Selecciona una categoria para buscar marcas</option>
+                            </select>
+                        </fieldset>
+                        <fieldset class="campos">
+                            <label class="etiquetas">Filtrar por Precio</label>
+                            <div class="contenedor-slider">
+                                <div id="slider-import">
+                                </div>
                             </div>
-                        </div>
-                        <p>Precio: $<span id="min-import"></span> — $<span id="max-import"></span></p>
-                    </fieldset>
-                    <fieldset class="campos">
-                        <p id="paginaLimiteImport"></p>
-                    </fieldset>
-                </form>
-            </section>
-            <section class="seccion-productos">
-                <section class="seccion-introducir-busqueda">
-                    <form class="formulario-busqueda">
-                        <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
-                        <div class="diseño-entrada-busuqeda">
-                            <input class="entradas entrada-busqueda" type="text" id="entradaValorBusquedaImport" placeholder="Vinos malbec">
-                            <img class="imagen-lupa" src="/carpeta_imagenes/web/buscar.png">
-                            <button class="boton boton-busqueda" type="button" id="buscarProductosImport">Buscar</button>
-                        </div>
+                            <div class="texto-flex">
+                                <p>Precio: $</p><p><span id="min-import"></span></p><p> — $</p><p><span id="max-import"></span></p>
+                            </div>
+                        </fieldset>
+                        <fieldset class="campos">
+                            <p id="paginaLimiteImport"></p>
+                        </fieldset>
                     </form>
                 </section>
-                <section class="conteendor-productos" id="conteendorProductosImportados">
-                    
-                </section>
-                <section class="seccion-cambiar-pagina">
-                    <img class="imagen-flecha-cambiar-pagina" id="indiceAnteriorImport" src="/carpeta_imagenes/web/flecha-izquierda.png">
-                    <p class="indice-de-pagina"><span id="numeroDePaginaImport">1</span></p> 
-                    <img class="imagen-flecha-cambiar-pagina" id="indiceSiguienteImport" src="/carpeta_imagenes/web/flecha-derecha.png">
+                <section class="seccion-productos">
+                    <section class="seccion-introducir-busqueda">
+                        <form class="formulario-busqueda" id="formComplemetarioImport">
+                            <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusquedaImport">Buscar: </label>
+                            <div class="diseño-entrada-busuqeda">
+                                <input class="entradas entrada-busqueda" type="text" id="entradaValorBusquedaImport" placeholder="Vinos malbec">
+                                <img class="imagen-lupa" src="/carpeta_imagenes/web/buscar.png">
+                                <button class="boton boton-busqueda" type="button" id="buscarProductosImport">Buscar</button>
+                            </div>
+                        </form>
+                    </section>
+                    <div class="contenedor-espiral"  id="animacionDeCarga">
+                        <p><strong>Cargando productos</strong></p> <div class="animacion-espiral"></div>
+                    </div>
+                    <section class="conteendor-productos" id="conteendorProductosImportados">
+
+                    </section>
+                    <section class="seccion-cambiar-pagina">
+                        <img class="imagen-flecha-cambiar-pagina" id="indiceAnteriorImport" src="/carpeta_imagenes/web/flecha-izquierda.png">
+                        <p class="indice-de-pagina"><span id="numeroDePaginaImport">1</span></p> 
+                        <img class="imagen-flecha-cambiar-pagina" id="indiceSiguienteImport" src="/carpeta_imagenes/web/flecha-derecha.png">
+                    </section>
                 </section>
             </section>
-        </section>
         </section>
     </section>
 </section>

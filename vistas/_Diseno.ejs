@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/animacionesGenerales.css">
     <link rel="stylesheet" href="/css/fuentes.css">
     <link rel="stylesheet" href="/css/global.css">
     <link rel="stylesheet" href="/css/estiloPrincipal.css">
@@ -10,20 +11,35 @@
     <title><%= TITULO %></title>
 </head>
 <body>
-    <header class="encabezado">
-        <nav class="navegador">
-            <div class="filtro-negro-global"></div>
-            <ul class="listas-generales lista-principal">
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/">Inicio</a></li>
-                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="<%= URLMadre %>/#tituloCategorias">Productos</a></li>
-                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="<%= URLMadre %>/#importados">Importados</a></li>
-                <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="">Contacto</a></li>
+    <dialog class="menu-desplazable menu-desplazable-productos" id="menuProductos">
+        <section class="menu-hijo-desplazable" id="menuHijoProductos">
+            <img class="icono-x-absolute" id="cerrarMenuProductos" src="/carpeta_imagenes/web/x-button.png">
+            <h2 class="texto-blanco texto-centrado">Productos</h2>
+            <ul class="listas-generales lista-secundario-categorias" id="listaSecundarioCategorias">
             </ul>
-            <h1 class="titulo-marca">SABORES VINOTECA</h1>
-            <ul class="listas-generales lista-principal lista-principal-padding-invertido">
+        </section>
+    </dialog>
+    <dialog class="menu-desplazable menu-desplazable-principal" id="menuDesPrincipal">
+        <section class="menu-hijo-desplazable" id="menuHijoPrincipal">
+            <img class="icono-x-absolute" id="cerrarMenuPrincipal" src="/carpeta_imagenes/web/x-button.png">
+            <h2 class="texto-blanco texto-centrado">Menu</h2>
+            <ul class="listas-generales lista-secundario-categorias" id="listaSecundarioCategorias">
+            </ul>
+        </section>
+    </dialog>
+    <header class="encabezado">
+        <nav class="navegador" id="navegadorPrincipal">
+            <div class="filtro-negro-global"></div>
+            <div class="contenedor-imagen-menu"><img class="imagen-menu" id="iconoMenuPrincipal" src="/carpeta_imagenes/web/menuSV.png"></div>
+            <ul class="listas-generales lista-principal lista-principal-variable" id="listaNav">
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/">Inicio</a></li>
+                <li class="items-generales items-principales"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" id="abrirMenuProductos">Productos</a></li>
+                <li class="items-generales items-principales"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="<%= URLMadre %>/#importados">Importados</a></li>
+            </ul>
+            <h1 class="titulo-marca" id="tituloMarca">SABORES VINOTECA</h1>
+            <ul class="listas-generales lista-principal lista-principal-padding-invertido lista-principal-visible">
                 
                 <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
                     <li class="items-generales items-principales"><a class="links-generales links-principales-finos" href="/cargar-productos-categorias">Cargar productos</a></li>
@@ -67,7 +83,7 @@
 <script>
     const URLMadre = "<%= URLMadre %>";
 </script>
-<script src="/js/principal.js" defer></script>
+<script src="/js/dist/principal.bundle.js" defer></script>
 <% const scripts = F_DetectarJavaScript(TITULO); if(scripts.existe) { %>
     <script src="<%= scripts.js %>" defer></script>
 <% } %>

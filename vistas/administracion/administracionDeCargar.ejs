@@ -8,7 +8,7 @@
         <button class="boton boton-elegir" id="botonCargarMarca">Cargar marcas</button>
     </section>
     <section class="seccion-contenedor-formulario seccion-contenedor-formulario-productos">
-        <h3 class="subtitulo-administrar">Cargar producto</h3>
+        <h3 class="subtitulo-administrar" id="tituloSeccionProducto">Cargar producto</h3>
         <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaProductos">
             <fieldset class="fieldset">
                 <label class="etiquetas" for="nombreProducto">Nombre del producto:</label>
@@ -45,8 +45,6 @@
                 </select>
                 <label class="etiquetas" for="precioProducto">Precio del producto:</label>
                 <input class="entradas" type="text" id="precioProducto" name="precio" placeholder="40000" required>
-                <!--<label class="etiquetas" for="cantidadProducto">Cantidad</label>
-                <input class="entradas" type="number" id="cantidadProducto" name="cantidad" placeholder="10" required>-->
                 <button type="submit" class="boton-admin-cargar boton-elegir">Guardar producto</button>
                 <button type="button" class="boton-admin-cargar boton-elegir">Resetear datos</button>
                 <p id="mensajeDeAlertaProductos"></p>
@@ -54,7 +52,7 @@
         </form>
     </section>
     <section class="seccion-contenedor-formulario seccion-contenedor-formulario-categorias">
-        <h3 class="subtitulo-administrar">Cargar categoria</h3>
+        <h3 class="subtitulo-administrar" id="tituloSeccionCategoria">Cargar categoria</h3>
         <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaCategorias">
             <fieldset class="fieldset">
                 <label class="etiquetas" for="nombreCategoria">Nombre de la categoria:</label>
@@ -74,7 +72,7 @@
         </form>
     </section>
     <section class="seccion-contenedor-formulario seccion-contenedor-formulario-marcas">
-        <h3 class="subtitulo-administrar">Cargar marca</h3>
+        <h3 class="subtitulo-administrar" id="tituloSeccionMarca">Cargar marca</h3>
         <form class="formulario formulario-carga formulario-carga-marca" id="seccionCargarMarcas">
             <fieldset class="fieldset fieldset-marca">
                 <label class="etiquetas" for="entradaCargarMarca">Nombre de la marca</label>

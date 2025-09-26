@@ -7,7 +7,22 @@ document.addEventListener('DOMContentLoaded', function(){
     CargarMarca();
     CargarCategoria();
     CargarProducto();
+    CargarOtro();
 });
+function CargarOtro(){
+    const botonCargarProductos = document.getElementById('botonCargarProductos');
+    botonCargarProductos.addEventListener('click', function(){
+        window.location.href = `${URLMadre}/cargar-productos-categorias#tituloSeccionProducto`
+    });
+    const botonCargarCategoria = document.getElementById('botonCargarCategoria');
+    botonCargarCategoria.addEventListener('click', function(){
+        window.location.href = `${URLMadre}/cargar-productos-categorias#tituloSeccionCategoria`
+    });
+    const botonCargarMarca = document.getElementById('botonCargarMarca');
+    botonCargarMarca.addEventListener('click', function(){
+        window.location.href = `${URLMadre}/cargar-productos-categorias#tituloSeccionMarca`
+    });
+}
 function MostrarGaleriaDeImagenesParaCategoria(){
     const entrada = document.getElementById('entradaDeImagenes')
     const elementoImagen = document.getElementById('imagenVistaPrevia')
