@@ -16,6 +16,7 @@
     --verde-claro: #B7E4C7;
     --verde-intermedio: #40916C;
     --verde-profundo: #1E3932;
+    --verde-hover: #24473e;
     --verde-profundo-t: #1E393299;
     --gris-profundo-neutral: #1E1E1E;
     /*CHATGPT*/
@@ -85,7 +86,7 @@ fieldset{
     font-size: 1.2em;
 }
 .entradas{
-    width: 95%;
+    width: 100%;
     font-size: inherit;
     font-family: inherit;
     padding: 10px;
@@ -172,4 +173,19 @@ fieldset{
 /*Menus*/
 .secciones-menu-desplasable{
     margin-top: 10px;
+}
+/*boton*/
+.boton-general{
+    background-color: var(--verde-profundo);
+    color: var(--fondo-blanco);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: inherit;
+    font-family: inherit;
+    margin-top: 10px;
+}
+.boton-general:hover{
+    background-color: var(--verde-hover)
 }

@@ -128,7 +128,7 @@ function ActualizarSeccionCategorias() {
     AnimacionAviso(false, 0);
     if(Categorias.length == 0 || Categorias[0].Categoria == 'No hay'){
       let html = '<p class="texto-centrado"><strong>No se encontraron categorias cargadas</strong></p>';
-      contenedorProductos.innerHTML = html;
+      contenedorDeLasCategorias.innerHTML = html;
     }else{
       for(let i = 0; i < Categorias.length; i++){
         const articulo = document.createElement('article');

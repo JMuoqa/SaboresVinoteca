@@ -20,8 +20,8 @@ main{
     font-family: "Roboto";
 }
 .encabezado{
-    height: 35em;
-    min-height: 35em;
+    height: 30em;
+    min-height: 30em;
     width: 100%;
     background-color: var(--fondo-blanco2);
     color: var(--fondo-blanco2);

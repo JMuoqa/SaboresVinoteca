@@ -1,0 +1,6 @@
+.seccion-botones-navegacion{
+    width: 35%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}

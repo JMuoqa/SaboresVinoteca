@@ -1,0 +1,32 @@
+.seccion-autenticacion{
+    width: 100%;
+}
+.seccion-registrarse{
+    width: 100%;
+}
+.seccion-mas-opciones{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.formulario-autenticacion{
+    border: solid 2px var(--verde-profundo);
+    width: 40em;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+}
+.boton-aut{
+    height: 2.5em;
+    width: 40em;
+    margin: auto;
+    margin-top: 10px;
+    
+}
+.entradas{
+    margin: 10px 0;
+}

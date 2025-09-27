@@ -9,4 +9,7 @@ enrutador.get('/editar-categorias', controladorPrincipal.VistaEditarCategorias);
 enrutador.get('/editar-marcas', controladorPrincipal.VistaEditarMarcas);
 enrutador.get('/categoria-seleccionada', controladorPrincipal.VistaCategoriaSeleccionada);
 enrutador.get('/ver-producto', controladorPrincipal.VistaIndividualProducto);
+enrutador.get('/autenticacion', controladorPrincipal.VistaIniciarSession);
+enrutador.get('/registrarse', controladorPrincipal.VistaRegistrarse);
+enrutador.get('/exito', controladorPrincipal.VistaExito);
 export default enrutador;

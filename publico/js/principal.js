@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function(){
     AgregarLinksCategorias();
     MenuPrincipalAdaptable();
     LinkImportados();
+    IrAut();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -69,7 +70,6 @@ function CerrarMenus(){
         }, 300);
     });
 }
-
 function AgregarLinksCategorias(){
   const listaSecundarioCategorias = document.getElementById('listaSecundarioCategorias');
   fetch('admin/obtener-categorias')
@@ -142,4 +142,12 @@ function LinkImportados(){
       cerrarMenuPrincipal.dispatchEvent(new Event('click'));
     }
   })
+}
+function IrAut(){
+  if(document.getElementById('IrAut')){
+    const irAut = document.getElementById('IrAut');
+    irAut.addEventListener('click', function(){
+      window.location.href = `${URLMadre}/autenticacion`;
+    });
+  }
 }

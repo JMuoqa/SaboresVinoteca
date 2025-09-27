@@ -53,15 +53,15 @@
                     <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador1"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                     <li class="items-generales items-principales items-principales-variables items-principales-admin" ><a class="links-generales links-principales-finos links-principales-variables" href="/editar-productos">Editar productos</a></li>
                     <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador2"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Nombre %>!</a></li>
+                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Usuario %>!</a></li>
                     <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                     <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
-                <% } else if(F_UsuarioActivo(Usuario)) { %>
-                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Nombre %>!</a></li>
+                <% } else if(F_UsuarioActivo(Usuario)) { console.log(Usuario) %>
+                    <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Usuario %>!</a></li>
                     <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                     <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
                 <% } else { %>
-                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png"></li>
+                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png" id="IrAut"></li>
                 <% } %>
             </ul>
             <img class="imagen-logo-principal" src="/carpeta_imagenes/web/Logo540saboresvinoteca.png" id="logoPrincipal">

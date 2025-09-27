@@ -12,6 +12,9 @@ export default {
     editarMarcas: './publico/js/adminEditarMarcas',
     clienteCategoriaSelect: './publico/js/clienteCategoriaSelect.js',
     vistaIndividual: './publico/js/clienteVistaIndividual.js',
+    iniciarSession: './publico/js/iniciarSession.js',
+    registrarse: './publico/js/registrarse.js',
+    exito: './publico/js/exito.js',
   },
   output: {
     filename: '[name].bundle.js',

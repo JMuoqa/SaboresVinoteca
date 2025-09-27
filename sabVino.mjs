@@ -8,6 +8,7 @@ import expressLayouts from 'express-ejs-layouts';
 import minifyHTML from 'express-minify-html';
 import rutasPrincipales from './rutas/rutasPrincipales.mjs';
 import rutasAdmin from './rutas/rutasAdmin.mjs';
+import rutasAut from './rutas/rutasAut.mjs'
 import session from 'express-session';
 import passport from './config/passport.mjs';
 
@@ -46,7 +47,8 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
 app.use('/', rutasPrincipales);
-app.use('/admin', rutasAdmin);
+app.use('/admin', rutasAdmin);rutasAut
+app.use('/aut', rutasAut);
 if(process.env.NODE_ENV === 'development'){
     app.use('/Imagenes', express.static('C:\\Users\\Joaquin\\Desktop\\Proyectos\\Trabajo\\SaboresVinoteca\\ImagenesSubidas'));
 }else{
@@ -69,7 +71,7 @@ app.use((err, req, res, next) => {
     console.log('Error - interno: ' + err);
     const error = err.message;
     res.render('error', {
-        TITULO: tituloError,
+        TITULO: 'Error',
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
         Error: error, 
