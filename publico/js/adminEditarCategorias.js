@@ -18,34 +18,40 @@ function AnimacionAviso(estado, pos){
 }
 function GuardarCategoria(){
     const seccionCargaCategorias = document.getElementById('seccionCargaCategorias');
+    let estadoConsulta = true;
     seccionCargaCategorias.addEventListener('submit', function(event){
         event.preventDefault();
-        AnimacionAviso(true, 0)
-        const datosDelFormulario = new FormData(this);
-        fetch('admin/cambiar-datos-de-categoria', {
-            method: 'POST',
-            body: datosDelFormulario
-        }).then(respuesta => {
-            if(!respuesta.ok)
-                throw new Error('Error en la solicitud'); 
-            return respuesta.json();  
-        }).then(({estado, mensaje})=>{
-            AnimacionAviso(false, 0)
-            const p = document.getElementById('textoEdicion');
-            if(estado == 'exitoso')
-                p.style = 'color: #2ea356;';
-            else
-                p.style = 'color: #d7596d;';
-            p.innerText = mensaje;
-            setTimeout(function(){
-                p.innerText = '';
-            },5000);
-            ActualizarSeccionCategorias();
-        }).catch( error =>{
-            console.error(error);
-            AnimacionAviso(false, 0)
-            window.location.href = `${URLMadre}/error?mensaje=${error}`;
-        })
+        if(estadoConsulta){
+            estadoConsulta = false;
+            AnimacionAviso(true, 1)
+            const datosDelFormulario = new FormData(this);
+            fetch('admin/cambiar-datos-de-categoria', {
+                method: 'POST',
+                body: datosDelFormulario
+            }).then(respuesta => {
+                if(!respuesta.ok)
+                    throw new Error('Error en la solicitud'); 
+                return respuesta.json();  
+            }).then(({estado, mensaje})=>{
+                AnimacionAviso(false, 1)
+                const p = document.getElementById('textoEdicion');
+                if(estado == 'exitoso')
+                    p.style = 'color: #2ea356;';
+                else
+                    p.style = 'color: #d7596d;';
+                p.innerText = mensaje;
+                setTimeout(function(){
+                    p.innerText = '';
+                },5000);
+                estadoConsulta = true;
+                ActualizarSeccionCategorias();
+            }).catch( error =>{
+                console.error(error);
+                estadoConsulta = true;
+                AnimacionAviso(false, 1)
+                window.location.href = `${URLMadre}/error?mensaje=${error}`;
+            })
+        }
     });
 }
 function MostrarGaleriaDeImagenesParaCategoria(){
@@ -93,12 +99,14 @@ function MostrarGaleriaDeImagenesParaCategoria(){
 }
 function ActualizarSeccionCategorias() {
     const contenedorDeLasCategorias = document.getElementById('contenedorDeLasCategorias');
+    AnimacionAviso(true, 0)
     fetch('admin/obtener-categorias')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async respuesta => {
+        AnimacionAviso(false, 0)
         const Categorias = respuesta['Categorias'];
         contenedorDeLasCategorias.innerHTML = '';
         if(Categorias.length == 0 || Categorias[0].Categoria == 'No hay'){
@@ -122,6 +130,7 @@ function ActualizarSeccionCategorias() {
         AgregarFuncionesACategorias();
     }).catch( error =>{
       console.error(error);
+        AnimacionAviso(false, 0)
       window.location.href = `${URLMadre}/error?mensaje=${error}`;
     })
 }

@@ -219,156 +219,179 @@ function ActualizarListaMarcas() {
 }
 function BotonBuscarYEventoDelFormulario() {
   const formularioFiltro = document.getElementById('formularioFiltro');
+  let estadoConsulta = true;
   formularioFiltro.addEventListener('submit', function(event){
     event.preventDefault();
-    const contenedorProductos = document.getElementById('contenedorProductos');
-    AnimacionAviso(true, 1);
-    contenedorProductos.innerHTML = '';
-    const datosDelFormulario = new FormData(this);
-    const datos = {};
-    datosDelFormulario.forEach((value, key)=>{
-      datos[key] = value;
-    })
-    let precioMin = document.getElementById('min').innerText.replace('$','');
-    let precioMax = document.getElementById('max').innerText.replace('$','');
-    const numeroDePagina = document.getElementById('numeroDePagina');
-    // // Obtenes la url actual
-    const url = new URL(window.location);
-    // Tomás los query params como objeto manejable
-    const parametros = new URLSearchParams(url.search);
-    // Cambiás los parámetros que quieras
-    parametros.set("precioMin", precioMin);
-    parametros.set("precioMax", precioMax);
-    parametros.set("busqueda", datos['busqueda']);
-    parametros.set("marca", datos['marca']);
-    parametros.set("categoria", datos['categoria']);
-    parametros.set("pagina", 1);
-    url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
-    url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
-    fetch(url.toString())
-    .then(respuesta =>{
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud'); 
-      return respuesta.json();    
-    }).then(async respuesta => {
-      AnimacionAviso(false, 1);
-      if(respuesta['Productos']){
-        const Productos = respuesta['Productos'];
-        const Marcas = respuesta['Marcas'];
-        numeroDePagina.innerText = 1;
-        if(Productos.length == 0){
-          let html = '<p><strong>No se encontraron productos</strong></p>';
-          contenedorProductos.innerHTML = html;
-        }
-        else{
-          for(let i = 0; i < Productos.length; i++){
-            const articulo = document.createElement('article');
-            articulo.innerHTML = `
-              <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                </div>
-              </article>`;
-            contenedorProductos.appendChild(articulo)
-            // Forzar “reflow” antes de añadir la clase de animación
-            articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
-            articulo.classList.add('animar-contenedor-info-producto');
-            await Esperar(50);
-          }
-          VerProducto('todos');
-        }
-      }else{
-          let html = '<p><strong>No se encontraron productos</strong></p>';
-          contenedorProductos.innerHTML = html;
-      }
-    }).catch( error => {
+    if(estadoConsulta){
+      estadoConsulta = false;
+      const contenedorProductos = document.getElementById('contenedorProductos');
+      AnimacionAviso(true, 1);
+      contenedorProductos.innerHTML = '';
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((value, key)=>{
+        datos[key] = value;
+      })
+      let precioMin = document.getElementById('min').innerText.replace('$','');
+      let precioMax = document.getElementById('max').innerText.replace('$','');
+      const numeroDePagina = document.getElementById('numeroDePagina');
+      // // Obtenes la url actual
+      const url = new URL(window.location);
+      // Tomás los query params como objeto manejable
+      const parametros = new URLSearchParams(url.search);
+      // Cambiás los parámetros que quieras
+      parametros.set("precioMin", precioMin);
+      parametros.set("precioMax", precioMax);
+      parametros.set("busqueda", datos['busqueda']);
+      parametros.set("marca", datos['marca']);
+      parametros.set("categoria", datos['categoria']);
+      parametros.set("pagina", 1);
+      url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
+      url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
+      fetch(url.toString())
+      .then(respuesta =>{
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud'); 
+        return respuesta.json();    
+      }).then(async respuesta => {
         AnimacionAviso(false, 1);
-        console.error(error);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
+        if(respuesta['Productos']){
+          const Productos = respuesta['Productos'];
+          const Marcas = respuesta['Marcas'];
+          numeroDePagina.innerText = 1;
+          if(Productos.length == 0){
+            let html = '<p><strong>No se encontraron productos</strong></p>';
+            contenedorProductos.innerHTML = html;
+            estadoConsulta = true;
+          }
+          else{
+            for(let i = 0; i < Productos.length; i++){
+              const articulo = document.createElement('article');
+              articulo.innerHTML = `
+                <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  </div>
+                </article>`;
+              contenedorProductos.appendChild(articulo)
+              // Forzar “reflow” antes de añadir la clase de animación
+              articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
+              articulo.classList.add('animar-contenedor-info-producto');
+              await Esperar(50);
+            }
+            estadoConsulta = true;
+            VerProducto('todos');
+          }
+        }else{
+            let html = '<p><strong>No se encontraron productos</strong></p>';
+            contenedorProductos.innerHTML = html;
+            estadoConsulta = true;
+        }
+      }).catch( error => {
+          AnimacionAviso(false, 1);
+          estadoConsulta = true;
+          console.error(error);
+          window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
   })
   const buscarProductos = document.getElementById('buscarProductos');
   buscarProductos.addEventListener('click', function(){
     const entradaValorBusqueda = document.getElementById('entradaValorBusqueda');
     const entracaOcultaBusqueda = document.getElementById('entracaOcultaBusqueda');
     entracaOcultaBusqueda.value = entradaValorBusqueda.value;
-    const formularioFiltro = document.getElementById('formularioFiltro');
-    formularioFiltro.dispatchEvent(new Event('submit'));
+    formularioFiltro.requestSubmit();
   });
+  const imagenLupa1 = document.getElementById('imagenLupa1')
+  imagenLupa1.addEventListener('click', function(){
+    const entradaValorBusqueda = document.getElementById('entradaValorBusqueda');
+    const entracaOcultaBusqueda = document.getElementById('entracaOcultaBusqueda');
+    entracaOcultaBusqueda.value = entradaValorBusqueda.value;
+    formularioFiltro.requestSubmit();
+  })
 }
 function BotonBuscarYEventoDelFormularioImportados(){
   const formularioFiltroImport = document.getElementById('formularioFiltroImport');
+  let estadoConsulta = true;
   formularioFiltroImport.addEventListener('submit', function(event){
     event.preventDefault();
-    const conteendorProductosImportados = document.getElementById('conteendorProductosImportados');
-    AnimacionAviso(true, 2);
-    const datosDelFormulario = new FormData(this);
-    const datos = {};
-    datosDelFormulario.forEach((value, key)=>{
-      datos[key] = value;
-    })
-    let precioMin = document.getElementById('min-import').innerText.replace('$','');
-    let precioMax = document.getElementById('max-import').innerText.replace('$','');
-    const numeroDePagina = document.getElementById('numeroDePagina');
-    const url = new URL(window.location);
-    const parametros = new URLSearchParams(url.search);
-    parametros.set("precioMin", precioMin);
-    parametros.set("precioMax", precioMax);
-    parametros.set("busqueda", datos['busqueda']);
-    parametros.set("marca", datos['marca']);
-    parametros.set("categoria", datos['categoria']);
-    parametros.set("pagina", 1);
-    parametros.set("importado", 1);
-    url.pathname  = 'admin/obtener-productos';
-    url.search = parametros.toString();
-    fetch(url.toString())
-    .then(respuesta =>{
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud'); 
-      return respuesta.json();    
-    }).then(async respuesta => {
-      AnimacionAviso(false, 2);
-      if(respuesta['Productos']){
-        const Productos = respuesta['Productos'];
-        const Marcas = respuesta['Marcas'];
-        conteendorProductosImportados.innerHTML = '';
-        numeroDePagina.innerText = 1;
-        if(Productos.length == 0){
-          let html = '<p><strong>No se encontraron productos</strong></p>';
-          conteendorProductosImportados.innerHTML = html;
-        }
-        else{
-          for(let i = 0; i < Productos.length; i++){
-            const articulo = document.createElement('article');
-            articulo.innerHTML = `
-              <article class="contenedor-info-producto ver-producto-importados" data-id="${Productos[i].ID}">
-                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                </div>
-              </article>`;
-            conteendorProductosImportados.appendChild(articulo)
-            // Forzar “reflow” antes de añadir la clase de animación
-            articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
-            articulo.classList.add('animar-contenedor-info-producto');
-            await Esperar(50);
-          }
-          VerProducto('importados');
-        }
-      }else{
-          let html = '<p><strong>No se encontraron productos</strong></p>';
-          contenedorProductos.innerHTML = html;
-      }
-    }).catch( error => {
-        console.error(error);
+    if(estadoConsulta){
+      estadoConsulta = false;
+      const conteendorProductosImportados = document.getElementById('conteendorProductosImportados');
+      AnimacionAviso(true, 2);
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((value, key)=>{
+        datos[key] = value;
+      })
+      let precioMin = document.getElementById('min-import').innerText.replace('$','');
+      let precioMax = document.getElementById('max-import').innerText.replace('$','');
+      const numeroDePagina = document.getElementById('numeroDePagina');
+      const url = new URL(window.location);
+      const parametros = new URLSearchParams(url.search);
+      parametros.set("precioMin", precioMin);
+      parametros.set("precioMax", precioMax);
+      parametros.set("busqueda", datos['busqueda']);
+      parametros.set("marca", datos['marca']);
+      parametros.set("categoria", datos['categoria']);
+      parametros.set("pagina", 1);
+      parametros.set("importado", 1);
+      url.pathname  = 'admin/obtener-productos';
+      url.search = parametros.toString();
+      console.log(url.toString())
+      fetch(url.toString())
+      .then(respuesta =>{
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud'); 
+        return respuesta.json();    
+      }).then(async respuesta => {
         AnimacionAviso(false, 2);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
+        if(respuesta['Productos']){
+          const Productos = respuesta['Productos'];
+          const Marcas = respuesta['Marcas'];
+          conteendorProductosImportados.innerHTML = '';
+          numeroDePagina.innerText = 1;
+          if(Productos.length == 0){
+            let html = '<p><strong>No se encontraron productos</strong></p>';
+            conteendorProductosImportados.innerHTML = html;
+            estadoConsulta = true;
+          }
+          else{
+            for(let i = 0; i < Productos.length; i++){
+              const articulo = document.createElement('article');
+              articulo.innerHTML = `
+                <article class="contenedor-info-producto ver-producto-importados" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  </div>
+                </article>`;
+              conteendorProductosImportados.appendChild(articulo)
+              // Forzar “reflow” antes de añadir la clase de animación
+              articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
+              articulo.classList.add('animar-contenedor-info-producto');
+              await Esperar(50);
+            }
+            VerProducto('importados');
+            estadoConsulta = true;
+          }
+        }else{
+            let html = '<p><strong>No se encontraron productos</strong></p>';
+            contenedorProductos.innerHTML = html;
+            estadoConsulta = true;
+        }
+      }).catch( error => {
+          console.error(error);
+          estadoConsulta = true;
+          AnimacionAviso(false, 2);
+          window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
   })
   const buscarProductosImport = document.getElementById('buscarProductosImport');
   buscarProductosImport.addEventListener('click', function(){
@@ -376,8 +399,15 @@ function BotonBuscarYEventoDelFormularioImportados(){
     const entracaOcultaBusquedaImport = document.getElementById('entracaOcultaBusquedaImport');
     entracaOcultaBusquedaImport.value = entradaValorBusquedaImport.value;
     const formularioFiltroImport = document.getElementById('formularioFiltroImport');
-    formularioFiltroImport.dispatchEvent(new Event('submit'));
+    formularioFiltroImport.requestSubmit();
   });
+  const imagenLupa2 = document.getElementById('imagenLupa2')
+  imagenLupa2.addEventListener('click', function(){
+    const entradaValorBusquedaImport = document.getElementById('entradaValorBusquedaImport');
+    const entracaOcultaBusquedaImport = document.getElementById('entracaOcultaBusquedaImport');
+    entracaOcultaBusquedaImport.value = entradaValorBusquedaImport.value;
+    formularioFiltroImport.requestSubmit();
+  })
 }
 function ObtenerURLConParametros(){
   let precioMin = document.getElementById('min').innerText.replace('$','');
@@ -426,7 +456,6 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
       throw new Error('Error en la solicitud'); 
     return respuesta.json();    
   }).then(async respuesta => {
-    console.log(animacion)
     AnimacionAviso(false, animacion);
     if(respuesta['Productos']){
       const Productos = respuesta['Productos'];

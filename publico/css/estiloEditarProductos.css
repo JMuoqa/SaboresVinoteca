@@ -187,3 +187,80 @@
     animation: espiral 1s linear infinite;
     background: transparent;   
 }
+@media(max-width:1024px){
+    .formulario-busqueda{
+        flex-direction: column;
+        width: 70%;
+        margin: auto;
+        align-items: flex-start;
+
+    }
+    .entrada-busqueda{
+        margin-left: 0;
+    }
+    .campos{
+        margin: 0;
+    }
+}
+@media(max-width: 950px) {
+    .seccion-seleccionar-edicion{
+        flex-direction: column;
+        width: 70%;
+        margin: auto;
+        align-items: flex-start;
+    }
+    .boton-elegir{
+        margin: 10px 0;
+    }
+}
+@media(max-width: 900px){
+    .datos{
+        width: 90%;
+    } 
+    .seccion-seleccionar-edicion{
+        width: 90%;
+    }
+    .formulario-busqueda{
+        width: 90%;
+    }
+    .contenedor-espiral-grande{
+        font-size: 1.2em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 80px;
+        height: 80px; 
+    }
+}
+@media(max-width: 800px){
+    .seccion-productos{
+        width: 90%;
+    }
+    .contenedor-prdouctos{
+        grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+    }
+}
+@media(max-width:550px){
+    .entrada-busqueda{
+        width: 20em;
+    }
+}
+@media(max-width:450px){
+    .entrada-busqueda{
+        width: 15em;
+    }
+    
+    .contenedor-espiral-grande{
+        font-size: 1em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 70px;
+        height: 70px; 
+    }
+}
+@media(max-width:350px){
+    .entrada-busqueda{
+        width: 13em;
+    }
+}

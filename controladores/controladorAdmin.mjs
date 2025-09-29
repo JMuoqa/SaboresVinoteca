@@ -4,7 +4,8 @@ import {
     Con_ObtenerIDDeMarca, Con_ObtenerProductosConFiltros, Con_ObtenerTodosProductos,
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
     Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
-    Con_CabmiarDatosDeUnaCategoria, Con_ObtenerMarcaPorID, Con_CambiarDatosDeUnaMarca
+    Con_CabmiarDatosDeUnaCategoria, Con_ObtenerMarcaPorID, Con_CambiarDatosDeUnaMarca,
+    Con_ComprobarProducto
 } from "../solicitudes/admin/solicitudesAdmin.mjs"
 import convert from "heic-convert";
 import fs from 'fs';
@@ -19,7 +20,12 @@ else{
     rutaDeLaCarpeta = '/home/joaquin/Imagenes/SaboresVinoteca/';
 }
 const InsertarMarca = async (req, res, next) =>{
+    
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         let { marca, categoria } = req.body;
         const regex = /^[a-zA-Z0-9 @._-]+$/; //hay un espacio(' ' en -> '9 @'), para que permita los espacios ya que es una marca
         if (!marca || !regex.test(marca)) {
@@ -38,11 +44,15 @@ const InsertarMarca = async (req, res, next) =>{
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error });
+        return res.json({estado: 'muyMalo', mensaje: error.message });
     }
 }
 const InsertarCategoria = async (req, res) => {
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const imagen = req.file;
         let imagenProcesada;
         if (!imagen)
@@ -65,11 +75,15 @@ const InsertarCategoria = async (req, res) => {
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error });
+        return res.json({estado: 'muyMalo', mensaje: error.message });
     }
 }
 const InsertarProducto = async (req, res) => {
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const imagen = req.file;
         let imagenProcesada;
         if (!imagen)
@@ -90,16 +104,22 @@ const InsertarProducto = async (req, res) => {
         else
             esImportado = 0;
         const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
+        console.log(solicitarIDCatecoria)
         const IDCategoria = solicitarIDCatecoria.Categoria.ID;
+
         const solicitarIDMarca = await Con_ObtenerIDDeMarca(marca, IDCategoria);
+        console.log(solicitarIDMarca)
         const IDMarca = solicitarIDMarca.Marca.ID;
+        const comprobarProducto = await Con_ComprobarProducto(nombreProducto, IDMarca, IDCategoria);
+        if(!comprobarProducto.estado)
+            return res.json({ estado: 'malo', mensaje: comprobarProducto.mensaje});
         const solicitud = await Con_InsertarProducto(nombreProducto, IDCategoria, IDMarca, precio, esImportado, imagenProcesada);
         if(!solicitud.estado)
             return res.json({ estado: 'malo', mensaje: solicitud.mensaje});
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error });
+        return res.json({estado: 'muyMalo', mensaje: error.message });
     }
 }
 function ValidarDatosDelProducto(nombreProducto, categoria, marca, precio){
@@ -108,11 +128,11 @@ function ValidarDatosDelProducto(nombreProducto, categoria, marca, precio){
     if(!precio || !regexNumeros.test(precio))
         return 'El precio contiene caracteres invalidos o esta vacio';
     if(!nombreProducto || !regex.test(nombreProducto))
-        return 'El precio contiene caracteres invalidos o esta vacio';
-    if(!categoria || !regex.test(categoria))
-        return 'El precio contiene caracteres invalidos o esta vacio';
-    if(!marca || !regex.test(marca))
-        return 'El precio contiene caracteres invalidos o esta vacio';
+        return 'Nombre del producto contiene caracteres invalidos o esta vacio';
+    if(!categoria || !regex.test(categoria) || categoria == 'No seleccionada' )
+        return 'La categoria contiene caracteres invalidos o esta vacia';
+    if(!marca || !regex.test(marca) || marca == 'No seleccionada' || marca == 'Selecciona una categoria para buscar marcas')
+        return 'La marca contiene caracteres invalidos o esta vacia';
     return false;
 }
 const ObtenerMarcas = async (req, res) =>{
@@ -126,7 +146,7 @@ const ObtenerMarcas = async (req, res) =>{
         return res.json({ estado: 'exitoso', Marcas: marcas });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error});
+        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error.message});
     }
 }
 const ObtenerMarcasPorCategoria = async (req, res)=>{
@@ -149,7 +169,7 @@ const ObtenerMarcasPorCategoria = async (req, res)=>{
         return res.json({ estado: 'exitoso', Marcas: marcas });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error});
+        return res.json({estado: 'muyMalo', Marcas: [{Marca: 'No hay'}], mensaje: error.message});
     }
 }
 const ObtenerCategorias = async (req, res) =>{
@@ -163,7 +183,7 @@ const ObtenerCategorias = async (req, res) =>{
         return res.json({ estado: 'exitoso', Categorias: categorias });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Categorias: [{Categoria: 'No hay'}],mensaje: error});
+        return res.json({estado: 'muyMalo', Categorias: [{Categoria: 'No hay'}],mensaje: error.message});
     }
 }
 const ObtenerProductosConFiltros = async (req, res) =>{
@@ -217,7 +237,7 @@ const ObtenerProductosConFiltros = async (req, res) =>{
         return res.json({ estado: 'exitoso', Productos: solicitud.Productos, Marcas: marcas})
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Productos: [], mensaje: error});
+        return res.json({estado: 'muyMalo', Productos: [], mensaje: error.message});
     }
 }
 const ObtenerTodosProductos = async (req, res, next)=>{
@@ -228,7 +248,7 @@ const ObtenerTodosProductos = async (req, res, next)=>{
         return res.json({ estado: 'exitoso', Productos: solicitud.Productos})
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', Productos: [], mensaje: error});
+        return res.json({estado: 'muyMalo', Productos: [], mensaje: error.message});
     }
 }
 const ObtenerProductoPorID = async (req, res, next)=>{
@@ -252,7 +272,7 @@ const ObtenerProductoPorID = async (req, res, next)=>{
         return res.json({ estado: 'exitoso', Producto: solicitud.Productos, Marcas: marcas, Categorias: categorias})
     }catch{
         console.error(error);
-        return res.json({estado: 'muyMalo', Producto: [], mensaje: error});
+        return res.json({estado: 'muyMalo', Producto: [], mensaje: error.message});
     }
 }
 const ObtenerCategoriaPorID = async (req, res, next) =>{
@@ -264,7 +284,7 @@ const ObtenerCategoriaPorID = async (req, res, next) =>{
         return res.json({estado: 'exitoso', Categoria: solicitud.Categoria});
     }catch{
         console.error(error);
-        return res.json({estado: 'muyMalo', Categorias: [], mensaje: error});
+        return res.json({estado: 'muyMalo', Categorias: [], mensaje: error.message});
     }
 }
 const ObtenerMarcaPorID = async (req, res, next)=>{
@@ -276,11 +296,15 @@ const ObtenerMarcaPorID = async (req, res, next)=>{
         return res.json({estado: 'exitoso', Marca: solicitud.Marca});
     }catch (error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 const CambiarDatosPrincipalesDelProducto = async (req, res, next)=>{
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const { nombre, precio, ID } = req.body;
         const solicitud = await Con_CambiarDatosPrincipales(nombre, precio, ID);
         if(!solicitud.estado)
@@ -288,11 +312,15 @@ const CambiarDatosPrincipalesDelProducto = async (req, res, next)=>{
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 const CambiarDatosCategoricos = async (req, res, next) =>{
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const { categoria, marca, ID } = req.body;
         const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
         const IDCategoria = solicitarIDCatecoria.Categoria.ID;
@@ -304,11 +332,15 @@ const CambiarDatosCategoricos = async (req, res, next) =>{
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 const CambiarImagenDelProducto = async (req, res, next)=>{
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const imagen = req.file;
         let imagenProcesada;
         if (!imagen)
@@ -326,11 +358,15 @@ const CambiarImagenDelProducto = async (req, res, next)=>{
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 const CambiarDatosDeUnaCategoria = async (req, res, next)=>{
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const imagen = req.file;
         let imagenProcesada = null;
         if (imagen){
@@ -348,11 +384,15 @@ const CambiarDatosDeUnaCategoria = async (req, res, next)=>{
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 const CambiarDatosDeUnaMarca = async (req, res, next)=>{
     try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
         const { marca, categoria, ID } = req.body;
         if(!ID)
             return res.json({estado: 'malo', mensaje: 'No se selecciono ninguna marca'});
@@ -369,7 +409,7 @@ const CambiarDatosDeUnaMarca = async (req, res, next)=>{
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
     }catch (error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 async function ConvertirImagen(imagen, rutaOriginal) {
@@ -384,6 +424,11 @@ async function ConvertirImagen(imagen, rutaOriginal) {
     await sharp(jpegBuffer).jpeg({ quality: 90 }).toFile(nuevaRuta); //Guarda la nueva imagen
     fs.unlinkSync(rutaOriginal);//Esto borra la imagen .heic que se subio.
     return nuevoNombre
+}
+async function ComprobarUsuario(usuario) {
+    if(usuario[0] && usuario[0].Jerarquia &&  usuario[0].Jerarquia == 'ADMIN')
+        return true;
+    return false
 }
 export default{
     InsertarMarca, InsertarCategoria, ObtenerMarcas,

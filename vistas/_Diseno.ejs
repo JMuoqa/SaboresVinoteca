@@ -55,11 +55,11 @@
                     <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador2"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                     <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Usuario %>!</a></li>
                     <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
-                <% } else if(F_UsuarioActivo(Usuario)) { console.log(Usuario) %>
+                    <li class="items-generales items-principales"><img class="iconos-principales idIconoSalirSession" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
+                <% } else if(F_UsuarioActivo(Usuario)) { %>
                     <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Usuario %>!</a></li>
                     <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                    <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/iconoPuerta.png"></li>
+                    <li class="items-generales items-principales"><img class="iconos-principales idIconoSalirSession"  src="/carpeta_imagenes/web/iconoPuerta.png"></li>
                 <% } else { %>
                     <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png" id="IrAut"></li>
                 <% } %>
@@ -81,9 +81,8 @@
         <article class="secciones-pie seccion-Redes">
             <h2 class="subtitulos-pie">Redes</h2>
             <ul class="listas-generales lista-secundarias">
-                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Instagram:</strong></p><a class="links-generales links-pie-redes" href="https://www.instagram.com/vinoteca.sabores.arg/"> @vinoteca.sabores.arg</a></li>
-                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Whatsapp:</strong></p><a class="links-generales links-pie-redes"> 3512223333</a></li>
-                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Email:</strong></p><a class="links-generales links-pie-redes"> mail_ml@gmail.com</a></li>
+                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Instagram: </strong></p><img class="iconos-contacto" src="/carpeta_imagenes/web/instagram.png"><a class="links-generales links-pie-redes" rel="noopener noreferrer" href="https://www.instagram.com/vinoteca.sabores.arg/"> @vinoteca.sabores.arg</a></li>
+                <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Whatsapp: </strong></p><img class="iconos-contacto" src="/carpeta_imagenes/web/whatsapp.png" ><a class="links-generales links-pie-redes"  rel="noopener noreferrer" target="_blank" href="https://wa.me/595992071741"> 595-992-071741</a></li>
             </ul>
         </article>
     </footer>

@@ -64,6 +64,22 @@ async function Con_InsertarProducto(nombre, categoria, marca, precio, esImportad
         await CerrarConexion(con);
     }
 }
+async function Con_ComprobarProducto(nombre, idmarca, idcategoria) {
+    const con = await Conexion();
+    try{
+        const comprobarProducto = 'SELECT Producto FROM Productos WHERE Producto = ? AND IDCategoria = ? AND IDMarca = ?;';
+        const valores = [nombre, idcategoria, idmarca];
+        const producto = await con.execute(comprobarProducto, valores);
+        if(producto[0].length > 0)
+            throw new Error('Ese producto ya existe');
+        return {estado:true};
+    } catch(error){
+        console.error(error);
+        return {estado: false, mensaje: `${error}`};
+    }finally {
+        await CerrarConexion(con);
+    }
+}
 async function Con_ObtenerMarcas() {
     const con = await Conexion();
     try{
@@ -211,6 +227,7 @@ async function Con_ObtenerIDDeCategoria(_categoria) {
 async function Con_ObtenerIDDeMarca(_marca, IDCategoria) {
     const con = await Conexion();
     try{
+        console.log(_marca, IDCategoria);
         const obtenerCategorias = 'SELECT ID FROM Marcas WHERE Marca = ? AND IDCategoria = ?;';
         const valor = [_marca, IDCategoria];
         const marca = await con.execute(obtenerCategorias, valor);
@@ -319,5 +336,5 @@ export {
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
     Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
     Con_CabmiarDatosDeUnaCategoria, Con_ObtenerMarcaPorID, Con_CambiarDatosDeUnaMarca,
-    
+    Con_ComprobarProducto,
 }

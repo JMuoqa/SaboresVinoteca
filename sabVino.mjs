@@ -11,7 +11,6 @@ import rutasAdmin from './rutas/rutasAdmin.mjs';
 import rutasAut from './rutas/rutasAut.mjs'
 import session from 'express-session';
 import passport from './config/passport.mjs';
-
 let urlMadre = '';
 if(process.env.NODE_ENV == 'development'){
     urlMadre = 'http://localhost:5111';
@@ -45,7 +44,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
-
 app.use('/', rutasPrincipales);
 app.use('/admin', rutasAdmin);rutasAut
 app.use('/aut', rutasAut);
@@ -80,8 +78,6 @@ app.use((err, req, res, next) => {
         F_DetectarJavaScript: DetectarJavaScript,
     });
 });
-
-
 function DetectarJavaScript(titulo){
     return false;
 }

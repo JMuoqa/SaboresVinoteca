@@ -29,28 +29,36 @@ const VistaInicio = (req, res) =>{
 }
 const VistaCargar = async (req, res) =>{
     const usuario = req.user ?? [];
-    res.render('administracion/administracionDeCargar', {
-        TITULO: tituloCargar,
-        Usuario: usuario[0],
-        URLMadre: urlMadre,
-        F_UsuarioActivo: UsuarioActivo,
-        F_AdminActivo: AdminActivo,
-        F_DetectarJavaScript: DetectarJavaScript,
-    });
+    if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
+        res.render('administracion/administracionDeCargar', {
+            TITULO: tituloCargar,
+            Usuario: usuario[0],
+            URLMadre: urlMadre,
+            F_UsuarioActivo: UsuarioActivo,
+            F_AdminActivo: AdminActivo,
+            F_DetectarJavaScript: DetectarJavaScript,
+        });
+    }else{
+        VistaInicio(req, res);
+    }
 }
 const VistaEditarProductos = (req, res) =>{
     const usuario = req.user ?? [];
-    res.render('administracion/administrarEditarProducto', {
-        TITULO: tituloEditar,
-        Usuario: usuario,
-        URLMadre : urlMadre,
-        F_UsuarioActivo: UsuarioActivo,
-        F_AdminActivo: AdminActivo,
-        F_DetectarJavaScript: DetectarJavaScript,
-    });
+    if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
+        res.render('administracion/administrarEditarProducto', {
+            TITULO: tituloEditar,
+            Usuario: usuario[0],
+            URLMadre : urlMadre,
+            F_UsuarioActivo: UsuarioActivo,
+            F_AdminActivo: AdminActivo,
+            F_DetectarJavaScript: DetectarJavaScript,
+        });
+    }else{
+        VistaInicio(req, res);
+    }
 }
 const VistaError = (req, res)=>{
-    const usuario = req.user ?? [];
+    const usuario = req.user ??[];
     const mensaje = req.query.mensaje;
     res.render('error', {
         TITULO: tituloError,
@@ -64,25 +72,33 @@ const VistaError = (req, res)=>{
 }
 const VistaEditarCategorias = (req, res) =>{
     const usuario = req.user ?? [];
-    res.render('administracion/adminEditarCategoria', {
-        TITULO: tituloEditarCategorias,
-        Usuario: usuario[0],
-        URLMadre: urlMadre,
-        F_UsuarioActivo: UsuarioActivo,
-        F_AdminActivo: AdminActivo,
-        F_DetectarJavaScript: DetectarJavaScript,
-    });
+    if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
+        res.render('administracion/adminEditarCategoria', {
+            TITULO: tituloEditarCategorias,
+            Usuario: usuario[0],
+            URLMadre: urlMadre,
+            F_UsuarioActivo: UsuarioActivo,
+            F_AdminActivo: AdminActivo,
+            F_DetectarJavaScript: DetectarJavaScript,
+        });
+    }else{
+        VistaInicio(req, res);
+    }
 }
 const VistaEditarMarcas = (req, res)=>{
     const usuario = req.user ?? [];
-    res.render('administracion/adminEditarMarcas', {
-        TITULO: tituloEditarMarcas,
-        Usuario: usuario[0],
-        URLMadre: urlMadre,
-        F_UsuarioActivo: UsuarioActivo,
-        F_AdminActivo: AdminActivo,
-        F_DetectarJavaScript: DetectarJavaScript,
-    });
+    if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
+        res.render('administracion/adminEditarMarcas', {
+            TITULO: tituloEditarMarcas,
+            Usuario: usuario[0],
+            URLMadre: urlMadre,
+            F_UsuarioActivo: UsuarioActivo,
+            F_AdminActivo: AdminActivo,
+            F_DetectarJavaScript: DetectarJavaScript,
+        });
+    }else{
+        VistaInicio(req, res);
+    }
 }
 const VistaCategoriaSeleccionada = (req, res)=>{
     const _IDCategoria = req.query.IDC;

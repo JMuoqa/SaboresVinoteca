@@ -35,7 +35,7 @@ const Registrarse = async (req, res, next) => {
         })(req, res, next);
     }catch(error){
         console.log(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 async function ValidarDatosParaRegistrarse(usuario, email, contraseña, contraseñaR) {
@@ -78,7 +78,7 @@ const IniciarSession = async (req, res, next) =>{
         })(req, res, next);
     }catch(error){
         console.log(error);
-        return res.json({estado: 'muyMalo', mensaje: error});
+        return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
 async function ValidarDatosParaIniciarSession(usuario, contraseña) {
@@ -91,6 +91,17 @@ async function ValidarDatosParaIniciarSession(usuario, contraseña) {
     }
     return null;
 }
+const SalirDeLaSession = async (req, res, next) => {
+    try{
+        req.logout(err => {
+            if (err) { return next(err); }
+            return res.json({estado:'exitoso', mensaje:'Sesión cerrada correctamente'})
+        });
+    }catch(error){
+        console.log(error);
+        return res.json({estado: 'muyMalo', mensaje: error.message});
+    }
+}
 export default{
-    Registrarse, IniciarSession
+    Registrarse, IniciarSession, SalirDeLaSession
 }

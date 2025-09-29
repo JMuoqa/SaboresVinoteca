@@ -8,6 +8,7 @@ async function Esperar(milisegundos) {
 }
 function ActualizarSeccionCategorias() {
   const contenedorDeLasCategorias = document.getElementById('contenedorDeLasCategorias');
+  AnimacionAviso(true, 2);
   fetch('admin/obtener-categorias')
   .then(respuesta =>{
     if(!respuesta.ok)
@@ -28,10 +29,11 @@ function ActualizarSeccionCategorias() {
           <h3 class="titulo-categoria">${Categorias[i].Categoria}</h3>
         </article> `;
         contenedorDeLasCategorias.appendChild(articulo);
-        articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
+        articulo.offsetWidth;
         articulo.classList.add('animar-contenedor-info-producto');
         await Esperar(50);
       }
+      AnimacionAviso(false, 2);
       AgregarFuncionesACategorias();
     }
   })

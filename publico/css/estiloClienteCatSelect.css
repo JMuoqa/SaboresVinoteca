@@ -208,6 +208,7 @@
     width: 60%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+    justify-items: center; 
 }
 .imagen-categoria{
     width: 100%;
@@ -232,5 +233,98 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    
+}
+@media(max-width: 1400px){
+    .contenedor-horizontal {
+        width: 100%;
+    }
+}
+@media(max-width: 1300px){
+    .seccion-productos{
+        width: 70%;
+    }
+    .seccion-filtros-busquedas{
+        width: 30%;
+    }
+}
+@media(max-width: 950px){
+    .contenedor-de-las-categorias{
+        width: 90%;
+    }
+    .entrada-busqueda{
+        width: 30em;
+    }
+    .seccion-filtros-busquedas{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    .diseño-entrada-busuqeda{
+        width: 100%;
+        justify-content: unset;
+        margin: 10px 0;
+    }
+    .contenedor-slider{
+        margin: 0;
+        margin-top: 0.5em;
+    }
+    .seccion-flex {
+        flex-direction: column;
+    }
+    .seccion-productos{
+        width: 100%;
+    }
+    .campos{
+        min-height: auto;
+    } 
+}
+@media(max-width: 900px){
+    .contenedor-espiral{
+        font-size: 1.2em;
+        width: 18em;
+        
+    }
+    .animacion-espiral{           
+        width: 80px;
+        height: 80px; 
+    }
+}
+@media(max-width: 550px){
+    .contenedor-slider{
+        margin-left: 20px;
+    }
+    .entrada-busqueda{
+        width: 25em;
+    }
+}
+@media(max-width: 450px){
+    .entrada-busqueda{
+        width: 20em;
+    }
+    .subtitulos-principales{
+        font-size: 3em;
+    }
+    .conteendor-productos{
+        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+    }
+    .contenedor-espiral{
+        font-size: 1em;
+    }
+    .animacion-espiral{           
+        width: 70px;
+        height: 70px; 
+    }
+}
+@media(max-width: 380px){
+    .entrada-busqueda{
+        width: 18em;
+    }
+    .contenedor-de-las-categorias {
+        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+    }
+    .contenedor-categoria{
+        width: 12em;
+        height: 18em;
+    }
 }

@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function(){
     MenuPrincipalAdaptable();
     LinkImportados();
     IrAut();
+    SalirDeLaSession();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -91,7 +92,7 @@ function AgregarLinksCategorias(){
           li.classList.add('items-generales');
           li.classList.add('items-secudarios-categorias');
           li.dataset.id = Categorias[i].ID;
-          li.innerHTML = `<a class="links-generales links-secundarios-categorias" href="${URLMadre}/categoria-seleccionada?IDC=${Categorias[i].ID}#tituloCategoria">${Categorias[i].Categoria}</a>`;
+          li.innerHTML = `<a class="links-generales links-secundarios-categorias" href="${URLMadre}/categoria-seleccionada?IDC=${Categorias[i].ID}#tituloCategoria">${Categorias[i].Categoria}</a> <img class="icono-flecha-links" src="/carpeta_imagenes/web/flecha.png">`;
           listaSecundarioCategorias.appendChild(li);
           li.offsetWidth;
         }
@@ -148,6 +149,31 @@ function IrAut(){
     const irAut = document.getElementById('IrAut');
     irAut.addEventListener('click', function(){
       window.location.href = `${URLMadre}/autenticacion`;
+    });
+  }
+}
+
+function SalirDeLaSession(){
+  const idIconoSalirSession = document.querySelectorAll('.idIconoSalirSession');
+  if(idIconoSalirSession[0]){
+    idIconoSalirSession[0].addEventListener('click', function(){
+      fetch('aut/salir',{
+        method: 'POST'
+      })
+      .then(respuesta =>{
+        if(!respuesta.ok)
+            throw new Error('Error en la solicitud');
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+          if(estado == 'exitoso'){
+              window.location.href = `${URLMadre}/exito?mensaje=${mensaje}`;
+          }else{
+            throw new Error('Tuvimos un problema');
+          }
+      }).catch( error => {
+          console.error(error);
+          window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
     });
   }
 }

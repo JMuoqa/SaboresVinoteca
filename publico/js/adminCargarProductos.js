@@ -127,7 +127,7 @@ function EventosChangeDeEntradas(){
     const entradaMarca = document.getElementById('entradaMarca');
     const etiquetaMarcaProducto = document.getElementById('etiquetaMarcaProducto');
     entradaMarca.addEventListener('change', function(){
-        if(entradaMarca.value.trim() === '' || entradaMarca.value.trim() === 'No seleccionado' || entradaMarca.value.trim() === 'No hay' || entradaMarca.value.trim() === 'Selecciona una categoria para buscar marcas')
+        if(entradaMarca.value.trim() === '' || entradaMarca.value.trim() === 'No seleccionada' || entradaMarca.value.trim() === 'No hay' || entradaMarca.value.trim() === 'Selecciona una categoria para buscar marcas')
             etiquetaMarcaProducto.innerText = '';
         else
             etiquetaMarcaProducto.innerText = entradaMarca.value.trim();
@@ -143,134 +143,160 @@ function EventosChangeDeEntradas(){
 }
 function CargarMarca(){
     const formulario = document.getElementById('seccionCargarMarcas');
+    let estadoConsulta = true;
     formulario.addEventListener('submit', async function(event){
         event.preventDefault();
-        const formData = new FormData(this);
-        const datos = {};
-        formData.forEach((value, key)=>{
-            datos[key] = value;
-        });
-        fetch('admin/guardar-marca', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(datos)
-        }).then(respuesta => {
-            if(!respuesta.ok)
-                throw new Error('Error en la solicitud');
-            return respuesta.json()
-        }).then(async respuesta => {
-            VaciarSeccionMarca();
-            ActualizarListaMarcas();
-            if(!respuesta){
-                throw new Error('Error en la solicitud');
-            }
-            if(respuesta['estado'] == 'muyMalo'){
-                throw new Error(respuesta['mensaje']);
-            }
-            if(respuesta['estado'] == 'malo'){
-                const p = document.getElementById('mensajeDeAlertaMarca');
-                p.style = 'color: #d7596d;';
-                p.innerText = respuesta['mensaje'];
-                setTimeout(function(){
-                    p.innerText = '';
-                },5000);
-            }else{
-                const p = document.getElementById('mensajeDeAlertaMarca');
-                p.style = 'color: #2ea356;';
-                p.innerText = respuesta['mensaje'];
-                setTimeout(function(){
-                    p.innerText = '';
-                },5000);
-            }
-        }).catch(error=>{
-            console.error(error);
-            window.location.href = `${URLMadre}/error?mensaje=${error}`;
-        })
+        if(estadoConsulta){
+            estadoConsulta = false;
+            AnimacionAviso(true, 2)
+            const formData = new FormData(this);
+            const datos = {};
+            formData.forEach((value, key)=>{
+                datos[key] = value;
+            });
+            fetch('admin/guardar-marca', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(datos)
+            }).then(respuesta => {
+                if(!respuesta.ok)
+                    throw new Error('Error en la solicitud');
+                return respuesta.json()
+            }).then(async respuesta => {
+                await VaciarSeccionMarca();
+                await ActualizarListaMarcas();
+                AnimacionAviso(false, 2)
+                if(!respuesta){
+                    throw new Error('Error en la solicitud');
+                }
+                if(respuesta['estado'] == 'muyMalo'){
+                    throw new Error(respuesta['mensaje']);
+                }
+                if(respuesta['estado'] == 'malo'){
+                    const p = document.getElementById('mensajeDeAlertaMarca');
+                    p.style = 'color: #d7596d;';
+                    p.innerText = respuesta['mensaje'];
+                    setTimeout(function(){
+                        p.innerText = '';
+                    },5000);
+                    estadoConsulta = true;
+                }else{
+                    const p = document.getElementById('mensajeDeAlertaMarca');
+                    p.style = 'color: #2ea356;';
+                    p.innerText = respuesta['mensaje'];
+                    setTimeout(function(){
+                        p.innerText = '';
+                    },5000);
+                    estadoConsulta = true;
+                }
+            }).catch(error=>{
+                console.error(error);
+                estadoConsulta = true;
+                AnimacionAviso(false, 2)
+                window.location.href = `${URLMadre}/error?mensaje=${error}`;
+            })
+        }
     });
 }
 function CargarCategoria(){
     const formulario = document.getElementById('seccionCargaCategorias');
+    let estadoConsulta = true;
     formulario.addEventListener('submit', async function(event){
         event.preventDefault();
-        const formData = new FormData(this);
-        fetch('admin/guardar-categoria',{
-            method:'POST',
-            body: formData
-        }).then(respuesta => {
-            if(!respuesta.ok)
-                throw new Error('Error en la solicitud');
-            return respuesta.json()
-        }).then(async respuesta => {
-            await VaciarSeccionCategoria();
-            await ActualizarListaCategorias();
-            if(!respuesta){
-                throw new Error('Error en la solicitud');
-            }
-            if(respuesta['estado'] == 'muyMalo'){
-                throw new Error(respuesta['mensaje']);
-            }
-            if(respuesta['estado'] == 'malo'){
-                const p = document.getElementById('mensajeDeAlertaCategoria');
-                p.style = 'color: #d7596d;';
-                p.innerText = respuesta['mensaje'];
-                setTimeout(function(){
-                    p.innerText = '';
-                },5000);
-            }else{
-                const p = document.getElementById('mensajeDeAlertaCategoria');
-                p.style = 'color: #2ea356;';
-                p.innerText = respuesta['mensaje'];
-                setTimeout(function(){
-                    p.innerText = '';
-                },5000);
-            }
-        }).catch(error=>{
-            console.error(error);
-            window.location.href = `${URLMadre}/error?mensaje=${error}`;
-        })
+        if(estadoConsulta){
+            AnimacionAviso(true, 1)
+            const formData = new FormData(this);
+            fetch('admin/guardar-categoria',{
+                method:'POST',
+                body: formData
+            }).then(respuesta => {
+                if(!respuesta.ok)
+                    throw new Error('Error en la solicitud');
+                return respuesta.json()
+            }).then(async respuesta => {
+                await VaciarSeccionCategoria();
+                await ActualizarListaCategorias();
+                AnimacionAviso(false, 1)
+                if(!respuesta){
+                    throw new Error('Error en la solicitud');
+                }
+                if(respuesta['estado'] == 'muyMalo'){
+                    throw new Error(respuesta['mensaje']);
+                }
+                if(respuesta['estado'] == 'malo'){
+                    const p = document.getElementById('mensajeDeAlertaCategoria');
+                    p.style = 'color: #d7596d;';
+                    p.innerText = respuesta['mensaje'];
+                    setTimeout(function(){
+                        p.innerText = '';
+                    },5000);
+                }else{
+                    const p = document.getElementById('mensajeDeAlertaCategoria');
+                    p.style = 'color: #2ea356;';
+                    p.innerText = respuesta['mensaje'];
+                    setTimeout(function(){
+                        p.innerText = '';
+                    },5000);
+                }
+            }).catch(error=>{
+                console.error(error);
+                AnimacionAviso(false, 1)
+                window.location.href = `${URLMadre}/error?mensaje=${error}`;
+            });
+        }
     }); 
 }
 function CargarProducto() {
     const formulario = document.getElementById('seccionCargaProductos');
+    let estadoConsulta = true;
     formulario.addEventListener('submit', function(event){
         event.preventDefault();
-        const formData = new FormData(this);
-        fetch('admin/guardar-producto', {
-            method: 'POST',
-            body: formData,
-        }).then(respuesta => {
-            if(!respuesta.ok)
-                throw new Error('Error en la solicitud');
-            return respuesta.json()
-        }).then(async respuesta => {
-            await VaciarSeccionProductos();
-            if(!respuesta){
-                throw new Error('Error en la solicitud');
-            }
-            if(respuesta['estado'] == 'muyMalo'){
-                throw new Error(respuesta['mensaje']);
-            }
-            if(respuesta['estado'] == 'malo'){
-                const p = document.getElementById('mensajeDeAlertaProductos');
-                p.style = 'color: #d7596d;';
-                p.innerText = respuesta['mensaje'];
-                setTimeout(function(){
-                    p.innerText = '';
-                },5000);
-            }else{
-                const p = document.getElementById('mensajeDeAlertaProductos');
-                p.style = 'color: #2ea356;';
-                p.innerText = respuesta['mensaje'];
-                setTimeout(function(){
-                    p.innerText = '';
-                },5000);
-            }
-        }).catch(error=>{
-            console.error(error);
-            window.location.href = `${URLMadre}/error?mensaje=${error}`;
-        })
+        if(estadoConsulta){
+            estadoConsulta = false;
+            AnimacionAviso(true, 0)
+            const formData = new FormData(this);
+            fetch('admin/guardar-producto', {
+                method: 'POST',
+                body: formData,
+            }).then(respuesta => {
+                if(!respuesta.ok)
+                    throw new Error('Error en la solicitud');
+                return respuesta.json()
+            }).then(async respuesta => {
+                await VaciarSeccionProductos();
+                AnimacionAviso(false, 0)
+                if(!respuesta){
+                    throw new Error('Error en la solicitud');
+                }
+                if(respuesta['estado'] == 'muyMalo'){
+                    throw new Error(respuesta['mensaje']);
+                }
+                if(respuesta['estado'] == 'malo'){
+                    const p = document.getElementById('mensajeDeAlertaProductos');
+                    p.style = 'color: #d7596d;';
+                    p.innerText = respuesta['mensaje'];
+                    setTimeout(function(){
+                        p.innerText = '';
+                    },5000);
+                    estadoConsulta = true;
+                }else{
+                    const p = document.getElementById('mensajeDeAlertaProductos');
+                    p.style = 'color: #2ea356;';
+                    p.innerText = respuesta['mensaje'];
+                    setTimeout(function(){
+                        p.innerText = '';
+                    },5000);
+                    estadoConsulta = true;
+                }
+            }).catch(error=>{
+                console.error(error);
+                estadoConsulta = true;
+                AnimacionAviso(false, 0)
+                window.location.href = `${URLMadre}/error?mensaje=${error}`;
+            })
+        }
     });
 }
 function VaciarSeccionCategoria(){
@@ -280,6 +306,15 @@ function VaciarSeccionCategoria(){
     entradaArchivos.value = null;
     nombreCategoria.value = '';
     elementoImagen.src = '';
+}
+function AnimacionAviso(estado, pos){
+  const index = parseInt(pos, 10); 
+  const animacionDeCarga = document.querySelectorAll('.contenedor-espiral');
+  if(estado){
+    animacionDeCarga[index].style.display = 'flex';
+  }else{
+    animacionDeCarga[index].style.display = 'none';
+  }
 }
 function VaciarSeccionMarca(){
     const entrada = document.getElementById('entradaCargarMarca')
@@ -320,7 +355,7 @@ function ActualizarListaMarcas() {
                     throw new Error('Error en la solicitud');
                 return respuesta.json()
             }).then(({Marcas}) =>{
-                entradaMarca.innerHTML = '<option>No seleccionado</option>';
+                entradaMarca.innerHTML = '<option>No seleccionada</option>';
                 for(let i = 0; i < Marcas.length; i++){
                     let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
                     entradaMarca.innerHTML += opcionesDeMarcas;

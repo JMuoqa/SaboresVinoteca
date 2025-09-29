@@ -189,3 +189,23 @@ fieldset{
 .boton-general:hover{
     background-color: var(--verde-hover)
 }
+/*Iconos diseño*/
+.iconos-contacto{
+    width: 1em;
+    height: 1em;
+    margin: 0 4px;
+}
+.icono-flecha-links{
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 5px;
+}
+/*Animacion espiral*/
+.contenedor-espiral > p {
+  margin-right: 15px;
+}
+@media(max-width: 450px){
+    .contenedor-info-producto{
+        width: 12em;
+    }
+}

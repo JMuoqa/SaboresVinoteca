@@ -155,3 +155,80 @@
     margin-top: 2em;
     font-size: 1.5em;
 }
+
+.contenedor-espiral-grande{
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 20em;
+    margin: auto;
+}
+.animacion-espiral-grande{
+    margin-left: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--verde-profundo);    
+    border-radius: 50%;               
+    width: 100px;
+    height: 100px;   
+    animation: espiral 1s linear infinite;
+    background: transparent;   
+}
+@media(max-width:1024px){
+    .field-tamaño-definido, .formulario-editar-marcas{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        align-items: flex-start;
+
+    }
+    .boton-busqueda{
+        margin-left: 0;
+    }
+    .entrada-busqueda{
+        margin-left: 0;
+    }
+    .campos{
+        margin: 0;
+    }
+}
+@media(max-width: 950px) {
+    .seccion-seleccionar-edicion{
+        flex-direction: column;
+        width: 70%;
+        margin: auto;
+        align-items: flex-start;
+    }
+    .boton-elegir{
+        margin: 10px 0;
+    }
+}
+
+@media(max-width: 900px){
+    .formulario-carga{
+        width: 90%;
+    } 
+    .seccion-seleccionar-edicion{
+        width: 90%;
+    }
+    .formulario-busqueda{
+        width: 90%;
+    }
+    .contenedor-espiral-grande{
+        font-size: 1.2em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 80px;
+        height: 80px; 
+    }
+}
+@media(max-width:450px){
+    .contenedor-espiral-grande{
+        font-size: 1em;
+    }
+    .animacion-espiral-grande{              
+        width:  70px;
+        height: 70px; 
+    }
+}

@@ -118,66 +118,79 @@ function ActualizarProductos() {
 }
 function BotonBuscarYEventoDelFormulario() {
   const formularioFiltro = document.getElementById('formularioFiltro');
+  let estadoConsulta = true;
   formularioFiltro.addEventListener('submit', function(event){
     event.preventDefault();
-    const contenedorProductos = document.getElementById('contenedorProductos');
-    const datosDelFormulario = new FormData(this);
-    const datos = {};
-    datosDelFormulario.forEach((value, key)=>{
-      datos[key] = value;
-    })
-    const numeroDePagina = document.getElementById('numeroDePagina');
-    const url = new URL(window.location);
-    const parametros = new URLSearchParams(url.search);
-    parametros.set("busqueda", datos['busqueda']);
-    parametros.set("marca", datos['marca']);
-    parametros.set("categoria", datos['categoria']);
-    parametros.set("limite", 14);
-    parametros.set("pagina", 1);
-    url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
-    url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
-    fetch(url.toString())
-    .then(respuesta =>{
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud'); 
-      return respuesta.json();    
-    }).then(async respuesta => {
-      if(respuesta['Productos']){
-        const Productos = respuesta['Productos'];
-        const Marcas = respuesta['Marcas'];
-        contenedorProductos.innerHTML = '';
-        numeroDePagina.innerText = 1;
-        if(Productos.length == 0){
-          let html = '<p><strong>No se encontraron productos</strong></p>';
-          contenedorProductos.innerHTML = html;
-        }
-        else{
-          for(let i = 0; i < Productos.length; i++){
-            const articulo = document.createElement('article');
-            articulo.innerHTML = `
-              <article class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
-                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                </div>
-              </article>`;
-            contenedorProductos.appendChild(articulo)
-            // Forzar “reflow” antes de añadir la clase de animación
-            articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
-            articulo.classList.add('animar-contenedor-info-producto');
-            await Esperar(50);
+    if(estadoConsulta){
+      estadoConsulta = false;
+      AnimacionAviso(true, 0)
+      const contenedorProductos = document.getElementById('contenedorProductos');
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((value, key)=>{
+        datos[key] = value;
+      })
+      const numeroDePagina = document.getElementById('numeroDePagina');
+      const url = new URL(window.location);
+      const parametros = new URLSearchParams(url.search);
+      parametros.set("busqueda", datos['busqueda']);
+      parametros.set("marca", datos['marca']);
+      parametros.set("categoria", datos['categoria']);
+      parametros.set("limite", 14);
+      parametros.set("pagina", 1);
+      url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
+      url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
+      fetch(url.toString())
+      .then(respuesta =>{
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud'); 
+        return respuesta.json();    
+      }).then(async respuesta => {
+        if(respuesta['Productos']){
+          AnimacionAviso(false, 0)
+          const Productos = respuesta['Productos'];
+          const Marcas = respuesta['Marcas'];
+          contenedorProductos.innerHTML = '';
+          numeroDePagina.innerText = 1;
+          if(Productos.length == 0){
+            let html = '<p><strong>No se encontraron productos</strong></p>';
+            contenedorProductos.innerHTML = html;
+            estadoConsulta = true;
           }
+          else{
+            for(let i = 0; i < Productos.length; i++){
+              const articulo = document.createElement('article');
+              articulo.innerHTML = `
+                <article class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
+                    <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
+                  </div>
+                </article>`;
+              contenedorProductos.appendChild(articulo)
+              // Forzar “reflow” antes de añadir la clase de animación
+              articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
+              articulo.classList.add('animar-contenedor-info-producto');
+              await Esperar(50);
+            }
+            estadoConsulta = true;
+          }
+        }else{
+          throw new Error('Hubo un error en la cosulta')
         }
-      }else{
-        throw new Error('Hubo un error en la cosulta')
-      }
-      AgregarFuncionesProductos();
-    }).catch( error => {
-        console.error(error);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
+        AgregarFuncionesProductos();
+      }).catch( error => {
+          console.error(error);
+          estadoConsulta = true;
+          window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
+  })
+  const imagenLupa =document.getElementById('imagenLupa');
+  imagenLupa.addEventListener('click', function(){
+    formularioFiltro.requestSubmit();
   })
 }
 function AnimacionAviso(estado, pos){
@@ -372,114 +385,131 @@ function ActualizarListaMarcas() {
 function GuardarInformacionPrincipal(){
   const formularioDatosPrincipales = document.getElementById('formularioDatosPrincipales');
   const formularioFiltro = document.getElementById('formularioFiltro');
+  let estadoConsulta = true;
   formularioDatosPrincipales.addEventListener('submit', function(event){
     event.preventDefault();
-    AnimacionAviso(true, 2)
-    const datosDelFormulario = new FormData(this);
-    const datos = {};
-    datosDelFormulario.forEach((valor, campo)=>{
-      datos[campo] = valor;
-    });
-    fetch('admin/cambiar-datos-principales',{
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(datos)
-    }).then(respuesta => {
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud')
-      return respuesta.json();
-    }).then(({estado, mensaje})=>{
-      AnimacionAviso(false, 2)
-      const p = document.getElementById('textoEdicionPrincipal');
-      if(estado == 'exitoso')
-        p.style = 'color: #2ea356;';
-      else
-        p.style = 'color: #d7596d;';
-      p.innerText = mensaje;
-      setTimeout(function(){
-          p.innerText = '';
-      },5000);
-      formularioFiltro.dispatchEvent(new Event('submit'));
-    }).catch( error => {
-      console.error(error);
-      AnimacionAviso(false, 2)
-      window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
+    if(estadoConsulta){
+      AnimacionAviso(true, 2)
+      estadoConsulta = false;
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((valor, campo)=>{
+        datos[campo] = valor;
+      });
+      fetch('admin/cambiar-datos-principales',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+      }).then(respuesta => {
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud')
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+        AnimacionAviso(false, 2)
+        const p = document.getElementById('textoEdicionPrincipal');
+        if(estado == 'exitoso')
+          p.style = 'color: #2ea356;';
+        else
+          p.style = 'color: #d7596d;';
+        p.innerText = mensaje;
+        setTimeout(function(){
+            p.innerText = '';
+        },5000);
+        estadoConsulta = true;
+        formularioFiltro.requestSubmit();
+      }).catch( error => {
+        console.error(error);
+        estadoConsulta = true;
+        AnimacionAviso(false, 2)
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
   });
 }
 function GuardarInformacionCategorica(){
   const formularioFiltro = document.getElementById('formularioFiltro');
   const formularioDatosCategoricos = document.getElementById('formularioDatosCategoricos');
+  let estadoConsulta = true;
   formularioDatosCategoricos.addEventListener('submit', function(event){
     event.preventDefault();
-    AnimacionAviso(true, 3)
-    const datosDelFormulario = new FormData(this);
-    const datos = {};
-    datosDelFormulario.forEach((valor, campo)=>{
-      datos[campo] = valor;
-    });
-    fetch('admin/cambiar-datos-categoricos',{
-      method: 'POST',
-      headers: {
-          'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(datos)
-    }).then(respuesta => {
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud')
-      return respuesta.json();
-    }).then(({estado, mensaje})=>{
-      AnimacionAviso(false, 3)
-      const p = document.getElementById('textoEdicionCategorica');
-      if(estado == 'exitoso')
-        p.style = 'color: #2ea356;';
-      else
-        p.style = 'color: #d7596d;';
-      p.innerText = mensaje;
-      setTimeout(function(){
-          p.innerText = '';
-      },5000);
-      formularioFiltro.dispatchEvent(new Event('submit'));
-    }).catch( error => {
-      console.error(error);
-      AnimacionAviso(false, 3)
-      window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
+    if(estadoConsulta){
+      estadoConsulta = false;
+      AnimacionAviso(true, 3)
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((valor, campo)=>{
+        datos[campo] = valor;
+      });
+      fetch('admin/cambiar-datos-categoricos',{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+      }).then(respuesta => {
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud')
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+        AnimacionAviso(false, 3)
+        const p = document.getElementById('textoEdicionCategorica');
+        if(estado == 'exitoso')
+          p.style = 'color: #2ea356;';
+        else
+          p.style = 'color: #d7596d;';
+        p.innerText = mensaje;
+        setTimeout(function(){
+            p.innerText = '';
+        },5000);
+        estadoConsulta = true;
+        formularioFiltro.requestSubmit();
+      }).catch( error => {
+        console.error(error);
+        estadoConsulta = true;
+        AnimacionAviso(false, 3)
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
   });
 }
 function GuardarImagen(){
   const formularioFiltro = document.getElementById('formularioFiltro');
+  let estadoConsulta = true;
   const formularioDatoImagen = document.getElementById('formularioDatoImagen');
   formularioDatoImagen.addEventListener('submit', function(event){
     event.preventDefault();
-    AnimacionAviso(true, 4)
-    const datosDelFormulario = new FormData(this);
-    fetch('admin/cambiar-imagen-producto',{
-      method: 'POST',
-      body: datosDelFormulario
-    }).then(respuesta => {
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud')
-      return respuesta.json();
-    }).then(({estado, mensaje})=>{
-      AnimacionAviso(false, 4)
-      const p = document.getElementById('textoEditarImagen');
-      if(estado == 'exitoso')
-        p.style = 'color: #2ea356;';
-      else
-        p.style = 'color: #d7596d;';
-      p.innerText = mensaje;
-      setTimeout(function(){
-          p.innerText = '';
-      },5000);
-      formularioFiltro.dispatchEvent(new Event('submit'));
-    }).catch( error => {
-      console.error(error);
-      AnimacionAviso(false, 4)
-      window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
+    if(estadoConsulta){
+      AnimacionAviso(true, 4)
+      const datosDelFormulario = new FormData(this);
+      fetch('admin/cambiar-imagen-producto',{
+        method: 'POST',
+        body: datosDelFormulario
+      }).then(respuesta => {
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud')
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+        AnimacionAviso(false, 4)
+        const p = document.getElementById('textoEditarImagen');
+        if(estado == 'exitoso')
+          p.style = 'color: #2ea356;';
+        else
+          p.style = 'color: #d7596d;';
+        p.innerText = mensaje;
+        setTimeout(function(){
+            p.innerText = '';
+        },5000);
+        estadoConsulta = true;
+        formularioFiltro.requestSubmit();
+      }).catch( error => {
+        console.error(error);
+        estadoConsulta = true;
+        AnimacionAviso(false, 4)
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
   });
 }
 function ConseguirFormatoDelPrecioOriginal(precio){

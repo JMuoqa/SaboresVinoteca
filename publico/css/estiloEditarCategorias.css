@@ -108,6 +108,8 @@
     width: 60%;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+    justify-items: center; 
+    align-items: center;
 }
 .imagen-categoria{
     width: 100%;
@@ -170,11 +172,9 @@
     align-items: center;
     overflow: hidden;
 }
-
 .imagen-vista-previa{
     width: 100%;
 }
-
 .contenedor-espiral{
     margin: auto;
     display: none;
@@ -189,4 +189,81 @@
     height: 1em;
     animation: espiral 1s linear infinite;
     background: transparent;   
+}
+.contenedor-espiral-grande{
+    margin: auto;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 20em;
+    margin: auto;
+}
+.animacion-espiral-grande{
+    margin-left: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--verde-profundo);    
+    border-radius: 50%;               
+    width: 100px;
+    height: 100px;   
+    animation: espiral 1s linear infinite;
+    background: transparent;   
+}
+@media(max-width: 1024px){
+    .formulario-carga{
+        flex-direction: column;
+    }
+    .fieldset{
+        width: 100%;
+    }
+    .contenedor-de-las-categorias{
+        width: 95%;
+    }
+}
+@media(max-width: 950px) {
+    .seccion-seleccionar-edicion{
+        flex-direction: column;
+        width: 70%;
+        margin: auto;
+        align-items: flex-start;
+    }
+    .boton-elegir{
+        margin: 10px 0;
+    }
+}
+
+@media(max-width: 900px){
+    .formulario-carga{
+        width: 90%;
+    } 
+    .seccion-seleccionar-edicion{
+        width: 90%;
+    }
+    .contenedor-espiral-grande{
+        font-size: 1.2em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 80px;
+        height: 80px; 
+    }
+}
+
+@media(max-width:450px){
+    .contenedor-espiral-grande{
+        font-size: 1em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 70px;
+        height: 70px; 
+    }
+}
+@media(max-width: 380px){
+    .contenedor-de-las-categorias {
+        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+    }
+    .contenedor-categoria{
+        width: 12em;
+        height: 18em;
+    }
 }

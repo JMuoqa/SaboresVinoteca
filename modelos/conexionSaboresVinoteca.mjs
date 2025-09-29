@@ -4,7 +4,7 @@ async function Conexion() {
         const conexion = await mysql.createConnection({
             host: process.env.HOSTVPS,
             user: process.env.UsuarioSaboresVinoteca,
-            password: process.env.ContraseñaBaseSaboresVinoteca,
+            password: process.env.ContrasenaBaseSaboresVinoteca,
             database: process.env.VPSBaseSaboresVinoteca
         })
         console.log('Conexion a MySQL establecida.');
