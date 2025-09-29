@@ -38,16 +38,19 @@ function Carrusel() {
     const slides = document.querySelectorAll(".slide");
     const next = document.getElementById("indiceSiguiente");
     const prev = document.getElementById("indiceAnterior");
-    if(slides.length > 6){
+    let tamaño = slides.length;
+    if(tamaño > 1){
         const px = 160;
         let indice = 0;    
         //Crear clones
         const firstClone = slides[0].cloneNode(true);
         const lastClone = slides[slides.length - 1].cloneNode(true);
+        let resta = 2;
         for(let i=0; i<6;i++){
           if(slides[i]){
               const clone = slides[i].cloneNode(true);
               pista.appendChild(clone);
+              resta++;
           }
         }
         pista.appendChild(firstClone);
@@ -78,7 +81,7 @@ function Carrusel() {
           }
           if (indice == 0) {
             pista.style.transition = "none";
-            indice = totalSlides - 7;
+            indice = totalSlides - resta;
             pista.style.transform = `translateX(-${indice * px}px)`;
           }
         });
