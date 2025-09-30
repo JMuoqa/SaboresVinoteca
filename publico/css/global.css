@@ -215,8 +215,8 @@ fieldset{
 }
 /*Categorias*/
 .contenedor-categoria{
-    width: 15em;
-    max-width: 15em;
+    width: 25em;
+    max-width: 25em;
     height: 10em;
     max-height: 10em;
     background: linear-gradient(to top, var(--verde-profundo), #203d35);
@@ -240,6 +240,6 @@ fieldset{
 .contenedor-de-las-categorias{
     width: 70%;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(26em, 1fr));
     justify-items: center; 
 }
