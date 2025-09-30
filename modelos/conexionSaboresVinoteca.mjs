@@ -1,12 +1,22 @@
 import mysql from 'mysql2/promise';
 async function Conexion() {
     try{
-        const conexion = await mysql.createConnection({
-            host: process.env.HOSTVPS,
-            user: process.env.UsuarioSaboresVinoteca,
-            password: process.env.ContrasenaBaseSaboresVinoteca,
-            database: process.env.VPSBaseSaboresVinoteca
-        })
+        let conexion;
+        if(process.env.NODE_ENV == 'development'){
+            conexion = await mysql.createConnection({
+                host: process.env.HOST,//process.env.HOSTVPS,
+                user: process.env.usuario,
+                password: process.env.ContrasenaMySQL,
+                database: process.env.VPSBaseSaboresVinoteca
+            })
+        }else{
+            conexion = await mysql.createConnection({
+                host: process.env.HOSTVPS,
+                user: process.env.UsuarioSaboresVinoteca,
+                password: process.env.ContrasenaBaseSaboresVinoteca,
+                database: process.env.VPSBaseSaboresVinoteca
+            })
+        }
         console.log('Conexion a MySQL establecida.');
         return conexion;
     }

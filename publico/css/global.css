@@ -6,6 +6,7 @@
     --dorado: #c9a646;
     --bronce: #8c6239;
     --color-rojo-error: #d7596d;
+    --color-rojo: #d01f3d;
     --color-naranja-edicion: #ff914d;
     /*Whisky*/
     --whisky-claro: #F5E6D3;
@@ -132,6 +133,9 @@ fieldset{
 }
 .contenedor-info-producto{
     width: 12em;
+    height: 21em;
+    min-height: 21em;
+    max-height: 21em;
     border-radius: 5px;
     margin-top: 1em;
     overflow: hidden;
@@ -208,4 +212,34 @@ fieldset{
     .contenedor-info-producto{
         width: 12em;
     }
+}
+/*Categorias*/
+.contenedor-categoria{
+    width: 15em;
+    max-width: 15em;
+    height: 10em;
+    max-height: 10em;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transform: scale(1);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.15);
+    transition: transform .3s ease, box-shadow .3s ease;
+    margin-top: 1em;
+}
+.contenedor-categoria:hover{
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.2);
+    transform: scale(1.1);
+
+}
+.contenedor-de-las-categorias{
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+    justify-items: center; 
 }

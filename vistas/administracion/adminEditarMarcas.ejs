@@ -34,6 +34,20 @@
     </section>
     <section class="seccion-editar-marcas">
         <h3 class="subtitulo-administrar">Editar marca</h3>
+        <form class="formulario formulario-carga formulario-carga-productos" id="formularioEliminarMarca">
+            <fieldset class="fieldset fieldset-completo">
+                <div class="contenedor-espiral"  id="">
+                    <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+                </div>
+                <input type="hidden" id="entradaOcultaIDEliminar" name="ID" required>
+                <div class="contenedor-seguridad">
+                    <label class="etiquetas" for="entradaSeguridad">Voy a eliminar</label>
+                    <input class="entrada-seguridad" id="entradaSeguridad" type="checkbox">
+                </div>
+                <button type="submit" class="boton-elimiar" id="botonEliminar">Eliminar</button>
+                <p id="textoEditarVisibilidad"></p>
+            </fieldset>
+        </form>
         <form class="formulario formulario-carga formulario-carga-marca" id="formularioMarca">
             <fieldset class="fieldset fieldset-marca" >
                 <div class="contenedor-espiral"  id="animacionDeCarga">

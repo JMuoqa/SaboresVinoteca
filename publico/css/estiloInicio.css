@@ -20,34 +20,8 @@
     text-align: center;
     padding: 0.5em 0;
 }
-.contenedor-categoria{
-    width: 10em;
-    height: 15em;
-    max-height: 15em;
-    background: linear-gradient(to top, var(--verde-profundo), #203d35);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    transform: scale(1);
-    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.15);
-    transition: transform .3s ease, box-shadow .3s ease;
-    margin-top: 1em;
-}
-.contenedor-categoria:hover{
-    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.2);
-    transform: scale(1.1);
-
-}
-.contenedor-de-las-categorias{
-    width: 60%;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
-    justify-items: center; 
-    align-items: center;
+.subtitulos-catalogo{
+    margin-top: 0;
 }
 .imagen-categoria{
     width: 100%;
@@ -56,7 +30,7 @@
     margin: 0;
     position: absolute;
     display: inline-block;
-    font-size: 1.6em;
+    font-size: 2.5em;
     text-align: center;
     font-family: "Bebas";
     color: var(--fondo-blanco);
@@ -65,7 +39,7 @@
     transform: translate(-50%, -50%);
 }
 .filtro-categoria{
-    background-color: #1119;
+    background-color: #1113;
     position: absolute;
     width: 100%;
     height: 100%;
@@ -89,9 +63,6 @@
 .subtitulos-principales-sin-fondo{
     width: 100%;
     text-align: center;
-}
-.subtitulos-categoorias{
-    margin-top: 0;
 }
 .seccion-filtros-busquedas{
     width: 30%;

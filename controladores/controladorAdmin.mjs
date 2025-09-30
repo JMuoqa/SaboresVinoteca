@@ -5,7 +5,8 @@ import {
     Con_ObtenerProductoPorID, Con_ObtenerMarcasPorCategoria, Con_CambiarDatosPrincipales,
     Con_CambiarDatosCategoricos, Con_CambiarImagenDelProducto, Con_ObtenerCategoriaPorID,
     Con_CabmiarDatosDeUnaCategoria, Con_ObtenerMarcaPorID, Con_CambiarDatosDeUnaMarca,
-    Con_ComprobarProducto
+    Con_ComprobarProducto, Con_CambiarVisibilidadDelProducto, Con_CambiarVisibilidadDeCategoria,
+    Con_CambiarVisibilidadDeMarca
 } from "../solicitudes/admin/solicitudesAdmin.mjs"
 import convert from "heic-convert";
 import fs from 'fs';
@@ -27,7 +28,7 @@ const InsertarMarca = async (req, res, next) =>{
         if(!usuarioPermitido)
             throw new Error('Sin permisos');
         let { marca, categoria } = req.body;
-        const regex = /^[a-zA-Z0-9 @._-]+$/; //hay un espacio(' ' en -> '9 @'), para que permita los espacios ya que es una marca
+        const regex = /^[a-zA-Z0-9 @,+._-]+$/; //hay un espacio(' ' en -> '9 @'), para que permita los espacios ya que es una marca
         if (!marca || !regex.test(marca)) {
             return res.json({ estado: 'malo', mensaje: 'La marca contiene caracteres inválidos o está vacía'});
         }
@@ -35,7 +36,6 @@ const InsertarMarca = async (req, res, next) =>{
             return res.json({ estado: 'malo', mensaje: 'Selecciona la categoria a la que pertenece la marca'});
         marca = marca.trim();
         categoria = categoria.trim();
-        console.log(marca, categoria);
         const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
         const IDCategoria = solicitarIDCatecoria.Categoria.ID;
         const solicitud = await Con_InsertarMarca(marca, IDCategoria);
@@ -64,7 +64,7 @@ const InsertarCategoria = async (req, res) => {
         else
             imagenProcesada = imagen.filename;
         let { categoria } = req.body;
-        const regex = /^[a-zA-Z0-9 @._-]+$/;
+        const regex = /^[a-zA-Z0-9 @,+._-]+$/;
         if (!categoria || !regex.test(categoria)) {
             return res.json({ estado: 'malo', mensaje: 'La categoria contiene caracteres inválidos o está vacía'});
         }
@@ -123,7 +123,7 @@ const InsertarProducto = async (req, res) => {
     }
 }
 function ValidarDatosDelProducto(nombreProducto, categoria, marca, precio){
-    const regex = /^[a-zA-Z0-9 @._-]+$/;
+    const regex = /^[a-zA-Z0-9 @,+._-]+$/;
     const regexNumeros = /^[0-9]+$/;
     if(!precio || !regexNumeros.test(precio))
         return 'El precio contiene caracteres invalidos o esta vacio';
@@ -412,6 +412,60 @@ const CambiarDatosDeUnaMarca = async (req, res, next)=>{
         return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
+const CambiarVisibilidadDelProducto = async (req, res) => {
+    try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
+        const { ID } = req.body;
+        if(!ID || ID.trim() == '')
+            return res.json({estado: 'malo', mensaje: 'No hay ningun producto seleccionado'});
+        const solicitud = await Con_CambiarVisibilidadDelProducto(ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error.message});
+    }
+}
+const CambiarVisibilidadDeCategoria = async (req, res) => {
+    try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
+        const { ID } = req.body;
+        if(!ID || ID.trim() == '')
+            return res.json({estado: 'malo', mensaje: 'No hay ninguna categoria seleccionada'});
+        const solicitud = await Con_CambiarVisibilidadDeCategoria(ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error.message});
+    }
+}
+const CambiarVisibilidadDeMarca = async (req, res) => {
+    try{
+        const usuarioLogeado = req.user ?? [];
+        const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
+        if(!usuarioPermitido)
+            throw new Error('Sin permisos');
+        const { ID } = req.body;
+        if(!ID || ID.trim() == '')
+            return res.json({estado: 'malo', mensaje: 'No hay ninguna categoria seleccionada'});
+        const solicitud = await Con_CambiarVisibilidadDeMarca(ID);
+        if(!solicitud.estado)
+            return res.json({estado: 'malo', mensaje: solicitud.mensaje});
+        return res.json({estado: 'exitoso', mensaje: solicitud.mensaje});
+    }catch (error){
+        console.error(error);
+        return res.json({estado: 'muyMalo', mensaje: error.message});
+    }
+}
 async function ConvertirImagen(imagen, rutaOriginal) {
     const nuevoNombre = imagen.filename.replace(/\.heic$/i,'.jpg');
     const nuevaRuta = path.join(rutaDeLaCarpeta, nuevoNombre);
@@ -436,5 +490,6 @@ export default{
     ObtenerTodosProductos, ObtenerProductoPorID, ObtenerMarcasPorCategoria,
     CambiarDatosPrincipalesDelProducto, CambiarDatosCategoricos, CambiarImagenDelProducto,
     ObtenerCategoriaPorID, CambiarDatosDeUnaCategoria, ObtenerMarcaPorID,
-    CambiarDatosDeUnaMarca,
+    CambiarDatosDeUnaMarca, CambiarVisibilidadDelProducto, CambiarVisibilidadDeCategoria,
+    CambiarVisibilidadDeMarca
 }

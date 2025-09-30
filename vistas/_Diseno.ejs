@@ -23,15 +23,16 @@
         <section class="menu-hijo-desplazable" id="menuHijoPrincipal">
             <img class="icono-x-absolute" id="cerrarMenuPrincipal" src="/carpeta_imagenes/web/x-button.png">
             <section class="secciones-menu-desplasable" id="contenedorMenu">
-                <h2 class="texto-blanco texto-centrado">Menu</h2>
+                <h2 class="texto-blanco texto-centrado texto-variable">Menu</h2>
             </section>
             <section class="secciones-menu-desplasable" id="contenedorAdmin">
             <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
-                    <h3 class="texto-blanco texto-centrado">Administracion</h3>
+                <h3 class="texto-blanco texto-centrado">Administracion</h3>
+                <ul class="listas-generales lista-principal lista-principal-variable-admin" id="listaResponsivaAdmin">
+                    <li class="items-generales items-principales items-principales-variables-admin items-principales-admin"><a class="links-generales links-principales-finos links-principales-variables-admin" href="/cargar-productos-categorias">Cargar productos</a></li>
+                    <li class="items-generales items-principales items-principales-variables-admin items-principales-admin" ><a class="links-generales links-principales-finos links-principales-variables-admin" href="/editar-productos">Editar productos</a></li>
+                </ul>
             <% }%>
-            <ul class="listas-generales lista-principal lista-principal-variable" id="listaResponsivaAdmin">
-            
-            </ul>
             </section>
         </section>
     </dialog>
@@ -49,9 +50,7 @@
             <h1 class="titulo-marca" id="tituloMarca">SABORES VINOTECA</h1>
             <ul class="listas-generales lista-principal lista-principal-padding-invertido lista-principal-visible" id="listaAdmin">
                 <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
-                    <li class="items-generales items-principales items-principales-variables items-principales-admin"><a class="links-generales links-principales-finos links-principales-variables" href="/cargar-productos-categorias">Cargar productos</a></li>
-                    <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador1"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                    <li class="items-generales items-principales items-principales-variables items-principales-admin" ><a class="links-generales links-principales-finos links-principales-variables" href="/editar-productos">Editar productos</a></li>
+                    <li class="items-generales items-principales " id="itemLinkAbrirMenu"><a class="links-generales links-principales-finos" id="abrirMenuCategorias">Admin</a></li>
                     <li class="items-generales items-principales icono-separador-variable" id="iconoSeparador2"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                     <li class="items-generales items-principales"><a class="links-generales links-principales-finos" >Hola <%= Usuario.Usuario %>!</a></li>
                     <li class="items-generales items-principales"><img class="icono-separador" src="/carpeta_imagenes/web/iconoRombo.png"></li>

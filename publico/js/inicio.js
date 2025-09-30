@@ -32,16 +32,35 @@ function ActualizarProductos() {
         }
         else{
           for(let i = 0; i < Productos.length; i++){
+            let marcaDelProducto ;
+            for(let j = 0; j<Marcas.length; j++){
+              if(Marcas[j].ID == Productos[i].IDMarca){
+                marcaDelProducto = Marcas[j].Marca;
+                break;
+              }
+            }
+            const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
             const articulo = document.createElement('article');
-            articulo.innerHTML = `
-              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                </div>
-              </div>`;
+            if(precio < 1){
+              articulo.innerHTML = `
+                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                  </div>
+                </div>`;
+            }else{
+              articulo.innerHTML = `
+                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                  </div>
+                </div>`;
+            }
             contenedorProductos.appendChild(articulo)
             // Forzar “reflow” antes de añadir la clase de animación
             articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -56,7 +75,7 @@ function ActualizarProductos() {
     }).catch( error => {
         console.error(error);
         AnimacionAviso(false, 1);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+        //window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
 function VerProducto(clase){
@@ -87,16 +106,35 @@ function ActualizarProductosImportados() {
         }
         else{
           for(let i = 0; i < Productos.length; i++){
+            let marcaDelProducto ;
+            for(let j = 0; j<Marcas.length; j++){
+              if(Marcas[j].ID == Productos[i].IDMarca){
+                marcaDelProducto = Marcas[j].Marca;
+                break;
+              }
+            }
+            const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
             const articulo = document.createElement('article');
-            articulo.innerHTML = `
-              <article class="contenedor-info-producto ver-producto-importados" data-id="${Productos[i].ID}">
-                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                </div>
-              </article>`;
+            if(precio < 1){
+              articulo.innerHTML = `
+                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                  </div>
+                </div>`;
+            }else{
+              articulo.innerHTML = `
+                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                  </div>
+                </div>`;
+            }
             conteendorProductosImportados.appendChild(articulo)
             // Forzar “reflow” antes de añadir la clase de animación
             articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -112,7 +150,7 @@ function ActualizarProductosImportados() {
     }).catch( error => {
         console.error(error);
         AnimacionAviso(false, 2);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+        //window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
 function ActualizarSeccionCategorias() {
@@ -266,16 +304,35 @@ function BotonBuscarYEventoDelFormulario() {
           }
           else{
             for(let i = 0; i < Productos.length; i++){
+              let marcaDelProducto ;
+              for(let j = 0; j<Marcas.length; j++){
+                if(Marcas[j].ID == Productos[i].IDMarca){
+                  marcaDelProducto = Marcas[j].Marca;
+                  break;
+                }
+              }
+              const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
               const articulo = document.createElement('article');
-              articulo.innerHTML = `
-                <article class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                  <div class="contenedor-informacion-productos">
-                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                  </div>
-                </article>`;
+              if(precio < 1){
+                articulo.innerHTML = `
+                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                    <div class="contenedor-informacion-productos">
+                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                    </div>
+                  </div>`;
+              }else{
+                articulo.innerHTML = `
+                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                    <div class="contenedor-informacion-productos">
+                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                      <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                    </div>
+                  </div>`;
+              }
               contenedorProductos.appendChild(articulo)
               // Forzar “reflow” antes de añadir la clase de animación
               articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -361,16 +418,35 @@ function BotonBuscarYEventoDelFormularioImportados(){
           }
           else{
             for(let i = 0; i < Productos.length; i++){
+              let marcaDelProducto ;
+              for(let j = 0; j<Marcas.length; j++){
+                if(Marcas[j].ID == Productos[i].IDMarca){
+                  marcaDelProducto = Marcas[j].Marca;
+                  break;
+                }
+              }
+              const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
               const articulo = document.createElement('article');
-              articulo.innerHTML = `
-                <article class="contenedor-info-producto ver-producto-importados" data-id="${Productos[i].ID}">
-                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                  <div class="contenedor-informacion-productos">
-                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                  </div>
-                </article>`;
+              if(precio < 1){
+                articulo.innerHTML = `
+                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                    <div class="contenedor-informacion-productos">
+                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                    </div>
+                  </div>`;
+              }else{
+                articulo.innerHTML = `
+                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                    <div class="contenedor-informacion-productos">
+                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                      <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                    </div>
+                  </div>`;
+              }
               conteendorProductosImportados.appendChild(articulo)
               // Forzar “reflow” antes de añadir la clase de animación
               articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -471,16 +547,35 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
         etiqueta.innerText = nPagina;
         contenedor.innerHTML = '';
         for(let i = 0; i < Productos.length; i++){
+          let marcaDelProducto ;
+          for(let j = 0; j<Marcas.length; j++){
+            if(Marcas[j].ID == Productos[i].IDMarca){
+              marcaDelProducto = Marcas[j].Marca;
+              break;
+            }
+          }
+          const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
           const articulo = document.createElement('article');
-          articulo.innerHTML = `
-            <article class="contenedor-info-producto ver-producto-${clase}" data-id="${Productos[i].ID}">
-              <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-              <div class="contenedor-informacion-productos">
-                <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-              </div>
-            </article>`;
+          if(precio < 1){
+            articulo.innerHTML = `
+              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                <div class="contenedor-informacion-productos">
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                </div>
+              </div>`;
+          }else{
+            articulo.innerHTML = `
+              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                <div class="contenedor-informacion-productos">
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                </div>
+              </div>`;
+          }
           contenedor.appendChild(articulo)
           // Forzar “reflow” antes de añadir la clase de animación
           articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -589,7 +684,7 @@ async function CargarSlider(_Productos){
   precioMax = Math.round(Productos[Productos.length-1].Precio);
   const slider = document.getElementById('slider'); 
   noUiSlider.create(slider, {
-    start: [2500, 8700000],  // valores iniciales
+    start: [precioMin, precioMax],  // valores iniciales
     connect: true,
     range: {
       'min': precioMin,
@@ -623,7 +718,7 @@ async function CargarSliderImportados(_Productos){
   precioMax = Math.round(Productos[Productos.length-1].Precio);
   const slider = document.getElementById('slider-import'); 
   noUiSlider.create(slider, {
-    start: [2500, 8700000],  // valores iniciales
+    start: [precioMin, precioMax],  // valores iniciales
     connect: true,
     range: {
       'min': precioMin,
@@ -655,6 +750,8 @@ async function ObtenerTodosLosProductos(){
 }
 function ConseguirFormatoDelPrecioOriginal(precio){
     let precioFinal = Math.round(precio);
+    if(precioFinal < 1)
+      return 0;
     const arregloDeNumeros = precioFinal.toString().split('');
     const arregloAux = [];
     for(let i = arregloDeNumeros.length-1; i>=0; i--){ 

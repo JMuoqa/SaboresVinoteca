@@ -45,6 +45,12 @@ function AbrirMenus(){
         void menu.offsetWidth;
         menu.classList.add("activo");
     });
+    if(document.getElementById('itemLinkAbrirMenu')){
+      const itemLinkAbrirMenu = document.getElementById('itemLinkAbrirMenu');
+      itemLinkAbrirMenu.addEventListener('click', function(){
+        iconoMenuPrincipal.dispatchEvent(new Event('click'));
+      });
+    }
 }
 function CerrarMenus(){
     const cerrar = document.getElementById('cerrarMenuProductos');
@@ -106,10 +112,6 @@ function MenuPrincipalAdaptable(){
 }
 function CargarConfiguracionVisual(){
     const listaDelNavegador = document.getElementById('listaNav');
-    const itemsAdmin = document.querySelectorAll('.items-principales-admin');
-    const listaResponsivaAdmin = document.getElementById('listaResponsivaAdmin');
-    const listaAdminOriginal = document.getElementById('listaAdmin');
-    listaResponsivaAdmin.style.display = 'flex';
     listaDelNavegador.style.display = 'none';
     const ancho = window.innerWidth;
     const contenedorMenu = document.getElementById('contenedorMenu');
@@ -118,18 +120,11 @@ function CargarConfiguracionVisual(){
     if (ancho <= 1280) {
         if (listaDelNavegador.parentElement !== contenedorMenu) {
             contenedorMenu.appendChild(listaDelNavegador);
-            itemsAdmin.forEach(item =>{
-              listaResponsivaAdmin.appendChild(item);
-            })
         }
         listaDelNavegador.style.display = 'flex';
     } else {
         if (listaDelNavegador.parentElement !== padreDeListaNavegador) {
             padreDeListaNavegador.insertBefore(listaDelNavegador, tituloMarca);
-            itemsAdmin.forEach((item, i )=>{
-              const icono = document.getElementById(`iconoSeparador${i+1}`);
-              listaAdminOriginal.insertBefore(item, icono);
-            })
         }
         listaDelNavegador.style.display = 'flex';
     }

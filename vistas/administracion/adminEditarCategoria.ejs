@@ -17,12 +17,26 @@
     <section class="editar-datos">
         <section class="seccion-contenedor-formulario seccion-contenedor-formulario-categorias">
         <h3 class="subtitulo-administrar">Editar categoria</h3>
+        <form class="formulario formulario-carga formulario-carga-productos" id="formularioEliminarCategoria">
+            <fieldset class="fieldset fieldset-completo">
+                <div class="contenedor-espiral"  id="">
+                    <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+                </div>
+                <input type="hidden" id="entradaOcultaIDEliminar" name="ID" required>
+                <div class="contenedor-seguridad">
+                    <label class="etiquetas" for="entradaSeguridad">Voy a eliminar</label>
+                    <input class="entrada-seguridad" id="entradaSeguridad" type="checkbox">
+                </div>
+                <button type="submit" class="boton-elimiar" id="botonEliminar">Eliminar</button>
+                <p id="textoEditarVisibilidad"></p>
+            </fieldset>
+        </form>
         <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaCategorias">
             <fieldset class="fieldset">
                 <div class="contenedor-espiral"  id="">
                     <p ><strong>Editando datos</strong></p> <div class="animacion-espiral"></div>
                 </div>
-                <input type="hidden" id="entradaOcultaID" name="ID">
+                <input type="hidden" id="entradaOcultaID" name="ID" required>
                 <label class="etiquetas" for="nombreCategoria">Nombre de la categoria:</label>
                 <input class="entradas" type="text" id="nombreCategoria" name="categoria" required placeholder="Vinos">
                 <label class="etiquetas" for="entradaDeImagenes">Seleccionar imagen</label>

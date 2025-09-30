@@ -187,6 +187,25 @@
     animation: espiral 1s linear infinite;
     background: transparent;   
 }
+.contenedor-seguridad{
+    display: flex;
+    margin-bottom: 10px;
+}
+.entrada-seguridad{
+    margin-left: 20px;
+}
+.boton-elimiar{
+    height: 2.4em;
+    border-radius: 1.2em;
+    background-color: var(--color-rojo);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+.boton-desactivado{
+    background-color: var(--muted);
+    color: #444;
+}
 @media(max-width:1024px){
     .formulario-busqueda{
         flex-direction: column;

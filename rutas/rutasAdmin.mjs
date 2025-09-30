@@ -45,4 +45,7 @@ enrutador.get('/obtener-marcas-por-categoria', controladorAdmin.ObtenerMarcasPor
 enrutador.post('/cambiar-datos-principales', controladorAdmin.CambiarDatosPrincipalesDelProducto);
 enrutador.post('/cambiar-datos-categoricos', controladorAdmin.CambiarDatosCategoricos);
 enrutador.post('/cambiar-datos-de-marca', controladorAdmin.CambiarDatosDeUnaMarca);
+enrutador.post('/eliminar-producto', controladorAdmin.CambiarVisibilidadDelProducto);
+enrutador.post('/eliminar-categoria', controladorAdmin.CambiarVisibilidadDeCategoria);
+enrutador.post('/eliminar-marca', controladorAdmin.CambiarVisibilidadDeMarca);
 export default enrutador;

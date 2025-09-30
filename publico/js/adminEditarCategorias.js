@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function(){
     ActualizarSeccionCategorias();
     MostrarGaleriaDeImagenesParaCategoria();
     GuardarCategoria();
+    ActivarBoton();
+    EliminarDato();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -23,7 +25,7 @@ function GuardarCategoria(){
         event.preventDefault();
         if(estadoConsulta){
             estadoConsulta = false;
-            AnimacionAviso(true, 1)
+            AnimacionAviso(true, 2)
             const datosDelFormulario = new FormData(this);
             fetch('admin/cambiar-datos-de-categoria', {
                 method: 'POST',
@@ -33,7 +35,7 @@ function GuardarCategoria(){
                     throw new Error('Error en la solicitud'); 
                 return respuesta.json();  
             }).then(({estado, mensaje})=>{
-                AnimacionAviso(false, 1)
+                AnimacionAviso(false, 2)
                 const p = document.getElementById('textoEdicion');
                 if(estado == 'exitoso')
                     p.style = 'color: #2ea356;';
@@ -48,7 +50,7 @@ function GuardarCategoria(){
             }).catch( error =>{
                 console.error(error);
                 estadoConsulta = true;
-                AnimacionAviso(false, 1)
+                AnimacionAviso(false, 2)
                 window.location.href = `${URLMadre}/error?mensaje=${error}`;
             })
         }
@@ -161,8 +163,10 @@ function CargarDatos(Categoria){
     const nombreCategoria = document.getElementById('nombreCategoria');
     const imagenVistaPrevia = document.getElementById('imagenVistaPrevia');
     const entradaOcultaID = document.getElementById('entradaOcultaID');
+    const entradaOcultaIDEliminar = document.getElementById('entradaOcultaIDEliminar');
     nombreCategoria.value = Categoria[0].Categoria;
     entradaOcultaID.value = Categoria[0].ID;
+    entradaOcultaIDEliminar.value = Categoria[0].ID;
     imagenVistaPrevia.src = `${URLMadre}/Imagenes/${Categoria[0].Imagen}`;
 }
 function EditarOtros(){
@@ -174,4 +178,78 @@ function EditarOtros(){
     botonEditarMarca.addEventListener('click', function(){
       window.location.href = `${URLMadre}/editar-marcas`;
     });
+}
+function ActivarBoton(){
+  const entradaSeguridad = document.getElementById('entradaSeguridad');
+  entradaSeguridad.checked = false;
+  const botonEliminar = document.getElementById('botonEliminar');
+  botonEliminar.classList.add('boton-desactivado');
+  botonEliminar.disabled = true;
+  entradaSeguridad.addEventListener('change', function(){
+    if(entradaSeguridad.checked){
+      botonEliminar.classList.remove('boton-desactivado')
+      botonEliminar.disabled = false;
+    }else{
+      botonEliminar.classList.add('boton-desactivado');
+      botonEliminar.disabled = true;
+    }
+  });
+}
+function EliminarDato(){
+  const formularioEliminarCategoria = document.getElementById('formularioEliminarCategoria');
+  let estadoConsulta = true;
+  formularioEliminarCategoria.addEventListener('submit', function(event){
+    event.preventDefault();
+    const entradaSeguridad = document.getElementById('entradaSeguridad');
+    if(estadoConsulta){
+      AnimacionAviso(true, 1)
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((valor, campo)=>{
+        datos[campo] = valor;
+      });
+      fetch('admin/eliminar-categoria',{
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+      }).then(respuesta => {
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud')
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+        AnimacionAviso(false, 1)
+        const p = document.getElementById('textoEditarVisibilidad');
+        if(estado == 'exitoso')
+          p.style = 'color: #2ea356;';
+        else
+          p.style = 'color: #d7596d;';
+        p.innerText = mensaje;
+        setTimeout(function(){
+            p.innerText = '';
+        },5000);
+        estadoConsulta = true;
+        ActualizarSeccionCategorias();
+        VaciarDatos();
+        entradaSeguridad.checked = false;
+        entradaSeguridad.dispatchEvent(new Event('change'));
+      }).catch( error => {
+        console.error(error);
+        estadoConsulta = true;
+        AnimacionAviso(false, 1)
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
+  })
+}
+function VaciarDatos(){
+    const nombreCategoria = document.getElementById('nombreCategoria');
+    const imagenVistaPrevia = document.getElementById('imagenVistaPrevia');
+    const entradaOcultaID = document.getElementById('entradaOcultaID');
+    const entradaOcultaIDEliminar = document.getElementById('entradaOcultaIDEliminar');
+    nombreCategoria.value = '';
+    entradaOcultaID.value = '';
+    entradaOcultaIDEliminar.value = '';
+    imagenVistaPrevia.src = '';
 }

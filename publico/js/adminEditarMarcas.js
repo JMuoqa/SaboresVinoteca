@@ -3,6 +3,8 @@ document.addEventListener('DOMContentLoaded', function(){
     ActualizarListaCategorias();
     BuscarMarcas();
     GuardarMarca();
+    ActivarBoton();
+    EliminarDato();
 });
 function EditarOtros(){
     const botonEditarProductos = document.getElementById('botonEditarProductos');
@@ -165,9 +167,12 @@ function CargarDatos(Marca){
     const entradaCargarMarca = document.getElementById('entradaCargarMarca');
     const seccMarca_EntCategoria = document.getElementById('seccMarca_EntCategoria');
     const entradaIDMarca = document.getElementById('entradaIDMarca');
+    const entradaOcultaIDEliminar = document.getElementById('entradaOcultaIDEliminar');
     entradaCargarMarca.value = Marca[0].Marca;
     seccMarca_EntCategoria.selectedIndex = Marca[0].IDCategoria;
     entradaIDMarca.value = Marca[0].ID;
+    entradaOcultaIDEliminar.value = Marca[0].ID;
+    
 }
 function GuardarMarca(){
     const formularioMarca = document.getElementById('formularioMarca');
@@ -177,7 +182,7 @@ function GuardarMarca(){
         event.preventDefault();
         if(estadoConsulta){
             estadoConsulta = false;
-            AnimacionAviso(true, 1)
+            AnimacionAviso(true, 2)
             const datosDelFormulario = new FormData(this);
             const datos = {};
             datosDelFormulario.forEach((valor, campo)=>{
@@ -194,7 +199,7 @@ function GuardarMarca(){
                   throw new Error('Error en la solicitud')
                 return respuesta.json();
             }).then(({estado, mensaje})=>{
-                AnimacionAviso(false, 1)
+                AnimacionAviso(false, 2)
                 const p = document.getElementById('textoEdicionMarca');
                 if(estado == 'exitoso')
                   p.style = 'color: #2ea356;';
@@ -209,7 +214,7 @@ function GuardarMarca(){
             }).catch( error => {
                 console.error(error);
                 estadoConsulta = true;
-                AnimacionAviso(false, 1)
+                AnimacionAviso(false, 2)
                 window.location.href = `${URLMadre}/error?mensaje=${error}`;
             });
         }
@@ -224,4 +229,79 @@ function AnimacionAviso(estado, pos){
     }else{
         animacionDeCarga[index].style.display = 'none';
     }
+}
+function ActivarBoton(){
+  const entradaSeguridad = document.getElementById('entradaSeguridad');
+  entradaSeguridad.checked = false;
+  const botonEliminar = document.getElementById('botonEliminar');
+  botonEliminar.classList.add('boton-desactivado');
+  botonEliminar.disabled = true;
+  entradaSeguridad.addEventListener('change', function(){
+    if(entradaSeguridad.checked){
+      botonEliminar.classList.remove('boton-desactivado')
+      botonEliminar.disabled = false;
+    }else{
+      botonEliminar.classList.add('boton-desactivado');
+      botonEliminar.disabled = true;
+    }
+  });
+}
+function EliminarDato(){
+  const formularioEliminarMarca = document.getElementById('formularioEliminarMarca');
+  let estadoConsulta = true;
+  const buscarMarcas = document.getElementById('buscarMarcas');
+  formularioEliminarMarca.addEventListener('submit', function(event){
+    event.preventDefault();
+    const entradaSeguridad = document.getElementById('entradaSeguridad');
+    if(estadoConsulta){
+      AnimacionAviso(true, 1)
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((valor, campo)=>{
+        datos[campo] = valor;
+      });
+      fetch('admin/eliminar-marca', {
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+      }).then(respuesta => {
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud')
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+        AnimacionAviso(false, 1)
+        const p = document.getElementById('textoEditarVisibilidad');
+        if(estado == 'exitoso')
+          p.style = 'color: #2ea356;';
+        else
+          p.style = 'color: #d7596d;';
+        p.innerText = mensaje;
+        setTimeout(function(){
+            p.innerText = '';
+        },5000);
+        estadoConsulta = true;
+        buscarMarcas.requestSubmit();
+        entradaSeguridad.checked = false;
+        entradaSeguridad.dispatchEvent(new Event('change'));
+        VaciarFormularios();
+      }).catch( error => {
+        console.error(error);
+        estadoConsulta = true;
+        AnimacionAviso(false, 1)
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
+  })
+}
+function VaciarFormularios(){
+    const entradaCargarMarca = document.getElementById('entradaCargarMarca');
+    const seccMarca_EntCategoria = document.getElementById('seccMarca_EntCategoria');
+    const entradaIDMarca = document.getElementById('entradaIDMarca');
+    const entradaOcultaIDEliminar = document.getElementById('entradaOcultaIDEliminar');
+    entradaCargarMarca.value = '';
+    seccMarca_EntCategoria.selectedIndex = '';
+    entradaIDMarca.value = '';
+    entradaOcultaIDEliminar.value = '';
 }

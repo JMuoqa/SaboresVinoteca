@@ -10,6 +10,8 @@ document.addEventListener('DOMContentLoaded', function(){
   GuardarImagen();
   MostrarGaleriaDeImagenesParaCategoria();
   CambiarPaginas();
+  ActivarBoton();
+  EliminarDato();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -89,16 +91,35 @@ function ActualizarProductos() {
         }
         else{
           for(let i = 0; i < Productos.length; i++){
+            let marcaDelProducto ;
+            for(let j = 0; j<Marcas.length; j++){
+              if(Marcas[j].ID == Productos[i].IDMarca){
+                marcaDelProducto = Marcas[j].Marca;
+                break;
+              }
+            }
+            const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
             const articulo = document.createElement('article');
-            articulo.innerHTML = `
-              <article class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
-                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                <div class="contenedor-informacion-productos">
-                  <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                  <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                  <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                </div>
-              </article>`;
+            if(precio < 1){
+              articulo.innerHTML = `
+                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                  </div>
+                </div>`;
+            }else{
+              articulo.innerHTML = `
+                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                  <div class="contenedor-informacion-productos">
+                    <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                    <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                    <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                  </div>
+                </div>`;
+            }
             contenedorProductos.appendChild(articulo)
             // Forzar “reflow” antes de añadir la clase de animación
             articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -159,16 +180,35 @@ function BotonBuscarYEventoDelFormulario() {
           }
           else{
             for(let i = 0; i < Productos.length; i++){
+              let marcaDelProducto ;
+              for(let j = 0; j<Marcas.length; j++){
+                if(Marcas[j].ID == Productos[i].IDMarca){
+                  marcaDelProducto = Marcas[j].Marca;
+                  break;
+                }
+              }
+              const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
               const articulo = document.createElement('article');
-              articulo.innerHTML = `
-                <article class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
-                  <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                  <div class="contenedor-informacion-productos">
-                    <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                    <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                    <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-                  </div>
-                </article>`;
+              if(precio < 1){
+                articulo.innerHTML = `
+                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                    <div class="contenedor-informacion-productos">
+                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                    </div>
+                  </div>`;
+              }else{
+                articulo.innerHTML = `
+                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                    <div class="contenedor-informacion-productos">
+                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                      <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                    </div>
+                  </div>`;
+              }
               contenedorProductos.appendChild(articulo)
               // Forzar “reflow” antes de añadir la clase de animación
               articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -248,8 +288,18 @@ async function CargarFormulario(producto, Marcas, Categorias){
   nombreProducto.innerText = producto[0].Producto;
   entradaNombre.value = producto[0].Producto;
   entradaPrecio.value = parseInt(producto[0].Precio);
-  const marcaSeleccionada = Marcas[producto[0].IDMarca-1].Marca;
-  const categoriaSeleccionada = Categorias[producto[0].IDCategoria-1].Categoria;
+  let marcaSeleccionada = '';
+  for(let i = 0; i < Marcas.length; i++ ){
+    if(Marcas[i].ID == producto[0].IDMarca){
+      marcaSeleccionada = Marcas[i].Marca;
+    }
+  }
+  let categoriaSeleccionada = '';
+  for(let i = 0; i < Categorias.length; i++ ){
+    if(Categorias[i].ID == producto[0].IDCategoria){
+      categoriaSeleccionada = Categorias[i].Categoria;
+    }
+  }
   for(let i = 0; i < editarEntradaCategoria.options.length; i++ ){
     if(categoriaSeleccionada == editarEntradaCategoria.options[i].value){
       editarEntradaCategoria.selectedIndex = i;
@@ -364,7 +414,10 @@ function ActualizarListaMarcas() {
     editarEntradaCategoria.addEventListener('change', function(){
         const editarEntradaMarcas = document.getElementById('editarEntradaMarcas')
         const categoria = editarEntradaCategoria.value;
-        if(categoria != 'No seleccionada'){
+        const entradasOcultas = document.querySelectorAll('.entrada-oculta-id-seleccionado');
+        console.log(entradasOcultas)
+        console.log(entradasOcultas[2].value)
+        if(entradasOcultas[2].value && categoria != 'No seleccionada'){
             fetch(`admin/obtener-marcas-por-categoria?categoria=${categoria}`).then(respuesta => {
                 if(!respuesta.ok)
                     throw new Error('Error en la solicitud');
@@ -389,7 +442,7 @@ function GuardarInformacionPrincipal(){
   formularioDatosPrincipales.addEventListener('submit', function(event){
     event.preventDefault();
     if(estadoConsulta){
-      AnimacionAviso(true, 2)
+      AnimacionAviso(true, 3)
       estadoConsulta = false;
       const datosDelFormulario = new FormData(this);
       const datos = {};
@@ -407,7 +460,7 @@ function GuardarInformacionPrincipal(){
           throw new Error('Error en la solicitud')
         return respuesta.json();
       }).then(({estado, mensaje})=>{
-        AnimacionAviso(false, 2)
+        AnimacionAviso(false, 3)
         const p = document.getElementById('textoEdicionPrincipal');
         if(estado == 'exitoso')
           p.style = 'color: #2ea356;';
@@ -422,7 +475,7 @@ function GuardarInformacionPrincipal(){
       }).catch( error => {
         console.error(error);
         estadoConsulta = true;
-        AnimacionAviso(false, 2)
+        AnimacionAviso(false, 3)
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
       });
     }
@@ -436,7 +489,7 @@ function GuardarInformacionCategorica(){
     event.preventDefault();
     if(estadoConsulta){
       estadoConsulta = false;
-      AnimacionAviso(true, 3)
+      AnimacionAviso(true, 4)
       const datosDelFormulario = new FormData(this);
       const datos = {};
       datosDelFormulario.forEach((valor, campo)=>{
@@ -453,7 +506,7 @@ function GuardarInformacionCategorica(){
           throw new Error('Error en la solicitud')
         return respuesta.json();
       }).then(({estado, mensaje})=>{
-        AnimacionAviso(false, 3)
+        AnimacionAviso(false, 4)
         const p = document.getElementById('textoEdicionCategorica');
         if(estado == 'exitoso')
           p.style = 'color: #2ea356;';
@@ -468,7 +521,7 @@ function GuardarInformacionCategorica(){
       }).catch( error => {
         console.error(error);
         estadoConsulta = true;
-        AnimacionAviso(false, 3)
+        AnimacionAviso(false, 4)
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
       });
     }
@@ -481,7 +534,7 @@ function GuardarImagen(){
   formularioDatoImagen.addEventListener('submit', function(event){
     event.preventDefault();
     if(estadoConsulta){
-      AnimacionAviso(true, 4)
+      AnimacionAviso(true, 5)
       const datosDelFormulario = new FormData(this);
       fetch('admin/cambiar-imagen-producto',{
         method: 'POST',
@@ -491,7 +544,7 @@ function GuardarImagen(){
           throw new Error('Error en la solicitud')
         return respuesta.json();
       }).then(({estado, mensaje})=>{
-        AnimacionAviso(false, 4)
+        AnimacionAviso(false, 5)
         const p = document.getElementById('textoEditarImagen');
         if(estado == 'exitoso')
           p.style = 'color: #2ea356;';
@@ -506,7 +559,7 @@ function GuardarImagen(){
       }).catch( error => {
         console.error(error);
         estadoConsulta = true;
-        AnimacionAviso(false, 4)
+        AnimacionAviso(false, 5)
         window.location.href = `${URLMadre}/error?mensaje=${error}`;
       });
     }
@@ -514,6 +567,8 @@ function GuardarImagen(){
 }
 function ConseguirFormatoDelPrecioOriginal(precio){
     let precioFinal = Math.round(precio);
+    if(precioFinal<1)
+      return 0;
     const arregloDeNumeros = precioFinal.toString().split('');
     const arregloAux = [];
     for(let i = arregloDeNumeros.length-1; i>=0; i--){ 
@@ -556,16 +611,35 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
         etiqueta.innerText = nPagina;
         contenedor.innerHTML = '';
         for(let i = 0; i < Productos.length; i++){
+          let marcaDelProducto ;
+          for(let j = 0; j<Marcas.length; j++){
+            if(Marcas[j].ID == Productos[i].IDMarca){
+              marcaDelProducto = Marcas[j].Marca;
+              break;
+            }
+          }
+          const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
           const articulo = document.createElement('article');
-          articulo.innerHTML = `
-            <article class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
-              <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-              <div class="contenedor-informacion-productos">
-                <p class="texto-info-producto nombre-del-producto"><strong>${Productos[i].Producto}</strong></p>
-                <p class="texto-info-producto marca-del-producto"><strong>Marca:</strong>${Marcas[Productos[i].IDMarca-1].Marca}</p>
-                <p class="texto-info-producto precio-del-producto"><strong>Precio:</strong>${ConseguirFormatoDelPrecioOriginal(Productos[i].Precio)}</p>
-              </div>
-            </article>`;
+          if(precio < 1){
+            articulo.innerHTML = `
+              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                <div class="contenedor-informacion-productos">
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                </div>
+              </div>`;
+          }else{
+            articulo.innerHTML = `
+              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
+                <div class="contenedor-informacion-productos">
+                  <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
+                  <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
+                  <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
+                </div>
+              </div>`;
+          }
           contenedor.appendChild(articulo)
           // Forzar “reflow” antes de añadir la clase de animación
           articulo.offsetWidth; // esto hace que el navegador registre el elemento recién insertado
@@ -634,4 +708,89 @@ function ObtenerURLConParametros(){
   url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;
+}
+function ActivarBoton(){
+  const entradaSeguridad = document.getElementById('entradaSeguridad');
+  entradaSeguridad.checked = false;
+  const botonEliminar = document.getElementById('botonEliminar');
+  botonEliminar.classList.add('boton-desactivado');
+  botonEliminar.disabled = true;
+  entradaSeguridad.addEventListener('change', function(){
+    if(entradaSeguridad.checked){
+      botonEliminar.classList.remove('boton-desactivado')
+      botonEliminar.disabled = false;
+    }else{
+      botonEliminar.classList.add('boton-desactivado');
+      botonEliminar.disabled = true;
+    }
+  });
+}
+function EliminarDato(){
+  const formularioEliminarProducto = document.getElementById('formularioEliminarProducto');
+  let estadoConsulta = true;
+  formularioEliminarProducto.addEventListener('submit', function(event){
+    event.preventDefault();
+    const entradaSeguridad = document.getElementById('entradaSeguridad');
+    if(estadoConsulta){
+      AnimacionAviso(true, 2)
+      const datosDelFormulario = new FormData(this);
+      const datos = {};
+      datosDelFormulario.forEach((valor, campo)=>{
+        datos[campo] = valor;
+      });
+      fetch('admin/eliminar-producto',{
+        method:'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(datos)
+      }).then(respuesta => {
+        if(!respuesta.ok)
+          throw new Error('Error en la solicitud')
+        return respuesta.json();
+      }).then(({estado, mensaje})=>{
+        AnimacionAviso(false, 2)
+        const p = document.getElementById('textoEditarVisibilidad');
+        if(estado == 'exitoso')
+          p.style = 'color: #2ea356;';
+        else
+          p.style = 'color: #d7596d;';
+        p.innerText = mensaje;
+        setTimeout(function(){
+            p.innerText = '';
+        },5000);
+        estadoConsulta = true;
+        formularioFiltro.requestSubmit();
+        VaciarTodosLosFormularios();
+        entradaSeguridad.checked = false;
+        entradaSeguridad.dispatchEvent(new Event('change'));
+      }).catch( error => {
+        console.error(error);
+        estadoConsulta = true;
+        AnimacionAviso(false, 2)
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+      });
+    }
+  })
+}
+async function VaciarTodosLosFormularios(){
+  const numeroProducto = document.getElementById('numeroProducto');
+  const nombreProducto = document.getElementById('nombreProducto');
+  const entradaNombre = document.getElementById('entradaNombre');
+  const entradaPrecio = document.getElementById('entradaPrecio');
+  const editarEntradaCategoria = document.getElementById('editarEntradaCategoria');
+  const editarEntradaMarcas = document.getElementById('editarEntradaMarcas');
+  const imagenVistaPreviaProducto = document.getElementById('imagenVistaPreviaProducto');
+  const entradasOcultas = document.querySelectorAll('.entrada-oculta-id-seleccionado');
+  numeroProducto.innerText = 'Ninguno';
+  nombreProducto.innerText = 'Ninguno';
+  entradaNombre.value = '';
+  entradaPrecio.value = '';
+  editarEntradaCategoria.selectedIndex = 0;
+  editarEntradaCategoria.dispatchEvent(new Event('change'));
+  editarEntradaMarcas.selectedIndex = 0;
+  for(let i = 0; i < entradasOcultas.length; i++){
+    entradasOcultas[i].value = '';
+  }
+  imagenVistaPreviaProducto.src = ''
 }

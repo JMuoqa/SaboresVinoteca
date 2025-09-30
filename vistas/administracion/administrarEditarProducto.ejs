@@ -61,11 +61,23 @@
                 <p><strong>Nombre de producto: </strong></p><p id="nombreProducto" class="texto-naranja-edicion">Ninguno</p>
             </div>
         </div>
+        <form class="datos datos-principales" id="formularioEliminarProducto">
+            <div class="contenedor-espiral"  id="animacionDeCarga">
+                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+            </div>
+            <div class="contenedor-seguridad">
+                <label class="etiquetas" for="entradaSeguridad">Voy a eliminar</label>
+                <input class="entrada-seguridad" id="entradaSeguridad" type="checkbox">
+            </div>
+            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" required>
+            <button type="submit" class="boton-elimiar" id="botonEliminar">Eliminar</button>
+            <p id="textoEditarVisibilidad"></p>
+        </form>
         <form class="datos datos-principales" id="formularioDatosPrincipales">
             <div class="contenedor-espiral" >
                 <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
             </div>
-            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" >
+            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" required>
             <label class="etiquetas" for="entradaNombre">Nombre del producto</label>
             <input type="text" class="entradas texto-naranja-edicion" min="3" placeholder="Vino Malbec 2L" id="entradaNombre" name="nombre" required>
             <label class="etiquetas" for="entradaPrecio">Precio del producto</label>
@@ -77,7 +89,7 @@
             <div class="contenedor-espiral" >
                 <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
             </div>
-            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID">
+            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" required>
             <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
             <select class="entradas texto-naranja-edicion" id="editarEntradaCategoria" name="categoria" required>
             </select>
