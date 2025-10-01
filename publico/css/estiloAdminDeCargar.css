@@ -168,3 +168,17 @@
         width: 90%;
     }
 }
+@media(max-width:450px){
+    .vista-previa{
+        width: 20em;
+        max-width: 20em;
+        height: 8em;
+        max-height: 8em;
+    }
+}
+@media(max-width:400px){
+    .vista-previa{
+        width: 16em;
+        max-width: 16em;
+    }
+}

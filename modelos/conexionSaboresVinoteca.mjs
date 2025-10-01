@@ -2,7 +2,7 @@ import mysql from 'mysql2/promise';
 async function Conexion() {
     try{
         let conexion;
-        if(process.env.NODE_ENV == 'development'){
+        if(/*process.env.NODE_ENV == 'development'*/false){
             conexion = await mysql.createConnection({
                 host: process.env.HOST,//process.env.HOSTVPS,
                 user: process.env.usuario,

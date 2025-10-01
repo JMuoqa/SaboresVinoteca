@@ -17,7 +17,7 @@ async function Esperar(milisegundos) {
 function ActualizarProductos() {
     const contenedorProductos = document.getElementById('contenedorProductos');
     AnimacionAviso(true, 1);
-    fetch('admin/obtener-productos')
+    fetch('admin/obtener-productos?limite=8')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
@@ -89,7 +89,7 @@ function VerProducto(clase){
 function ActualizarProductosImportados() {
     const conteendorProductosImportados = document.getElementById('conteendorProductosImportados');
     AnimacionAviso(true, 2);
-    fetch('admin/obtener-productos?importado=1')
+    fetch('admin/obtener-productos?importado=1&limite=8')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
@@ -283,6 +283,7 @@ function BotonBuscarYEventoDelFormulario() {
       parametros.set("busqueda", datos['busqueda']);
       parametros.set("marca", datos['marca']);
       parametros.set("categoria", datos['categoria']);
+      parametros.set('limite', 8)
       parametros.set("pagina", 1);
       url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
       url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
@@ -395,6 +396,7 @@ function BotonBuscarYEventoDelFormularioImportados(){
       parametros.set("marca", datos['marca']);
       parametros.set("categoria", datos['categoria']);
       parametros.set("pagina", 1);
+      parametros.set("limite", 8);
       parametros.set("importado", 1);
       url.pathname  = 'admin/obtener-productos';
       url.search = parametros.toString();
@@ -500,7 +502,7 @@ function ObtenerURLConParametros(){
   parametros.set("marca", entradaMarcaProductos);
   parametros.set("categoria", entradaCategoriaProductos);
   parametros.set("pagina", numeroDePagina);
-  
+  parametros.set('limite', 8);
   url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;
@@ -521,6 +523,7 @@ function ObtenerURLConParametrosImport(){
   parametros.set("categoria", entradaCategoriaProductos);
   parametros.set("pagina", numeroDePagina);
   parametros.set("importado", 1);
+  parametros.set('limite', 8);
   url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;

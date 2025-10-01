@@ -217,6 +217,12 @@
     .contenedor-de-las-categorias{
         grid-template-columns: repeat(auto-fill, minmax(21em, 1fr));
     }
+    .vista-previa{
+        width: 20em;
+        max-width: 20em;
+        height: 8em;
+        max-height: 8em;
+    }
 }
 @media(max-width:400px){
     .contenedor-categoria{
@@ -225,5 +231,9 @@
     }
     .contenedor-de-las-categorias{
         grid-template-columns: repeat(auto-fill, minmax(17em, 1fr));
+    }
+    .vista-previa{
+        width: 16em;
+        max-width: 16em;
     }
 }

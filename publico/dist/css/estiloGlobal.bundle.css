@@ -164,6 +164,7 @@ fieldset{
     width: 100%;
     max-height: 14em;
     object-fit: cover;/* mantiene proporción, recorta si sobra */
+    background-color: transparent;
 }
 .contenedor-informacion-productos{
     width: 100%;
@@ -225,7 +226,7 @@ fieldset{
     max-width: 25em;
     height: 10em;
     max-height: 10em;
-    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    background: linear-gradient(to top, var(--verde-profundo), var(--color-principal-degrade));
     display: flex;
     justify-content: center;
     align-items: center;
