@@ -132,6 +132,7 @@ function CargarMarca(){
     let estadoConsulta = true;
     formulario.addEventListener('submit', async function(event){
         event.preventDefault();
+        const entradaCategoriaProducto = document.getElementById('entradaCategoriaProducto');
         if(estadoConsulta){
             estadoConsulta = false;
             AnimacionAviso(true, 2)
@@ -177,6 +178,7 @@ function CargarMarca(){
                     },5000);
                     estadoConsulta = true;
                 }
+                entradaCategoriaProducto.dispatchEvent(new Event('change'));
             }).catch(error=>{
                 console.error(error);
                 estadoConsulta = true;

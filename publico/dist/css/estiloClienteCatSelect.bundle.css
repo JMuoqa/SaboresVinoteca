@@ -1,15 +1,6 @@
 /*!******************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloClienteCatSelect.css ***!
   \******************************************************************************************/
-.subtitulos-principales{
-    background: linear-gradient(to top, var(--verde-profundo), #203d35);
-    color: var(--fondo-blanco);
-    width: 100%;
-    font-size: 4em;
-    font-family: "Bebas";
-    text-align: center;
-    padding: 0.5em 0;
-}
 .subtitulo-categoria{
     margin-top: 0;
 }
@@ -91,6 +82,9 @@
     font-family: inherit;
     margin-top: 1em;
     width: 100%;
+}
+.boton-busqueda:hover{
+    background-color: var(--verde-hover);
 }
 /*Imagenes flechas*/
 .seccion-cambiar-pagina{

@@ -107,6 +107,9 @@
     font-size: inherit;
     font-family: inherit;
 }
+.boton-busqueda:hover{
+    background-color: var(--verde-hover);
+}
 .seccion-cambiar-pagina{
     display: flex;
     justify-content: center;

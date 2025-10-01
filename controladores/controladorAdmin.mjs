@@ -81,15 +81,11 @@ const InsertarProducto = async (req, res) => {
         if(!usuarioPermitido)
             throw new Error('Sin permisos');
         const imagen = req.file;
-        let imagenProcesada;
         if (!imagen)
             return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
         const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
-        const extencion = path.extname(imagen.originalname).toLowerCase();
-        if(extencion == '.heic')
-            imagenProcesada = await ConvertirImagen(imagen, rutaOriginal);
-        else
-            imagenProcesada = imagen.filename;
+        const extension = path.extname(imagen.originalname).toLowerCase();
+        const imagenProcesada = await ConvertirImagen(imagen, rutaOriginal, extension);
         const { nombreProducto, importado, categoria, marca, precio } = req.body;
         const validacion = ValidarDatosDelProducto(nombreProducto, categoria, marca, precio);
         if(validacion)
@@ -338,15 +334,11 @@ const CambiarImagenDelProducto = async (req, res, next)=>{
         if(!usuarioPermitido)
             throw new Error('Sin permisos');
         const imagen = req.file;
-        let imagenProcesada;
         if (!imagen)
             return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
         const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
-        const extencion = path.extname(imagen.originalname).toLowerCase();
-        if(extencion == '.heic')
-            imagenProcesada = await ConvertirImagen(imagen, rutaOriginal);
-        else
-            imagenProcesada = imagen.filename;
+        const extension = path.extname(imagen.originalname).toLowerCase();
+        const imagenProcesada = await ConvertirImagen(imagen, rutaOriginal, extension);
         const { ID } = req.body;
         const solicitud = await Con_CambiarImagenDelProducto(imagenProcesada, ID);
         if(!solicitud.estado)
@@ -367,11 +359,8 @@ const CambiarDatosDeUnaCategoria = async (req, res, next)=>{
         let imagenProcesada = null;
         if (imagen){
             const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
-            const extencion = path.extname(imagen.originalname).toLowerCase();
-            if(extencion == '.heic')
-                imagenProcesada = await ConvertirImagen(imagen, rutaOriginal);
-            else
-                imagenProcesada = imagen.filename;
+            const extension = path.extname(imagen.originalname).toLowerCase();
+            imagenProcesada = await ConvertirImagen(imagen, rutaOriginal, extension);
         }
         let { categoria, ID } = req.body;
         const solicitud = await Con_CabmiarDatosDeUnaCategoria(imagenProcesada, categoria.toUpperCase(), ID);
@@ -479,13 +468,13 @@ async function ConvertirImagen(imagen, rutaOriginal, extension) {
             format: "JPEG",
             quality: 0.9
         });
-        if(metadata.width > 720) 
+        if(metadata.width > MAX_WIDTH) 
             await sharp(bufferJPEG).resize({ width: 720 }).jpeg({ quality: 90, mozjpeg: true }).toFile(nuevaRuta); 
         else 
             await sharp(bufferJPEG).jpeg({ quality: 80, mozjpeg: true }).toFile(nuevaRuta);
         fs.unlinkSync(rutaOriginal);
     } else {
-        if(metadata.width > 720) 
+        if(metadata.width > MAX_WIDTH) 
             await sharp(bufferDeEntrada).resize({ width: 720 }).jpeg({ quality: 90, mozjpeg: true }).toFile(tempRuta); 
         else 
             await sharp(bufferDeEntrada).jpeg({ quality: 80, mozjpeg: true }).toFile(tempRuta);

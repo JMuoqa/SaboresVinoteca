@@ -14,14 +14,14 @@
     color: var(--fondo-blanco);
     margin: 0 10px;
     border: none;
-    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    background-color: var(--verde-profundo);
     cursor: pointer;
     font-size: inherit;
     font-family: inherit;
     border-radius: 20px;
 }
 .boton-elegir:hover{
-    background: linear-gradient(to top, #255B4A, #296653);
+    background-color: var(--verde-hover);
 }
 .boton-admin-cargar{
     margin: 10px 0;
@@ -54,10 +54,11 @@
     width: 49%;
 }
 .vista-previa{
-    width: 10em;
-    height: 15em;
-    max-height: 15em;
-    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    width: 25em;
+    max-width: 25em;
+    height: 10em;
+    max-height: 10em;
+    background: linear-gradient(to top, var(--verde-profundo), var(--color-principal-degrade));
     margin-top: 1em;
     border-radius: 10px;
     display: flex;
