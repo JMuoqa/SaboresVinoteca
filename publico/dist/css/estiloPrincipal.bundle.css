@@ -1,0 +1,407 @@
+/*!***********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloPrincipal.css ***!
+  \***********************************************************************************/
+html{
+    min-height: 100%;
+    background:linear-gradient(to bottom, var(--fondo-blanco2), var(--fondo-blanco));
+}
+body{
+    min-height: 100%;
+    margin: 0;
+    font-family:  'Roboto', Arial, sans-serif;
+    color: #000;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    max-width: 1920px;
+    margin: auto;
+}
+main{
+    flex:1;
+    font-family:  'Roboto', Arial, sans-serif;
+}
+.encabezado{
+    height: 30em;
+    min-height: 30em;
+    width: 100%;
+    background-color: var(--fondo-blanco2);
+    color: var(--fondo-blanco2);
+    border-bottom: solid 4px var(--verde-profundo);
+}
+.navegador{
+    font-family: "Roboto";
+    font-weight: 600;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+.navegador::after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: url(../c764db5e598f811321cc.jpg) fixed;
+    background-position: center;
+    background-size: cover;
+    inset: 0;
+    z-index: -10;
+}
+.imagen-presentacion-principal{
+    font-family: "Roboto";
+    font-weight: 600;
+    width: 100%;
+    height: 35em;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+    border-bottom: solid 4px var(--verde-profundo);
+}
+.imagen-presentacion-principal::after{
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: url(../c764db5e598f811321cc.jpg) fixed;
+    background-position: center;
+    background-size: cover;
+    inset: 0;
+    z-index: -10;
+}
+.imagen-logo-principal{
+    width: 12em;
+    height: 12em;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    color: var(--fondo-blanco2);
+    border-radius: 6em;
+    cursor:  pointer;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.15);
+    transition: transform .5s ease, box-shadow .5s ease;
+}
+.imagen-logo-principal:hover{
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.1);
+}
+.lista-principal{
+    display: none;
+    height: 6em;
+    padding-left: 10px;
+    z-index: 60;
+}
+.lista-principal-visible{
+    display: flex;
+}
+.lista-principal-padding-invertido{
+    padding-left: 0;
+    padding-right: 10px;
+}
+.items-principales{
+    display: flex;
+    font-size: 1.15em;
+    align-self: center;
+    padding: 0 5px;
+}
+.items-principales-icono{
+    display: flex;
+    align-self: center;
+}
+.icono-separador{
+    width: 8px;
+}
+.titulo-marca{
+    font-family: "Bebas", 'Arial', 'Helvetica', sans-serif;
+    margin: 0;
+    font-size: 4em;
+    position: absolute; 
+    top: 0.7em;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--fondo-blanco2);
+    cursor:  pointer;
+}
+.links-principales-finos{
+    position: relative;
+}
+.links-principales-finos::after{
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 2px;
+    background-color: var(--verde-intermedio);
+    transition: width 0.4s ease;
+}
+.links-principales-finos:hover::after{
+    width: 100%;
+}
+.pie {
+    width: 100%;
+    padding: 5px;
+    margin-top: 3em;  
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    border-top: solid 4px var(--verde-profundo);
+    min-height: 6em;
+    font-family: "Roboto";
+}
+.secciones-pie{
+    margin: 0 10px;
+}
+.items-secundarios{
+    display: flex;
+    margin: 10px 0;
+}
+.etiquetas-pie-redes{
+    margin: 0;
+}
+.parrafos-pie-horarios{
+    margin: 0;
+}
+.links-pie-redes{
+    display: inline-block;
+    margin-left: 3px;
+    color: #000;
+}
+.links-pie-redes:link{
+    color: #000;
+}
+.links-pie-redes:visited{
+    color: #000;
+}
+/*Menu desplazable*/
+.menu-desplazable{
+    position: fixed;
+    border: none;
+    background-color: var(--color-negro-transparente);
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    top: 0;
+    left: 0;
+    z-index: 40;
+}
+.icono-x-absolute{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 1em;
+    height: 1em;
+    z-index: 60;
+    cursor: pointer;
+}
+.menu-hijo-desplazable{
+    background-color: var(--verde-profundo);
+    width: 25%;
+    height: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
+    transform: translateX(-100%);
+    overflow: auto;
+    transition: transform 0.3s ease-out;
+    z-index: 50;
+    position: relative;
+    user-select: none;
+}
+.menu-hijo-desplazable.activo {
+  transform: translateX(0);
+}
+.oculto{
+    display: none;
+}
+.items-secudarios-categorias{
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: solid 1px var(--verde-claro);
+    padding: 10px 5px;
+    margin: 5px 0;
+    display: flex;
+    justify-content: space-between;
+}
+.links-secundarios-categorias{
+    user-select: none;
+}
+.items-secudarios-categorias:hover .links-secundarios-categorias{
+    color: var(--verde-claro);
+}
+.contenedor-imagen-menu{
+    height: 6em;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+
+}
+.imagen-menu{
+    width:  2em;
+    height: 2em;
+    padding-left: 10px;
+    cursor: pointer;
+}
+.lista-principal-variable-admin{
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    height: auto;
+}
+.items-principales-variables-admin{
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: solid 1px var(--verde-claro);
+    padding: 10px 5px;
+    margin: 5px 0;
+}
+.links-principales-variables-admin{
+    width: 100%;
+    height: 100%;
+    text-align: left;
+}
+.texto-variable{
+    display: none;
+}
+.contenedor-info-muoqa{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.links-muoqa{
+    display: inline-block;
+    font-weight: 600;
+    font-family: "Roboto";
+}
+@media(max-width: 1280px){
+    .texto-variable{
+        display: inline-block;
+    }
+    .contenedor-imagen-menu{
+        display: flex;
+    }
+    .icono-separador-variable{
+        display: none;
+    }
+    .lista-principal-variable{
+        flex-direction: column;
+        padding: 0;
+        height: auto;
+    }
+    .items-principales-variables{
+        width: 100%;
+        box-sizing: border-box;
+        border-bottom: solid 1px var(--verde-claro);
+        padding: 10px 5px;
+        margin: 5px 0;
+    }
+    .links-principales-variables{
+        width: 100%;
+        height: 100%;
+        text-align: left;
+    }
+}
+@media(max-width:1200px){
+    .lista-principal-padding-invertido{
+        position: absolute;
+        bottom: 5px;
+        right: 5px;
+        height: 3em;
+    }
+}
+@media(max-width:1024px){
+    .menu-hijo-desplazable{
+        width: 50%;
+    }
+    .titulo-marca{
+        width: 100%;
+        text-align: center;
+        z-index: 0;
+    }
+}
+@media(max-width:820px){
+    .menu-hijo-desplazable{
+        width: 70%;
+    }
+    
+    .titulo-marca{
+        font-size: 3.5em;
+        top:0.85em
+    }
+}
+@media(max-width: 600px){
+    .pie{
+        flex-direction: column;
+        align-items: center;
+    }
+    .secciones-pie{
+        min-width: 70%;
+        margin: 0;
+    }
+}
+@media(max-width:540px){
+    .menu-hijo-desplazable{
+        width: 100%;
+    }
+    .titulo-marca{
+        font-size: 3.2em;
+        top:0.9em
+    }
+    .imagen-logo-principal{
+        width: 10em;
+        height: 10em;
+    }
+}
+@media(max-width: 500px){
+    body{
+        font-size: 0.95em;
+    }
+}
+@media(max-width: 480px){
+    .titulo-marca{
+        font-size: 3em;
+        top:0.97em
+    }
+}
+@media(max-width: 440px){
+    .titulo-marca{
+        font-size: 2.7em;
+        top:1.1em
+    }
+    .imagen-logo-principal{
+        width: 9.5em;
+        height: 9.5em;
+    }
+}
+@media(max-width: 400px){
+    .titulo-marca{
+        font-size: 2.5em;
+        top:1.2em
+    }
+}
+@media(max-width: 380px){
+    .titulo-marca{
+        font-size: 2.2em;
+        top:1.4em
+    }
+    .imagen-logo-principal{
+        width: 9em;
+        height: 9em;
+    }
+}
+@media(max-width: 340px){
+    .titulo-marca{
+        font-size: 2em;
+        top:1.5em
+    }
+    .imagen-logo-principal{
+        width: 8.6em;
+        height: 8.6em;
+    }
+}

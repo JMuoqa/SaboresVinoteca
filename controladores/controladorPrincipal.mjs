@@ -163,16 +163,16 @@ const VistaExito = (req, res)=>{
 }
 function DetectarJavaScript(titulo){
     switch(titulo){
-        case tituloInicio: return {js:'/js/dist/inicio.bundle.js', existe: true };
-        case tituloCargar: return {js:'/js/dist/cargar.bundle.js', existe: true };
-        case tituloEditar: return {js:'/js/dist/editar.bundle.js', existe: true };
-        case tituloEditarMarcas: return {js:'/js/dist/editarMarcas.bundle.js', existe: true };
-        case tituloEditarCategorias: return {js:'/js/dist/editarCategorias.bundle.js', existe: true };
-        case tituloCategoriaSelec: return {js: '/js/dist/clienteCategoriaSelect.bundle.js', existe:true};
-        case tituloProductoIndividual: return {js: '/js/dist/vistaIndividual.bundle.js', existe:true};
-        case tituloIniciarSession: return {js: '/js/dist/iniciarSession.bundle.js', existe:true};
-        case tituloRegistrarse: return {js: '/js/dist/registrarse.bundle.js', existe:true};
-        case tituloExito: return {js: '/js/dist/exito.bundle.js', existe:true};
+        case tituloInicio: return {js:'/dist/js/inicio.bundle.js', existe: true };
+        case tituloCargar: return {js:'/dist/js/cargar.bundle.js', existe: true };
+        case tituloEditar: return {js:'/dist/js/editar.bundle.js', existe: true };
+        case tituloEditarMarcas: return {js:'/dist/js/editarMarcas.bundle.js', existe: true };
+        case tituloEditarCategorias: return {js:'/dist/js/editarCategorias.bundle.js', existe: true };
+        case tituloCategoriaSelec: return {js: '/dist/js/clienteCategoriaSelect.bundle.js', existe:true};
+        case tituloProductoIndividual: return {js: '/dist/js/vistaIndividual.bundle.js', existe:true};
+        case tituloIniciarSession: return {js: '/dist/js/iniciarSession.bundle.js', existe:true};
+        case tituloRegistrarse: return {js: '/dist/js/registrarse.bundle.js', existe:true};
+        case tituloExito: return {js: '/dist/js/exito.bundle.js', existe:true};
         default: return { existe: false }; 
     }
 }

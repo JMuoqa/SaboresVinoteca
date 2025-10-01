@@ -1,0 +1,68 @@
+/*!****************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloIniciarSession.css ***!
+  \****************************************************************************************/
+.seccion-autenticacion{
+    width: 100%;
+}
+.seccion-iniciar-session{
+    width: 100%;
+}
+.seccion-mas-opciones{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.formulario-autenticacion{
+    border: solid 2px var(--verde-profundo);
+    width: 40em;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
+}
+.boton-aut{
+    height: 2.5em;
+    width: 40em;
+    margin: auto;
+    margin-top: 10px;
+    
+}
+.entradas{
+    margin: 10px 0;
+}
+@media(max-width:800px){
+    .formulario-autenticacion{
+        width: 90%;
+    }
+    .boton-aut{
+        width: 35em;
+    }
+}
+@media(max-width:650px){
+    .boton-aut{
+        width: 30em;
+    }
+}
+@media(max-width:500px){
+    .boton-aut{
+        width: 25em;
+    }
+}
+@media(max-width:450px){
+    .boton-aut{
+        width: 23em;
+    }
+}
+@media(max-width:400px){
+    .boton-aut{
+        width: 20em;
+    }
+}
+@media(max-width:340px){
+    .boton-aut{
+        width: 18em;
+    }
+}

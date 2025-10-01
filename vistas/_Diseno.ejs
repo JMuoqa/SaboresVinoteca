@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/animacionesGenerales.css">
-    <link rel="stylesheet" href="/css/fuentes.css">
-    <link rel="stylesheet" href="/css/global.css">
-    <link rel="stylesheet" href="/css/estiloPrincipal.css">
+    <link rel="stylesheet" href="/dist/css/animacionesGenerales.bundle.css">
+    <link rel="stylesheet" href="/dist/css/fuentes.bundle.css">
+    <link rel="stylesheet" href="/dist/css/estiloGlobal.bundle.css">
+    <link rel="stylesheet" href="/dist/css/estiloPrincipal.bundle.css">
     <link rel="icon" href="/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
     <title><%= TITULO %></title>
 </head>
@@ -94,7 +94,7 @@
 <script>
     const URLMadre = "<%= URLMadre %>";
 </script>
-<script src="/js/dist/principal.bundle.js" defer></script>
+<script src="/dist/js/principal.bundle.js" defer></script>
 <% const scripts = F_DetectarJavaScript(TITULO); if(scripts.existe) { %>
     <script src="<%= scripts.js %>" defer></script>
 <% } %>

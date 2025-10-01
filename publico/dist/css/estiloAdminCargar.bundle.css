@@ -1,0 +1,172 @@
+/*!***************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloAdminDeCargar.css ***!
+  \***************************************************************************************/
+.seccion-seleccionar-tipo-carga{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 2px var(--verde-profundo);
+}
+.boton-elegir{
+    padding: 10px;
+    height: 3em;
+    color: var(--fondo-blanco);
+    margin: 0 10px;
+    border: none;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    border-radius: 20px;
+}
+.boton-elegir:hover{
+    background: linear-gradient(to top, #255B4A, #296653);
+}
+.boton-admin-cargar{
+    margin: 10px 0;
+}
+.seccion-contenedor-formulario{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.subtitulo-administrar{
+    width: 100%;
+    text-align: center;
+}
+.formulario-carga{
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 2px var(--verde-profundo-t);
+    background-color: var(--fondo-blanco2);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+.fieldset{
+    display: flex;
+    flex-direction: column;
+    width: 49%;
+}
+.vista-previa{
+    width: 10em;
+    height: 15em;
+    max-height: 15em;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    margin-top: 1em;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.imagen-vista-previa{
+    width: 100%;
+}
+.imagen-del-producto{
+    width: 100%;
+    max-height: 14em;
+    object-fit: cover;/* mantiene proporción, recorta si sobra */
+}
+.contenedor-importado{
+    width: 100%;
+    display: flex;
+}
+.entradas, .etiquetas{
+    margin: 0.5em 0;
+}
+.entrada-importado{
+    width: 2em;
+    padding: 1.5em;
+}
+.contenedor-info-producto{
+    width: 12em;
+    min-height: 15em;
+    border-radius: 5px;
+    margin-top: 1em;
+    overflow: hidden;
+    background-color: var(--fondo-blanco2);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+    display: flex;
+    flex-direction: column;
+}
+.contenedor-informacion-productos{
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.texto-info-producto {
+    margin: 10px 0;
+}
+.valor-producto{
+    margin-left: 3px;
+}
+.texto-marca-precio{
+    display: flex;
+}
+.listado-marcas{
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: solid 2px var(--verde-profundo-t);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+}
+.items-marca{
+    display: flex;
+}
+.fieldset-marca{
+    margin: auto;
+}
+.parrafo-nombre-marca{
+    margin-left: 5px;
+}
+/*espiral*/
+
+.contenedor-espiral{
+    margin: auto;
+    display: none;
+    align-items: center;
+}
+.animacion-espiral{
+    margin-left: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.1); /* borde gris clarito/transparente */
+    border-top: 2px solid var(--verde-profundo);        /* color de la parte "que gira" */
+    border-radius: 50%;                   /* lo hace circular */
+    width: 1em;
+    height: 1em;
+    animation: espiral 1s linear infinite;   /* animación infinita */
+    background: transparent;   
+}
+@media(max-width: 1350px) {
+    .formulario-carga{
+        width: 85%;
+    }
+}
+@media(max-width: 1024px) {
+    .formulario-carga{
+        flex-direction: column;
+    }
+    .fieldset{
+        width: 100%;
+    }
+}
+@media(max-width: 950px) {
+    .seccion-seleccionar-tipo-carga{
+        flex-direction: column;
+    }
+    .boton-elegir{
+        margin: 10px 0;
+    }
+}
+@media(max-width: 500px) {
+    .formulario-carga{
+        width: 90%;
+    }
+}

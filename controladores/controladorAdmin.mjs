@@ -54,15 +54,11 @@ const InsertarCategoria = async (req, res) => {
         if(!usuarioPermitido)
             throw new Error('Sin permisos');
         const imagen = req.file;
-        let imagenProcesada;
         if (!imagen)
             return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
         const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
-        const extencion = path.extname(imagen.originalname).toLowerCase();
-        if(extencion == '.heic')
-            imagenProcesada = await ConvertirImagen(imagen, rutaOriginal);
-        else
-            imagenProcesada = imagen.filename;
+        const extension = path.extname(imagen.originalname).toLowerCase();
+        const imagenProcesada = await ConvertirImagen(imagen, rutaOriginal, extension);
         let { categoria } = req.body;
         const regex = /^[a-zA-Z0-9 @,+._-]+$/;
         if (!categoria || !regex.test(categoria)) {
@@ -466,18 +462,40 @@ const CambiarVisibilidadDeMarca = async (req, res) => {
         return res.json({estado: 'muyMalo', mensaje: error.message});
     }
 }
-async function ConvertirImagen(imagen, rutaOriginal) {
-    const nuevoNombre = imagen.filename.replace(/\.heic$/i,'.jpg');
+async function ConvertirImagen(imagen, rutaOriginal, extension) {
+    const nuevoNombre = imagen.filename.replace(extension, ".jpg");
+    const tempNombre = "temp_" + nuevoNombre;
+    const tempRuta = path.join(rutaDeLaCarpeta, tempNombre);
     const nuevaRuta = path.join(rutaDeLaCarpeta, nuevoNombre);
-    const bufferDeEntrada = fs.readFileSync(rutaOriginal); // esto lee el archivo por que convert(heic-convert), no lee el archivo pasandole la ruta.
-    const jpegBuffer = await convert({
-        buffer: bufferDeEntrada,  // buffer de entrada. (El archivo)
-        format: 'JPEG',       // formato de salida
-        quality: 0.9          // calidad jpeg
-    });
-    await sharp(jpegBuffer).jpeg({ quality: 90 }).toFile(nuevaRuta); //Guarda la nueva imagen
-    fs.unlinkSync(rutaOriginal);//Esto borra la imagen .heic que se subio.
-    return nuevoNombre
+    const MAX_WIDTH = 720;
+    const bufferDeEntrada = fs.readFileSync(rutaOriginal);
+    const imagenSharp = sharp(bufferDeEntrada);
+    const metadata = await imagenSharp.metadata();
+    if (extension === ".heic") {
+        // Leer HEIC y convertir a JPEG
+        const bufferHEIC = fs.readFileSync(rutaOriginal);
+        const bufferJPEG = await convert({
+            buffer: bufferHEIC,
+            format: "JPEG",
+            quality: 0.9
+        });
+        if(metadata.width > 720) 
+            await sharp(bufferJPEG).resize({ width: 720 }).jpeg({ quality: 90, mozjpeg: true }).toFile(nuevaRuta); 
+        else 
+            await sharp(bufferJPEG).jpeg({ quality: 80, mozjpeg: true }).toFile(nuevaRuta);
+        fs.unlinkSync(rutaOriginal);
+    } else {
+        if(metadata.width > 720) 
+            await sharp(bufferDeEntrada).resize({ width: 720 }).jpeg({ quality: 90, mozjpeg: true }).toFile(tempRuta); 
+        else 
+            await sharp(bufferDeEntrada).jpeg({ quality: 80, mozjpeg: true }).toFile(tempRuta);
+        fs.unlinkSync(rutaOriginal);
+        fs.renameSync(tempRuta, nuevaRuta);
+    }
+    return nuevoNombre;
+}
+async function Esperar(milisegundos) {
+  return new Promise(resolver => setTimeout(resolver,milisegundos))
 }
 async function ComprobarUsuario(usuario) {
     if(usuario[0] && usuario[0].Jerarquia &&  usuario[0].Jerarquia == 'ADMIN')

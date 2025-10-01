@@ -1,1 +1,0 @@
-document.addEventListener("DOMContentLoaded",function(){document.getElementById("botonIrInicio").addEventListener("click",function(){window.location.href=`${URLMadre}/`}),document.getElementById("botonIrImportados").addEventListener("click",function(){window.location.href=`${URLMadre}/#importados`})});

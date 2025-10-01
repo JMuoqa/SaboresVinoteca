@@ -64,49 +64,6 @@
     animation: espiral 1s linear infinite;   /* animación infinita */
     background: transparent;   
 }
-/*Categorias*/
-.seccion-categorias{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-bottom: 3em;
-}
-.subtitulos-principales{
-    background: linear-gradient(to top, var(--verde-profundo), #203d35);
-    color: var(--fondo-blanco);
-    width: 100%;
-    font-size: 4em;
-    font-family: "Bebas";
-    text-align: center;
-    padding: 0.5em 0;
-}
-.imagen-categoria{
-    width: 100%;
-}
-.titulo-categoria{
-    margin: 0;
-    position: absolute;
-    display: inline-block;
-    font-size: 1.6em;
-    text-align: center;
-    font-family: "Bebas";
-    color: var(--fondo-blanco);
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-.filtro-categoria{
-    background-color: #1119;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    
-}
 .animar-contenedor-info-producto{
     animation: aparecerProductos .5s ease none;
 }
@@ -209,9 +166,6 @@
     .fieldset{
         width: 100%;
     }
-    .contenedor-de-las-categorias{
-        width: 95%;
-    }
 }
 @media(max-width: 950px) {
     .seccion-seleccionar-edicion{
@@ -251,9 +205,22 @@
         width: 70px;
         height: 70px; 
     }
+    .contenedor-categoria{
+        width: 20em;
+        max-width: 20em;
+        height: 8em;
+        max-height: 8em;
+    }
+    .contenedor-de-las-categorias{
+        grid-template-columns: repeat(auto-fill, minmax(21em, 1fr));
+    }
 }
-@media(max-width: 380px){
-    .contenedor-de-las-categorias {
-        grid-template-columns: repeat(auto-fill, minmax(12em, 1fr));
+@media(max-width:400px){
+    .contenedor-categoria{
+        width: 16em;
+        max-width: 16em;
+    }
+    .contenedor-de-las-categorias{
+        grid-template-columns: repeat(auto-fill, minmax(17em, 1fr));
     }
 }

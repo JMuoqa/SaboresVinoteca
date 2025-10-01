@@ -1,0 +1,296 @@
+/*!******************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloClienteCatSelect.css ***!
+  \******************************************************************************************/
+.subtitulos-principales{
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    color: var(--fondo-blanco);
+    width: 100%;
+    font-size: 4em;
+    font-family: "Bebas";
+    text-align: center;
+    padding: 0.5em 0;
+}
+.subtitulo-categoria{
+    margin-top: 0;
+}
+.seccion-filtros-busquedas{
+    width: 20%;
+    padding-right: 5px;
+    box-sizing: border-box;
+}
+.formulario-filtro{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+}
+.campos{
+    width: 100%;
+    margin: 0 1em;
+    display: flex;
+    flex-direction: column;
+    min-height: 10em;
+}
+.campo-boton{
+    align-items: center;
+    justify-self: flex-start;
+}
+.etiqueta-filtrar{
+    display: inline-block;
+    margin: 10px 0;
+}
+/*Diseño de entrada busqueda*/
+.diseño-entrada-busuqeda{
+    width: 100%;
+    height: 2em;
+    display: flex;
+    justify-content: center;
+}
+.imagen-lupa{
+    width: 1.9em;
+    border: solid 1px #000;
+    border-left:none;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; 
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+.imagen-lupa:hover{
+    background-color: #EEEEEE;
+}
+.etiqueta-de-busuqeda{
+    font-size: 1.3em;
+    display: inline-block;
+    margin-bottom:10px;
+}
+.entrada-busqueda{
+    width: 100%;
+    padding: 10px;
+    border: solid 1px #000;
+    border-right:none;
+    border-radius:0;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+.contenedor-slider{
+    width: 80%;
+    margin: auto;
+    margin-top: 10px;
+}
+
+.boton-busqueda{
+    background-color: var(--verde-profundo);
+    color: var(--fondo-blanco);
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: inherit;
+    font-family: inherit;
+    margin-top: 1em;
+    width: 100%;
+}
+/*Imagenes flechas*/
+.seccion-cambiar-pagina{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+.imagen-flecha-cambiar-pagina{
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+    border-radius: 3em;
+    margin: 0 1em;
+}
+.indice-de-pagina{
+    font-size: 2em;
+}
+.imagen-flecha-cambiar-pagina:hover{
+    background-color: #ccc;
+}
+/*Carrusel*/
+.seccion-mostrar-marcas{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3em;
+}
+.contenedor-marcas{
+    overflow: hidden;
+    max-width: 52em;
+}
+
+.pista {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+.slide {
+    min-width: 140px;
+    text-align: center;
+    font-size: 1.5em;
+    transform: scale(1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px;
+}
+.slide:hover{
+    transform: scale(1.1);
+}
+/*Tarjetas productos*/
+.seccion-productos{
+    width: 80%;
+    margin: auto;
+}
+.subtitulo-marcas {
+    font-size: 1.5em;
+}
+.conteendor-productos{
+    grid-template-columns: repeat(auto-fill, minmax(12.5em, 1fr)); 
+}
+/*Animacion esporal*/
+.contenedor-espiral{
+    margin: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 20em;
+    margin: auto;
+}
+.animacion-espiral{
+    margin-left: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--verde-profundo);    
+    border-radius: 50%;               
+    width: 100px;
+    height: 100px;   
+    animation: espiral 1s linear infinite;
+    background: transparent;   
+}
+/*Categoria*/
+.seccion-categorias{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 3em;
+}
+@media(max-width: 1400px){
+    .contenedor-categorias-productos {
+        width: 100%;
+    }
+}
+@media(max-width: 1300px){
+    .seccion-productos{
+        width: 70%;
+    }
+    .seccion-filtros-busquedas{
+        width: 30%;
+    }
+}
+@media(max-width: 950px){
+    .entrada-busqueda{
+        width: 30em;
+    }
+    .seccion-filtros-busquedas{
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    .diseño-entrada-busuqeda{
+        width: 100%;
+        justify-content: unset;
+        margin: 10px 0;
+    }
+    .contenedor-slider{
+        margin: 0;
+        margin-top: 0.5em;
+    }
+    .seccion-flex {
+        flex-direction: column;
+    }
+    .seccion-productos{
+        width: 100%;
+    }
+    .campos{
+        min-height: auto;
+    } 
+}
+@media(max-width: 900px){
+    .contenedor-espiral{
+        font-size: 1.2em;
+        width: 18em;
+        
+    }
+    .animacion-espiral{           
+        width: 80px;
+        height: 80px; 
+    }
+}
+@media(max-width: 550px){
+    .contenedor-slider{
+        margin-left: 20px;
+    }
+    .entrada-busqueda{
+        width: 25em;
+    }
+    .conteendor-productos{
+        grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
+    }
+    .imagen-del-producto{
+        max-height: 12em;
+    }
+    .contenedor-info-producto{
+        width: 10em;
+        max-width: 10em;
+        height: 19em;
+        max-height: 19em;
+    }
+}
+@media(max-width: 450px){
+    .entrada-busqueda{
+        width: 20em;
+    }
+    .subtitulos-principales{
+        font-size: 3em;
+    }
+    .contenedor-espiral{
+        font-size: 1em;
+    }
+    .animacion-espiral{           
+        width: 70px;
+        height: 70px; 
+    }
+    .contenedor-categoria{
+        width: 20em;
+        max-width: 20em;
+        height: 8em;
+        max-height: 8em;
+    }
+    .contenedor-de-las-categorias{
+        grid-template-columns: repeat(auto-fill, minmax(21em, 1fr));
+    }
+}
+@media(max-width: 400px){
+    .contenedor-categoria{
+        width: 16em;
+        max-width: 16em;
+    }
+    .contenedor-de-las-categorias{
+        grid-template-columns: repeat(auto-fill, minmax(17em, 1fr));
+    }
+}
+@media(max-width: 380px){
+    .entrada-busqueda{
+        width: 18em;
+    }
+}

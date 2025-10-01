@@ -11,6 +11,8 @@ import rutasAdmin from './rutas/rutasAdmin.mjs';
 import rutasAut from './rutas/rutasAut.mjs'
 import session from 'express-session';
 import passport from './config/passport.mjs';
+
+
 let urlMadre = '';
 if(process.env.NODE_ENV == 'development'){
     urlMadre = 'http://localhost:5111';

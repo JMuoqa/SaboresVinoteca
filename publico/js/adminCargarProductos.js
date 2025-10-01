@@ -29,35 +29,28 @@ function MostrarGaleriaDeImagenesParaCategoria(){
     let imagenSeleccionada = null;
     entrada.addEventListener('change', async function(event){ // Es asincrono por que llama a heic2any
         try {
-            const archivo = event.target.files[0]; //No existe event.target.file, siempre devuelve un array
-            let archivoFinal = null;
-            if(!archivo)
-                throw new Error ('No se selecciono ningun archivo');
-            if(archivo && archivo.type === 'image/heic' || archivo.name.toLowerCase().endsWith('.heic')){
-                    const blobConvertido = await heic2any({ //HEIC2ANY sirve para convertir heic2any a jpg
-                        blob: archivo,
-                        toType: "image/jpeg",
-                        quality: 0.9
-                    });
-                    // Crear objeto File para que tenga type y name correctos
-                    const archivoConvertido = new File([blobConvertido], file.name.replace(/\.heic$/i, '.jpg'), { type: "image/jpeg" });
-                    archivoFinal = archivoConvertido;
-            }else{
-                archivoFinal = archivo
+            const archivo = event.target.files[0];
+            if (!archivo) throw new Error('No se seleccionó ningún archivo');
+            let archivoFinal = archivo;
+            if (archivo.type === 'image/heic' || archivo.name.toLowerCase().endsWith('.heic')) {
+                const blobConvertido = await heic2any({
+                    blob: archivo,
+                    toType: "image/jpeg",
+                    quality: 0.9
+                });
+                archivoFinal = new File(
+                    [blobConvertido],
+                    archivo.name.replace(/\.heic$/i, '.jpg'),
+                    { type: "image/jpeg" }
+                );
             }
-            if(archivoFinal != null && archivoFinal.type.startsWith('image/')){
-                const lector = new FileReader();
-                lector.onload = function(e){ /*
-                    reader.onload = function(e){}; esto le dice como va a ser la funcion 'onload',
-                    que se ejecutara cada ves que termine de leer un archivo*/
-                    imagenSeleccionada = e.target.result;
-                    mostrarImagen();
-                };
-                lector.readAsDataURL(archivo);
-            }
-            else{
-                elementoImagen.src='';
-            }
+            if (!archivoFinal.type.startsWith('image/')) throw new Error('No se seleccionó un archivo de imagen');
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                imagenSeleccionada = e.target.result;
+                mostrarImagen();
+            };
+            lector.readAsDataURL(archivoFinal);
         } catch (error) {
             console.error(error);
         }
@@ -75,35 +68,28 @@ function MostrarGaleriaDeImagenesParaProducto(){
     
     entrada.addEventListener('change', async function(event){ // Es asincrono por que llama a heic2any
         try{
-            const archivo = event.target.files[0]; //No existe event.target.file, siempre devuelve un array
-            let archivoFinal = null;
-            if(!archivo)
-                throw new Error ('No se selecciono ningun archivo');
-            if(archivo && archivo.type === 'image/heic' || archivo.name.toLowerCase().endsWith('.heic')){
-                const blobConvertido = await heic2any({ //HEIC2ANY sirve para convertir heic2any a jpg
+            const archivo = event.target.files[0];
+            if (!archivo) throw new Error('No se seleccionó ningún archivo');
+            let archivoFinal = archivo;
+            if (archivo.type === 'image/heic' || archivo.name.toLowerCase().endsWith('.heic')) {
+                const blobConvertido = await heic2any({
                     blob: archivo,
                     toType: "image/jpeg",
                     quality: 0.9
                 });
-                // Crear objeto File para que tenga type y name correctos
-                const archivoConvertido = new File([blobConvertido], file.name.replace(/\.heic$/i, '.jpg'), { type: "image/jpeg" });
-                archivoFinal = archivoConvertido;
-            }else{
-                archivoFinal = archivo
+                archivoFinal = new File(
+                    [blobConvertido],
+                    archivo.name.replace(/\.heic$/i, '.jpg'),
+                    { type: "image/jpeg" }
+                );
             }
-            if(archivoFinal != null && archivoFinal.type.startsWith('image/')){
-                const lector = new FileReader();
-                lector.onload = function(e){ /*
-                    reader.onload = function(e){}; esto le dice como va a ser la funcion 'onload',
-                    que se ejecutara cada ves que termine de leer un archivo*/
-                    imagenSeleccionada = e.target.result;
-                    mostrarImagen();
-                };
-                lector.readAsDataURL(archivo);
-            }
-            else{
-                throw new Error ('No se selecciono ningun archivo')
-            }
+            if (!archivoFinal.type.startsWith('image/')) throw new Error('No se seleccionó un archivo de imagen');
+            const lector = new FileReader();
+            lector.onload = function(e) {
+                imagenSeleccionada = e.target.result;
+                mostrarImagen();
+            };
+            lector.readAsDataURL(archivoFinal);
         }catch (error){
             console.error(error);
             elementoImagen.src = '';

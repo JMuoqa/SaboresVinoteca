@@ -1,4 +1,6 @@
 import path from 'path';
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import RemoveEmptyScriptsPlugin from "webpack-remove-empty-scripts";
 import { fileURLToPath } from 'url';
 const __nombreDelArchivo = fileURLToPath(import.meta.url); // Obtiene el archivo actual
 const __nombreDelDirectorio = path.dirname(__nombreDelArchivo);       // Obtiene el directorio actual
@@ -15,10 +17,41 @@ export default {
     iniciarSession: './publico/js/iniciarSession.js',
     registrarse: './publico/js/registrarse.js',
     exito: './publico/js/exito.js',
+    //css
+    animacionesGenerales: './publico/css/animacionesGenerales.css',
+    estiloAdminCargar: './publico/css/estiloAdminDeCargar.css',
+    estiloClienteCatSelect: './publico/css/estiloClienteCatSelect.css',
+    estiloEditarCategorias: './publico/css/estiloEditarCategorias.css',
+    estiloEditarMarcas: './publico/css/estiloEditarMarcas.css',
+    estiloEditarProductos: './publico/css/estiloEditarProductos.css',
+    estiloExito: './publico/css/estiloExito.css',
+    estiloIniciarSession: './publico/css/estiloIniciarSession.css',
+    estiloInicio: './publico/css/estiloInicio.css',
+    estiloPrincipal: './publico/css/estiloPrincipal.css',
+    estiloRegistrarse: './publico/css/estiloRegistrarse.css',
+    estiloVerProducto: './publico/css/estiloVerProducto.css',
+    fuentes: './publico/css/fuentes.css',
+    estiloGlobal: './publico/css/global.css',
   },
   output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__nombreDelDirectorio, 'publico/js/dist'), // importante
+    filename: 'js/[name].bundle.js',
+    path: path.resolve(__nombreDelDirectorio, 'publico/dist'), // importante
+    clean:true,
   },
-  mode: 'production',
-};
+  module: {
+    rules: [
+      {
+        test: /\.css$/i,
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
+      },
+    ]
+  },
+  plugins: [
+    new RemoveEmptyScriptsPlugin(),
+    new MiniCssExtractPlugin({
+      filename: "css/[name].bundle.css",
+    }),
+  ],
+  mode: "production"
+}
+

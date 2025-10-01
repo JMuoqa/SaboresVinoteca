@@ -1,0 +1,290 @@
+/*!**************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/global.css ***!
+  \**************************************************************************/
+:root{
+    --fondo-blanco: #ffffff;
+    --fondo-blanco2: #f8f7f4;
+    --color-negro: #111;
+    --color-negro-transparente: #1119;
+    --dorado: #c9a646;
+    --bronce: #8c6239;
+    --color-rojo-error: #d7596d;
+    --color-rojo: #d01f3d;
+    --color-naranja-edicion: #ff914d;
+    /*Whisky*/
+    --whisky-claro: #F5E6D3;
+    --whisky-intermedio: #B87B2E;
+    --whisky-intermedio-t: #B87B2E;
+    --whisky-oscuro: #5C3A21;
+    /*Verde*/
+    --verde-claro: #B7E4C7;
+    --verde-intermedio: #40916C;
+    --verde-profundo: #1E3932;
+    --verde-hover: #24473e;
+    --verde-profundo-t: #1E393299;
+    --gris-profundo-neutral: #1E1E1E;
+    /*CHATGPT*/
+    --bg: #0b1020;
+    --card: #0f1724;
+    --muted: #9ca3af;
+    --accent: #60a5fa;
+    --accent-600: #3b82f6;
+    --ring: 0 6px 18px rgba(96,165,250,0.08);
+    --shadow-sm: 0 6px 18px rgba(2,6,23,0.6);
+    --glass: rgba(255,255,255,0.02);
+    --input-border: rgba(255,255,255,0.06);
+}
+span{
+    display: inline-block;
+    width: 100%;
+}
+* {
+  -webkit-tap-highlight-color: transparent; /* iOS / Safari */
+  outline: none;                            /* quita contorno de focus */
+}
+dialog{
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: var(--color-negro-transparente);
+}
+fieldset{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+}
+.listas-generales{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    cursor: pointer;
+}
+.links-generales{
+    color: var(--fondo-blanco);
+    text-decoration: none;
+}
+.links-generales:link{
+    color: var(--fondo-blanco);
+}
+.links-generales:visited{
+    color: var(--fondo-blanco);
+}
+.iconos-principales{
+    width: 1.8em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.iconos-principales:hover{
+    background-color: #40916d41;
+}
+.filtro-negro-global{
+    background-color: #0006;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -5;
+}
+.etiquetas{
+    font-weight: 600;
+    font-size: 1.2em;
+}
+.entradas{
+    width: 100%;
+    font-size: inherit;
+    font-family: inherit;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    border: solid 1px var(--color-negro);
+}
+.entradas-imagenes{
+    border: none;
+}
+.texto-centrado{
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+}
+.texto-naranja-edicion{
+    color: var(--color-naranja-edicion);
+}
+.texto-desenfocado{
+    color: #999;
+}
+.texto-blanco{
+    color: var(--fondo-blanco)
+}
+.punto-suspensivos{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 95%;
+    margin: auto;
+}
+.texto-flex{
+    display: flex;
+}
+/*contenedor productos*/
+
+.conteendor-productos{
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+    justify-items: center; 
+}
+.contenedor-info-producto{
+    width: 12em;
+    height: 21em;
+    max-height: 21em;
+    border-radius: 5px;
+    margin-top: 1em;
+    overflow: hidden;
+    background-color: var(--fondo-blanco2);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+    display: flex;
+    flex-direction: column;
+    transition: transform .5s ease, box-shadow .5s ease;
+    cursor: pointer;
+}
+.contenedor-info-producto:hover{
+    transform: scale(1.05);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.1);
+}
+.animar-contenedor-info-producto{
+    animation: aparecerProductos .5s ease none;
+}
+.imagen-del-producto{
+    width: 100%;
+    max-height: 14em;
+    object-fit: cover;/* mantiene proporción, recorta si sobra */
+}
+.contenedor-informacion-productos{
+    width: 100%;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.texto-info-producto{
+    margin: 10px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.seccion-flex{
+    display: flex;
+    width: 90%;
+    margin: auto;
+}
+/*Menus*/
+.secciones-menu-desplasable{
+    margin-top: 10px;
+}
+/*boton*/
+.boton-general{
+    background-color: var(--verde-profundo);
+    color: var(--fondo-blanco);
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: inherit;
+    font-family: inherit;
+    margin-top: 10px;
+}
+.boton-general:hover{
+    background-color: var(--verde-hover)
+}
+/*Iconos diseño*/
+.iconos-contacto{
+    width: 1em;
+    height: 1em;
+    margin: 0 4px;
+}
+.icono-flecha-links{
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: 5px;
+}
+/*Categorias*/
+.seccion-categorias{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-bottom: 3em;
+}
+.contenedor-categoria{
+    width: 25em;
+    max-width: 25em;
+    height: 10em;
+    max-height: 10em;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    transform: scale(1);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.15);
+    transition: transform .3s ease, box-shadow .3s ease;
+    margin-top: 1.5em;
+}
+.contenedor-categoria:hover{
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.2);
+    transform: scale(1.1);
+
+}
+.contenedor-de-las-categorias{
+    width: 90%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(26em, 1fr));
+    justify-items: center; 
+}
+.imagen-categoria{
+    width: 100%;
+}
+.titulo-categoria{
+    margin: 0;
+    position: absolute;
+    display: inline-block;
+    font-size: 2.5em;
+    text-align: center;
+    font-family: "Bebas", 'Arial', 'Helvetica', sans-serif;
+    color: var(--fondo-blanco);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.filtro-categoria{
+    background-color: #1113;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+}
+/*subtitulos-principales*/
+.subtitulos-principales{
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    color: var(--fondo-blanco);
+    width: 100%;
+    font-size: 4em;
+    font-family: "Bebas";
+    text-align: center;
+    padding: 0.5em 0;
+}
+/*Animacion espiral*/
+.contenedor-espiral > p {
+  margin-right: 15px;
+}
+@media(max-width: 450px){
+    .contenedor-info-producto{
+        width: 12em;
+    }
+}

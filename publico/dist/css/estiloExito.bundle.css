@@ -1,0 +1,32 @@
+/*!*******************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloExito.css ***!
+  \*******************************************************************************/
+.seccion-botones-navegacion{
+    width: 35%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+.boton-general{
+    height: 2.5em;
+}
+@media(max-width:1024px){
+    .seccion-botones-navegacion{
+        width: 50%;
+    }
+}
+@media(max-width:900px){
+    .seccion-botones-navegacion{
+        width: 60%;
+    }
+}
+@media(max-width:800px){
+    .seccion-botones-navegacion{
+        width: 70%;
+    }
+}
+@media(max-width:450px){
+    .seccion-botones-navegacion{
+        width:80%;
+    }
+}

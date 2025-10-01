@@ -102,7 +102,7 @@ function ActualizarProductos() {
             const articulo = document.createElement('article');
             if(precio < 1){
               articulo.innerHTML = `
-                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                <div class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
                   <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                   <div class="contenedor-informacion-productos">
                     <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -111,7 +111,7 @@ function ActualizarProductos() {
                 </div>`;
             }else{
               articulo.innerHTML = `
-                <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                <div class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
                   <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                   <div class="contenedor-informacion-productos">
                     <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -191,7 +191,7 @@ function BotonBuscarYEventoDelFormulario() {
               const articulo = document.createElement('article');
               if(precio < 1){
                 articulo.innerHTML = `
-                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <div class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
                     <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                     <div class="contenedor-informacion-productos">
                       <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -200,7 +200,7 @@ function BotonBuscarYEventoDelFormulario() {
                   </div>`;
               }else{
                 articulo.innerHTML = `
-                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+                  <div class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
                     <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                     <div class="contenedor-informacion-productos">
                       <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -622,7 +622,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
           const articulo = document.createElement('article');
           if(precio < 1){
             articulo.innerHTML = `
-              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+              <div class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
@@ -631,7 +631,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
               </div>`;
           }else{
             articulo.innerHTML = `
-              <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
+              <div class="contenedor-info-producto contenedor-info-producto-funcional" data-id="${Productos[i].ID}">
                 <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
                 <div class="contenedor-informacion-productos">
                   <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>

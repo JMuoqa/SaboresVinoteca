@@ -1,0 +1,288 @@
+/*!*****************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloEditarProductos.css ***!
+  \*****************************************************************************************/
+.seccion-seleccionar-edicion{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: solid 2px var(--verde-profundo);
+}
+.boton-elegir{
+    padding: 10px;
+    height: 2.4em;
+    color: var(--fondo-blanco);
+    margin: 0.5em 10px;
+    border: none;
+    background: linear-gradient(to top, var(--verde-profundo), #203d35);
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    border-radius: 20px;
+}
+.boton-elegir:hover{
+    background: linear-gradient(to top, #255B4A, #296653);
+}
+.subtitulo-administrar{
+    width: 100%;
+    text-align: center;
+}
+.formulario-carga{
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 2px var(--verde-profundo-t);
+    background-color: var(--fondo-blanco2);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+    border-radius: 10px;
+    display: flex;
+}
+.fieldset{
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+.editar-datos{
+    border-top: solid 2px var(--verde-profundo);
+    margin-top: 3em;
+}
+.datos{
+    width: 70%;
+    margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    border: solid 2px var(--verde-profundo-t);
+    background-color: var(--fondo-blanco2);
+    box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
+.entradas, .etiquetas{
+    margin: 0.5em 0;
+}
+/*Busqueda*/
+.buscar-productos{
+    margin-top: 3em;
+}
+.campos{
+    margin: 0 1em;
+}
+.seccion-introducir-busqueda{
+    width: 100%;
+}
+.formulario-busqueda{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.diseño-entrada-busuqeda{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+.imagen-lupa{
+    width:  1.8em;
+    height: 1.8em;
+    border: solid 1px #000;
+    border-left:none;
+    padding: 10px;
+    margin: 0.5em 0;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px; 
+    cursor: pointer;
+    background-color: #FFFFFF;
+}
+.imagen-lupa:hover{
+    background-color: #EEEEEE;
+}
+.etiqueta-de-busuqeda{
+    font-size: 1.3em;
+}
+.entrada-busqueda{
+    width: 25em;
+    height: 1.8em;
+    padding: 10px;
+    border: solid 1px #000;
+    border-right: none;
+    box-sizing:inherit;
+    border-radius: 0;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-left: 10px;
+}
+.boton-busqueda{
+    background-color: var(--verde-profundo);
+    color: var(--fondo-blanco);
+    border: none;
+    padding: 5px 10px;
+    margin-left: 1em;
+    cursor: pointer;
+    border-radius: 20px;
+    font-size: inherit;
+    font-family: inherit;
+    width: 10em;
+}
+/*Productos*/
+.seccion-productos{
+    width: 80%;
+    margin: auto;
+    margin-top:1em;
+}
+/*Flechas*/
+.seccion-cambiar-pagina{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2em 0;
+}
+.imagen-flecha-cambiar-pagina{
+    width: 3em;
+    height: 3em;
+    cursor: pointer;
+    border-radius: 3em;
+    margin: 0 1em;
+}
+.indice-de-pagina{
+    font-size: 2em;
+}
+.imagen-flecha-cambiar-pagina:hover{
+    background-color: #ccc;
+}
+.contenedor-espiral{
+    margin: auto;
+    display: none;
+    align-items: center;
+}
+.animacion-espiral{
+    margin-left: 5px;
+    border: 2px solid rgba(0, 0, 0, 0.1); /* borde gris clarito/transparente */
+    border-top: 2px solid var(--verde-profundo);        /* color de la parte "que gira" */
+    border-radius: 50%;                   /* lo hace circular */
+    width: 1em;
+    height: 1em;
+    animation: espiral 1s linear infinite;   /* animación infinita */
+    background: transparent;   
+}
+.contenedor-espiral-grande{
+    margin: auto;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    width: 20em;
+    margin: auto;
+}
+.animacion-espiral-grande{
+    margin-left: 15px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-top: 2px solid var(--verde-profundo);    
+    border-radius: 50%;               
+    width: 100px;
+    height: 100px;   
+    animation: espiral 1s linear infinite;
+    background: transparent;   
+}
+.contenedor-seguridad{
+    display: flex;
+    margin-bottom: 10px;
+}
+.entrada-seguridad{
+    margin-left: 20px;
+}
+.boton-elimiar{
+    height: 2.4em;
+    border-radius: 1.2em;
+    background-color: var(--color-rojo);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+}
+.boton-desactivado{
+    background-color: var(--muted);
+    color: #444;
+}
+@media(max-width:1024px){
+    .formulario-busqueda{
+        flex-direction: column;
+        width: 70%;
+        margin: auto;
+        align-items: flex-start;
+
+    }
+    .entrada-busqueda{
+        margin-left: 0;
+    }
+    .campos{
+        margin: 0;
+    }
+}
+@media(max-width: 950px) {
+    .seccion-seleccionar-edicion{
+        flex-direction: column;
+        width: 70%;
+        margin: auto;
+        align-items: flex-start;
+    }
+    .boton-elegir{
+        margin: 10px 0;
+    }
+}
+@media(max-width: 900px){
+    .datos{
+        width: 90%;
+    } 
+    .seccion-seleccionar-edicion{
+        width: 90%;
+    }
+    .formulario-busqueda{
+        width: 90%;
+    }
+    .contenedor-espiral-grande{
+        font-size: 1.2em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 80px;
+        height: 80px; 
+    }
+}
+@media(max-width: 800px){
+    .seccion-productos{
+        width: 90%;
+    }
+    .contenedor-prdouctos{
+        grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+    }
+}
+@media(max-width:550px){
+    .entrada-busqueda{
+        width: 20em;
+    }
+}
+@media(max-width:450px){
+    .entrada-busqueda{
+        width: 15em;
+    }
+    
+    .contenedor-espiral-grande{
+        font-size: 1em;
+        width: 18em;
+    }
+    .animacion-espiral-grande{              
+        width: 70px;
+        height: 70px; 
+    }
+}
+@media(max-width:350px){
+    .entrada-busqueda{
+        width: 13em;
+    }
+}
