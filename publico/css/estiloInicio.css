@@ -210,18 +210,15 @@
     }
 }
 @media(max-width:550px){
-    .conteendor-productos{
+    /*.conteendor-productos{
         grid-template-columns: repeat(auto-fill, minmax(11em, 1fr));
-    }
-    .imagen-del-producto{
-        max-height: 12em;
     }
     .contenedor-info-producto{
         width: 10em;
         max-width: 10em;
         height: 19em;
         max-height: 19em;
-    }
+    }*/
 }
 @media(max-width: 450px){
     .contenedor-categoria{
@@ -243,6 +240,12 @@
     .animacion-espiral{           
         width: 70px;
         height: 70px; 
+    }
+    .conteendor-productos{
+        grid-template-columns: repeat(auto-fill, minmax(23em, 1fr));
+    }
+    .contenedor-info-producto{
+        min-width: 22em;
     }
 }
 @media(max-width: 400px){
@@ -268,6 +271,38 @@
     .diseño-entrada-busuqeda{
         width: 100%;
         justify-content: unset;
+    }
+    .conteendor-productos{
+        grid-template-columns: repeat(auto-fill, minmax(21em, 1fr));
+    }
+    .contenedor-info-producto{
+        min-width: 20em;
+    }
+    .imagen-del-producto{
+        max-width: 45%;
+        object-fit: cover;/* mantiene proporción, recorta si sobra */
+        background-color: transparent;
+    }
+    .contenedor-informacion-productos{
+        width: 55%;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+}
+@media(max-width: 380px){
+    .conteendor-productos{
+        grid-template-columns: repeat(auto-fill, minmax(20em, 1fr));
+    }
+    .contenedor-info-producto{
+        min-width: 19em;
+    }
+}
+@media(max-width: 350px){
+    .conteendor-productos{
+        grid-template-columns: repeat(auto-fill, minmax(16em, 1fr));
+    }
+    .contenedor-info-producto{
+        min-width: 15em;
     }
 }
 @media(max-width: 360px){

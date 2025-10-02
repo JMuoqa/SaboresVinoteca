@@ -15,12 +15,12 @@
     --whisky-oscuro: #5C3A21;
     /*Verde*/
     --verde-claro: #D9A6A9;
-    --verde-intermedio: #A32B2F;
-    --verde-profundo: #5B0F12;
-    --color-principal-degrade:#6A0F13;
-    --color-principal-transparente: #A32B2F41;
-    --verde-hover: #7B1417;
-    --verde-profundo-t: #5B0F1299;
+    --verde-intermedio: #C1903C;
+    --verde-profundo: #7A4A10;
+    --color-principal-degrade:#74470f;
+    --color-principal-transparente: #C1903C41;
+    --verde-hover: #935A18;
+    --verde-profundo-t: #7A4A1099;
     --gris-profundo-neutral: #1E1E1E;
     /*CHATGPT*/
     --bg: #0b1020;
@@ -34,7 +34,7 @@
     --input-border: rgba(255,255,255,0.06);
 }
 .noUi-connect {
-    background: #B83F48 !important;
+    background: #A8571E !important;
 }
 span{
     display: inline-block;
@@ -117,13 +117,13 @@ fieldset{
 .texto-blanco{
     color: var(--fondo-blanco)
 }
-.punto-suspensivos{
+.punto-suspensivos{/*
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 95%;
-    margin: auto;
+    margin: auto;*/
 }
 .texto-flex{
     display: flex;
@@ -133,12 +133,12 @@ fieldset{
 .conteendor-productos{
     padding: 10px;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(13em, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(22em, 1fr));
     justify-items: center; 
 }
 .contenedor-info-producto{
-    width: 12em;
-    height: 21em;
+    width: 21em;
+    height: 10em;
     max-height: 21em;
     border-radius: 5px;
     margin-top: 1em;
@@ -146,7 +146,6 @@ fieldset{
     background-color: var(--fondo-blanco2);
     box-shadow: 0 4px 14px 2px rgba(22, 22, 22, 0.05);
     display: flex;
-    flex-direction: column;
     transition: transform .5s ease, box-shadow .5s ease;
     cursor: pointer;
 }
@@ -158,21 +157,21 @@ fieldset{
     animation: aparecerProductos .5s ease none;
 }
 .imagen-del-producto{
-    width: 100%;
-    max-height: 14em;
+    max-width: 35%;
     object-fit: cover;/* mantiene proporción, recorta si sobra */
     background-color: transparent;
 }
 .contenedor-informacion-productos{
-    width: 100%;
+    width: 65%;
     padding: 5px;
     box-sizing: border-box;
 }
 .texto-info-producto{
     margin: 10px 0;
+    /*
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;
+    text-overflow: ellipsis;*/
 }
 .seccion-flex{
     display: flex;

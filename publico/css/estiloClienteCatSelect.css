@@ -139,12 +139,6 @@
     width: 80%;
     margin: auto;
 }
-.subtitulo-marcas {
-    font-size: 1.5em;
-}
-.conteendor-productos{
-    grid-template-columns: repeat(auto-fill, minmax(12.5em, 1fr)); 
-}
 /*Animacion esporal*/
 .contenedor-espiral{
     margin: auto;
