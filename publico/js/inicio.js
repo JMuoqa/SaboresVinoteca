@@ -16,14 +16,14 @@ async function Esperar(milisegundos) {
 }
 function ActualizarProductos() {
     const contenedorProductos = document.getElementById('contenedorProductos');
-    AnimacionAviso(true, 1);
+    AnimacionAviso(true, 0);
     fetch('admin/obtener-productos?limite=8')
     .then(respuesta =>{
       if(!respuesta.ok)
         throw new Error('Error en la solicitud'); 
       return respuesta.json();    
     }).then(async ({Productos, Marcas}) => {
-      AnimacionAviso(false, 1);
+      AnimacionAviso(false, 0);
       if(Productos){
         contenedorProductos.innerHTML = '';
         if(Productos.length == 0){
@@ -74,7 +74,7 @@ function ActualizarProductos() {
       }
     }).catch( error => {
         console.error(error);
-        AnimacionAviso(false, 1);
+        AnimacionAviso(false, 0);
         //window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
@@ -155,7 +155,7 @@ function ActualizarProductosImportados() {
 }
 function ActualizarSeccionCategorias() {
   const contenedorDeLasCategorias = document.getElementById('contenedorDeLasCategorias');
-  AnimacionAviso(true, 0);
+  AnimacionAviso(true, 1);
   fetch('admin/obtener-categorias')
   .then(respuesta =>{
     if(!respuesta.ok)
@@ -163,7 +163,7 @@ function ActualizarSeccionCategorias() {
     return respuesta.json();    
   }).then(async respuesta => {
     const Categorias = respuesta['Categorias'];
-    AnimacionAviso(false, 0);
+    AnimacionAviso(false, 1);
     if(Categorias.length == 0 || Categorias[0].Categoria == 'No hay'){
       let html = '<p class="texto-centrado"><strong>No se encontraron categorias cargadas</strong></p>';
       contenedorDeLasCategorias.innerHTML = html;
@@ -263,7 +263,7 @@ function BotonBuscarYEventoDelFormulario() {
     if(estadoConsulta){
       estadoConsulta = false;
       const contenedorProductos = document.getElementById('contenedorProductos');
-      AnimacionAviso(true, 1);
+      AnimacionAviso(true, 0);
       contenedorProductos.innerHTML = '';
       const datosDelFormulario = new FormData(this);
       const datos = {};
@@ -293,7 +293,7 @@ function BotonBuscarYEventoDelFormulario() {
           throw new Error('Error en la solicitud'); 
         return respuesta.json();    
       }).then(async respuesta => {
-        AnimacionAviso(false, 1);
+        AnimacionAviso(false, 0);
         if(respuesta['Productos']){
           const Productos = respuesta['Productos'];
           const Marcas = respuesta['Marcas'];
@@ -349,7 +349,7 @@ function BotonBuscarYEventoDelFormulario() {
             estadoConsulta = true;
         }
       }).catch( error => {
-          AnimacionAviso(false, 1);
+          AnimacionAviso(false, 0);
           estadoConsulta = true;
           console.error(error);
           window.location.href = `${URLMadre}/error?mensaje=${error}`;
@@ -598,7 +598,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor, avisoPaginaLimit
 function CambiarPaginas(){
   const indiceSiguiente = document.getElementById('indiceSiguiente');
   indiceSiguiente.addEventListener('click', function(){
-    AnimacionAviso(true, 1);
+    AnimacionAviso(true, 0);
     const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
     const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);
     const numeroSiguiente = numeroDePagina + 1;
@@ -607,14 +607,14 @@ function CambiarPaginas(){
     const url = ObtenerURLConParametros();
     const contenedor = document.getElementById('contenedorProductos');
     const paginaLimite = document.getElementById('paginaLimite');
-    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1, 'todos');
+    FetchCambiarPagina(numeroSiguiente, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 0, 'todos');
     const aUrl = new URL(window.location);
     aUrl.hash = 'formComplemetario'
     window.location.href = aUrl.toString();
   });
   const indiceAnterior = document.getElementById('indiceAnterior');
   indiceAnterior.addEventListener('click', function(){
-    AnimacionAviso(true, 1);
+    AnimacionAviso(true, 0);
     const etiquetaNumeroDePagina = document.getElementById('numeroDePagina');
     const numeroDePagina = Number(etiquetaNumeroDePagina.innerText);
     let numeroAnterior = numeroDePagina - 1;
@@ -625,7 +625,7 @@ function CambiarPaginas(){
     const url = ObtenerURLConParametros();
     const contenedor = document.getElementById('contenedorProductos');
     const paginaLimite = document.getElementById('paginaLimite');
-    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 1, 'todos');
+    FetchCambiarPagina(numeroAnterior, url, etiquetaNumeroDePagina, contenedor, paginaLimite, 0, 'todos');
     const aUrl = new URL(window.location);
     aUrl.hash = 'formComplemetario'
     window.location.href = aUrl.toString();

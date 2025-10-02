@@ -133,6 +133,9 @@
     margin: auto;
     margin-top:1em;
 }
+.texto-marca-precio{
+    display: flex;
+}
 /*Flechas*/
 .seccion-cambiar-pagina{
     display: flex;
@@ -205,6 +208,9 @@
 .boton-desactivado{
     background-color: var(--muted);
     color: #444;
+}
+#vistaPreviaProducto{
+    min-height: 22em;
 }
 @media(max-width:1024px){
     .formulario-busqueda{
