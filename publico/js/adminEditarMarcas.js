@@ -35,60 +35,6 @@ async function ActualizarListaCategorias() {
         
     })
 }
-function Carrusel() {
-    const pista = document.querySelector(".pista");
-    const slides = document.querySelectorAll(".slide");
-    const next = document.getElementById("indiceSiguiente");
-    const prev = document.getElementById("indiceAnterior");
-    let tamaño = slides.length;
-    if(tamaño > 1){
-        const px = 160;
-        let indice = 0;    
-        //Crear clones
-        const firstClone = slides[0].cloneNode(true);
-        const lastClone = slides[slides.length - 1].cloneNode(true);
-        let resta = 2;
-        for(let i=0; i<6;i++){
-          if(slides[i]){
-              const clone = slides[i].cloneNode(true);
-              pista.appendChild(clone);
-              resta++;
-          }
-        }
-        pista.appendChild(firstClone);
-        pista.insertBefore(lastClone, slides[0]);
-        let totalSlides = pista.querySelectorAll(".slide").length;
-        // Posicion inicial (después del clon)
-        pista.style.transform = `translateX(-${px}px)`; 
-        indice = 1;
-        async function moverCarrusel() {
-            pista.style.transition = "transform 0.3s ease-in-out";
-            pista.style.transform = `translateX(-${indice * px}px)`;
-        }
-        next.addEventListener("click", async () => {
-          if (indice >= slides.length + 1) return;
-          indice++;
-          await moverCarrusel();
-        });
-        prev.addEventListener("click", async () => {
-          if (indice <= 0) return;
-          indice--;
-          await moverCarrusel();
-        });
-        pista.addEventListener("transitionend", () => {
-          if (indice == slides.length+1) {
-            pista.style.transition = "none";
-            indice = 1;
-            pista.style.transform = `translateX(-${px}px)`;
-          }
-          if (indice == 0) {
-            pista.style.transition = "none";
-            indice = totalSlides - resta;
-            pista.style.transform = `translateX(-${indice * px}px)`;
-          }
-        });
-    }
-}
 function BuscarMarcas(){
     const buscarMarcas = document.getElementById('buscarMarcas');
     let estadoConsulta = true;
@@ -97,7 +43,7 @@ function BuscarMarcas(){
         if(estadoConsulta){
             AnimacionAviso(true, 0);
             estadoConsulta = false;
-            const contenedorSlider = document.getElementById('contenedorSlider')
+            const seccionMostrarMarcas = document.getElementById('seccionMostrarMarcas')
             const datosDelFormulario = new FormData(this);
             const datos = {};
             datosDelFormulario.forEach((valor, campo)=>{
@@ -112,23 +58,12 @@ function BuscarMarcas(){
                 }).then(({Marcas}) =>{
                     if(Marcas){
                         AnimacionAviso(false, 0);
-                        contenedorSlider.innerHTML = '';
-                        const contenedorDeArticuloS = document.createElement('article');
-                        contenedorSlider.appendChild(contenedorDeArticuloS)
-                        contenedorDeArticuloS.offsetWidth; 
-                        contenedorDeArticuloS.classList.add('pista');
+                        seccionMostrarMarcas.innerHTML = '';
                         for(let i = 0; i< Marcas.length; i++){
-                            const articulo = document.createElement('article');
-                            articulo.classList.add('slide');
-                            articulo.dataset.id = Marcas[i].ID;
-                            articulo.innerHTML += `<P>${Marcas[i].Marca}</P>`;
-                            contenedorDeArticuloS.appendChild(articulo)
-                            articulo.offsetWidth; 
-                            articulo.classList.add('animar-contenedor-info-producto');
+                            seccionMostrarMarcas.innerHTML += `<p class="p-funcionales" data-id="${Marcas[i].ID}">${Marcas[i].Marca}</p>`;
                         }
-                        Carrusel();
                         estadoConsulta = true;
-                        EventosDeLasMarcas();
+                        SeleccionarMarca();
                     }
                 })
             }
@@ -137,31 +72,53 @@ function BuscarMarcas(){
         }
     });
 }
-function EventosDeLasMarcas(){
-    const items = document.querySelectorAll('.slide');
-    for(let i = 0; i<items.length; i++){
-        items[i].addEventListener('click', function(){
-            const ID = Number(items[i].dataset.id);
-            const url = new URL(window.location);
-            const parametros = new URLSearchParams(url.search);
-            parametros.set("ID", ID);
-            url.pathname  = 'admin/obtener-marca-por-ID';
-            url.search = parametros.toString();
-            fetch(url.toString())
-            .then(respuesta => {
-                if(!respuesta.ok)
-                    throw new Error('Error en la solicitud');
-                return respuesta.json()
-            }).then(({estado, Marca})=>{
-                if(estado=='exitoso'){
-                    CargarDatos(Marca);
+function SeleccionarMarca(){
+    const marcas = document.querySelectorAll('.p-funcionales');
+    let estadoConsulta = true;
+    let marcaActual;
+    for(let i = 0; i < marcas.length; i++){
+        marcas[i].addEventListener('click',function(){
+          if(estadoConsulta){
+            estadoConsulta = false;
+            if(marcaActual != marcas[i].dataset.id){
+                marcaActual = marcas[i].dataset.id;
+                marcas[i].style = 'font-weight: 600;'
+                for(let j = 0; j < marcas.length; j++){
+                  console.log(j)
+                  if(j != i)
+                    marcas[j].style = 'font-weight: 400;'
                 }
-            }).catch( error => {
-                console.error(error);
-                window.location.href = `${URLMadre}/error?mensaje=${error}`;
-            });
+                BusquedaDeLasMarcas(marcas[i]);
+            }else{
+                marcaActual = null;
+                marcas[i].style = 'font-weight: 400;'
+                VaciarFormularios();
+            }
+            estadoConsulta = true;
+          }
         });
     }
+}
+function BusquedaDeLasMarcas(marca){
+  const ID = Number(marca.dataset.id);
+  const url = new URL(window.location);
+  const parametros = new URLSearchParams(url.search);
+  parametros.set("ID", ID);
+  url.pathname  = 'admin/obtener-marca-por-ID';
+  url.search = parametros.toString();
+  fetch(url.toString())
+  .then(respuesta => {
+      if(!respuesta.ok)
+          throw new Error('Error en la solicitud');
+      return respuesta.json()
+  }).then(({estado, Marca})=>{
+      if(estado=='exitoso'){
+          CargarDatos(Marca);
+      }
+  }).catch( error => {
+      console.error(error);
+      window.location.href = `${URLMadre}/error?mensaje=${error}`;
+  });
 }
 function CargarDatos(Marca){
     const entradaCargarMarca = document.getElementById('entradaCargarMarca');

@@ -15,6 +15,7 @@ const tituloError = 'Error';
 const tituloExito = 'Exito';
 const tituloIniciarSession = 'Iniciar sessión';
 const tituloRegistrarse = 'Registrarse';
+const tituloContacto = 'Contacto'
 const VistaInicio = (req, res) =>{
     const usuario = req.user ?? [];
     console.log(usuario);
@@ -161,6 +162,17 @@ const VistaExito = (req, res)=>{
         F_DetectarJavaScript: DetectarJavaScript,
     });
 }
+const VistaContacto = (req, res)=>{
+    const usuario = req.user ?? [];
+    res.render('contacto', {
+        TITULO: tituloContacto,
+        Usuario: usuario[0],
+        URLMadre: urlMadre,
+        F_UsuarioActivo: UsuarioActivo,
+        F_AdminActivo: AdminActivo,
+        F_DetectarJavaScript: DetectarJavaScript,
+    });
+}
 function DetectarJavaScript(titulo){
     switch(titulo){
         case tituloInicio: return {js:'/dist/js/inicio.bundle.js', existe: true };
@@ -190,5 +202,6 @@ export default {
     VistaInicio, VistaCargar, VistaEditarProductos,
     VistaError, VistaEditarCategorias, VistaEditarMarcas,
     VistaCategoriaSeleccionada, VistaIndividualProducto,
-    VistaIniciarSession, VistaRegistrarse, VistaExito
+    VistaIniciarSession, VistaRegistrarse, VistaExito,
+    VistaContacto
 };

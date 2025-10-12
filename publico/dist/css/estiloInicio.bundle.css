@@ -1,3 +1,6 @@
+/*!********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloInicio.css ***!
+  \********************************************************************************/
 .seccion-inicio{
     display: flex;
     flex-direction: column;
@@ -11,7 +14,7 @@
     flex-direction: column;
     margin-bottom: 3em;
 }
-.subtitulos-catalogo{
+.subtitulos-categoorias{
     margin-top: 0;
 }
 .contenedor-horizontal{

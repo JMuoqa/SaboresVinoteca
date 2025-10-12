@@ -47,6 +47,23 @@
 .imagen-flecha-cambiar-pagina:hover{
     background-color: #ccc;
 }
+.seccion-mostrar-marcas{
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+    margin-bottom: 2em;
+}
+.p-funcionales{
+    font-size: 1.5em;
+    text-align: center;
+    transform: scale(1);
+    transition: transform 0.3s ease;
+    cursor: pointer;
+}
+.p-funcionales:hover{
+    transform: scale(1.03);
+}
 .contenedor-espiral{
     margin: auto;
     display: none;
@@ -118,17 +135,6 @@
     font-family: inherit;
     width: 10em;
 }
-.seccion-mostrar-marcas{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 3em;
-}
-.contenedor-marcas{
-    overflow: hidden;
-    max-width: 52em;
-}
-
 .pista {
   display: flex;
   transition: transform 0.4s ease;

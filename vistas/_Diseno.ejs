@@ -8,6 +8,11 @@
     <link rel="stylesheet" href="/dist/css/estiloGlobal.bundle.css">
     <link rel="stylesheet" href="/dist/css/estiloPrincipal.bundle.css">
     <link rel="icon" href="/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
+    <meta property="og:title" content="Sabores vinoteca">
+    <meta property="og:description" content="Explora nuestro gran catalogo de bebidas.">
+    <meta property="og:image" content="<%= URLMadre %>/carpeta_imagenes/web/logoSabores.jpg">
+    <meta property="og:url" content="https://saboresvinoteca.com">
+    <meta property="og:type" content="website">
     <title><%= TITULO %></title>
 </head>
 <body>
@@ -41,13 +46,12 @@
             <div class="filtro-negro-global"></div>
             <div class="contenedor-imagen-menu"><img class="imagen-menu" id="iconoMenuPrincipal" src="/carpeta_imagenes/web/menuSV.png"></div>
             <ul class="listas-generales lista-principal lista-principal-variable" id="listaNav">
-                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" href="/">Inicio</a></li>
+                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" href="<%= URLMadre %>/">Inicio</a></li>
+                <li class="items-generales items-principales icono-separador-variable"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
+                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" href="<%= URLMadre %>/contacto">Contacto</a></li>
                 <li class="items-generales items-principales icono-separador-variable"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
                 <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" id="abrirMenuProductos">Productos</a></li>
-                <li class="items-generales items-principales icono-separador-variable"><img class="icono-separador icono-separador-variable" src="/carpeta_imagenes/web/iconoRombo.png"></li>
-                <li class="items-generales items-principales items-principales-variables"><a class="links-generales links-principales-finos links-principales-variables" href="<%= URLMadre %>/#importados" id="linkImportados">Importados</a></li>
             </ul>
-            <h1 class="titulo-marca" id="tituloMarca">SABORES VINOTECA</h1>
             <ul class="listas-generales lista-principal lista-principal-padding-invertido lista-principal-visible" id="listaAdmin">
                 <% if(Usuario && Usuario.Jerarquia && F_AdminActivo(Usuario.Jerarquia)) { %>
                     <li class="items-generales items-principales " id="itemLinkAbrirMenu"><a class="links-generales links-principales-finos" id="abrirMenuCategorias">Admin</a></li>
@@ -63,7 +67,8 @@
                     <li class="items-generales items-principales"><img class="iconos-principales" src="/carpeta_imagenes/web/PersonaMuoqa.png" id="IrAut"></li>
                 <% } %>
             </ul>
-            <img class="imagen-logo-principal" src="/carpeta_imagenes/web/Logo540saboresvinoteca.png" id="logoPrincipal">
+            <h1 class="titulo-principal" id="tituloMarca"><img class="imagen-logo-principal" src="/carpeta_imagenes/web/Logo540saboresvinoteca.png" id="logoPrincipal" alt="SABORES VINOTECA"></h1>
+            
         </nav>
     </header>
     <main>

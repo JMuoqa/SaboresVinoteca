@@ -1,10 +1,15 @@
 .subtitulo-categoria{
     margin-top: 0;
+    margin-bottom: 0.5em;
 }
 .seccion-filtros-busquedas{
     width: 20%;
     padding-right: 5px;
     box-sizing: border-box;
+}
+.seccion-marcas{
+    border-bottom: solid 2px var(--verde-profundo);
+    margin-bottom: 2em;
 }
 .formulario-filtro{
     display: flex;
@@ -103,36 +108,25 @@
 .imagen-flecha-cambiar-pagina:hover{
     background-color: #ccc;
 }
-/*Carrusel*/
 .seccion-mostrar-marcas{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 3em;
+    width: 80%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
+    margin-bottom: 2em;
 }
-.contenedor-marcas{
-    overflow: hidden;
-    max-width: 52em;
-}
-
-.pista {
-  display: flex;
-  transition: transform 0.4s ease;
-}
-.slide {
-    min-width: 140px;
-    text-align: center;
+.p-funcionales{
     font-size: 1.5em;
+    text-align: center;
     transform: scale(1);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 0.3s ease;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 10px;
 }
-.slide:hover{
-    transform: scale(1.1);
+.p-funcionales:hover{
+    transform: scale(1.03);
+}
+.texto-uso{
+    margin: 5px 0;
 }
 /*Tarjetas productos*/
 .seccion-productos{

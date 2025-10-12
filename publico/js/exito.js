@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function(){
     Inicio();
-    Importados();
+    Contacto();
 });
 
 function Inicio(){
@@ -9,9 +9,9 @@ function Inicio(){
         window.location.href = `${URLMadre}/`;
     });
 }
-function Importados(){
-    const botonIrImportados = document.getElementById('botonIrImportados');
-    botonIrImportados.addEventListener('click', function(){
-        window.location.href = `${URLMadre}/#importados`;
+function Contacto(){
+    const botonIrContacto = document.getElementById('botonIrContacto');
+    botonIrContacto.addEventListener('click', function(){
+        window.location.href = `${URLMadre}/contacto`;
     });
 }

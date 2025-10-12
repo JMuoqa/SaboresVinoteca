@@ -11,8 +11,6 @@ import rutasAdmin from './rutas/rutasAdmin.mjs';
 import rutasAut from './rutas/rutasAut.mjs'
 import session from 'express-session';
 import passport from './config/passport.mjs';
-
-
 let urlMadre = '';
 if(process.env.NODE_ENV == 'development'){
     urlMadre = 'http://localhost:5111';
@@ -95,5 +93,5 @@ function AdminActivo(Jerarquia){
 }
 const PORT = 5111;
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando por el puerto ${PORT}: http://dominio:${PORT}`);
+    console.log(`Servidor escuchando por el puerto ${PORT}: http://localhost:${PORT}`);
 });

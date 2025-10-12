@@ -32,6 +32,7 @@ export default {
     estiloVerProducto: './publico/css/estiloVerProducto.css',
     fuentes: './publico/css/fuentes.css',
     estiloGlobal: './publico/css/global.css',
+    estiloContacto: './publico/css/estiloContacto.css',
   },
   output: {
     filename: 'js/[name].bundle.js',

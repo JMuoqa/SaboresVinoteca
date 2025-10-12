@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', function(){
-    ActualizarProductos();
     CargarMarcas();
     ObtenerCategoriaPorID();
-    ObtenerTodosLosProductos();
     ActualizarSeccionCategorias();
     BuscarProductos();
     CambiarPaginas();
+    ObtenerTodosLosProductos();
 });
 async function Esperar(milisegundos) {
   return new Promise(resolver => setTimeout(resolver,milisegundos))
@@ -47,7 +46,6 @@ async function CargarSlider(_Productos){
   }
   precioMin = Math.round(Productos[0].Precio);
   precioMax = Math.round(Productos[Productos.length-1].Precio);
-  console.log(precioMin)
   const slider = document.getElementById('slider'); 
   noUiSlider.create(slider, {
     start: [precioMin, precioMax],  // valores iniciales
@@ -64,76 +62,6 @@ async function CargarSlider(_Productos){
     max.textContent = Math.round(values[1]);
   });
 }
-async function ObtenerTodosLosProductos(){
-  fetch('admin/obtener-todos-productos')
-  .then(respuesta =>{
-    if(!respuesta.ok)
-      throw new Error('Error en la solicitud'); 
-    return respuesta.json();    
-  }).then(async ({Productos})=> {
-      if(Productos && Productos.length > 0){
-        CargarSlider(Productos);
-      }
-    }).catch( error => {
-        console.error(error);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
-    });
-}
-async function Carrusel() {
-    const pista = document.querySelector(".pista");
-    const slides = document.querySelectorAll(".slide");
-    const next = document.getElementById("indiceSiguiente");
-    const prev = document.getElementById("indiceAnterior");
-    let tamaño = slides.length;
-    if(tamaño > 1){
-        const px = 160;
-        let indice = 0;    
-        //Crear clones
-        const firstClone = slides[0].cloneNode(true);
-        const lastClone = slides[slides.length - 1].cloneNode(true);
-        let resta = 2;
-        for(let i=0; i<6;i++){
-          if(slides[i]){
-              const clone = slides[i].cloneNode(true);
-              pista.appendChild(clone);
-              resta++;
-          }
-        }
-        pista.appendChild(firstClone);
-        pista.insertBefore(lastClone, slides[0]);
-        let totalSlides = pista.querySelectorAll(".slide").length;
-        // Posicion inicial (después del clon)
-        pista.style.transform = `translateX(-${px}px)`; 
-        indice = 1;
-        async function moverCarrusel() {
-            pista.style.transition = "transform 0.3s ease-in-out";
-            pista.style.transform = `translateX(-${indice * px}px)`;
-        }
-        next.addEventListener("click", async () => {
-          if (indice >= slides.length + 1) return;
-          indice++;
-          await moverCarrusel();
-        });
-        prev.addEventListener("click", async () => {
-          if (indice <= 0) return;
-          indice--;
-          await moverCarrusel();
-        });
-        pista.addEventListener("transitionend", () => {
-          if (indice == slides.length+1) {
-            pista.style.transition = "none";
-            indice = 1;
-            pista.style.transform = `translateX(-${px}px)`;
-          }
-          if (indice == 0) {
-            pista.style.transition = "none";
-            indice = totalSlides - resta;
-            pista.style.transform = `translateX(-${indice * px}px)`;
-          }
-        });
-    }
-    SeleccionarMarca();
-}
 function CargarMarcas(){
     const valorIDCategoria = document.getElementById('valorIDCategoria').value;
     fetch(`admin/obtener-marcas-por-categoria?IDC=${valorIDCategoria}`).then(respuesta => {
@@ -142,93 +70,13 @@ function CargarMarcas(){
         return respuesta.json()
     }).then(({Marcas}) =>{
         if(Marcas){
-            contenedorSlider.innerHTML = '';
-            const contenedorDeArticuloS = document.createElement('article');
-            contenedorSlider.appendChild(contenedorDeArticuloS)
-            contenedorDeArticuloS.offsetWidth; 
-            contenedorDeArticuloS.classList.add('pista');
+            const seccionMostrarMarcas = document.getElementById('seccionMostrarMarcas')
+            seccionMostrarMarcas.innerHTML = '';
             for(let i = 0; i< Marcas.length; i++){
-                const articulo = document.createElement('div');
-                articulo.classList.add('slide');
-                articulo.dataset.id = Marcas[i].ID;
-                articulo.innerHTML += `<p class="p-funcionales" data-id="${Marcas[i].ID}">${Marcas[i].Marca}</p>`;
-                contenedorDeArticuloS.appendChild(articulo)
-                articulo.offsetWidth; 
-                articulo.classList.add('animar-contenedor-info-producto');
+                seccionMostrarMarcas.innerHTML += `<p class="p-funcionales" data-id="${Marcas[i].ID}">${Marcas[i].Marca}</p>`;
             }
-            Carrusel();
+            SeleccionarMarca();
         }
-    });
-}
-function ActualizarProductos(){
-    AnimacionAviso(true, 0)
-    const contenedorProductos = document.getElementById('contenedorProductos');
-    const valorIDCategoria = document.getElementById('valorIDCategoria').value;
-    const url = new URL(window.location);
-    const parametros = new URLSearchParams(url.search);
-    parametros.set("categoria", valorIDCategoria);
-    parametros.set("limite", 12);
-    parametros.set("pagina", 1);
-    url.pathname  = 'admin/obtener-productos';
-    url.search = parametros.toString();
-    fetch(url.toString())
-    .then(respuesta =>{
-      if(!respuesta.ok)
-        throw new Error('Error en la solicitud'); 
-      return respuesta.json();    
-    }).then(async ({Productos, Marcas}) => {
-      if(Productos){
-        contenedorProductos.innerHTML = '';
-        AnimacionAviso(false, 0)
-        if(Productos.length == 0){
-          let html = '<p class="texto-centrado"><strong>No se encontraron productos</strong></p>';
-          contenedorProductos.innerHTML = html;
-        }
-        else{
-          for(let i = 0; i < Productos.length; i++){
-              let marcaDelProducto ;
-              for(let j = 0; j<Marcas.length; j++){
-                if(Marcas[j].ID == Productos[i].IDMarca){
-                  marcaDelProducto = Marcas[j].Marca;
-                  break;
-                }
-              }
-              const precio = ConseguirFormatoDelPrecioOriginal(Productos[i].Precio);
-              const articulo = document.createElement('article');
-              if(precio < 1){
-                articulo.innerHTML = `
-                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                    <div class="contenedor-informacion-productos">
-                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
-                    </div>
-                  </div>`;
-              }else{
-                articulo.innerHTML = `
-                  <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="Imagen de ${Productos[i].Producto}">
-                    <div class="contenedor-informacion-productos">
-                      <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
-                      <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
-                      <p class="texto-info-producto precio-del-producto punto-suspensivos"><strong>Precio:</strong>${precio}</p>
-                    </div>
-                  </div>`;
-              }
-            contenedorProductos.appendChild(articulo)
-            articulo.offsetWidth;
-            articulo.classList.add('animar-contenedor-info-producto');
-            await Esperar(50);
-          }
-        }
-        VerProducto('todos');
-      }else{
-        throw new Error('Hubo un error en la cosulta')
-      }
-    }).catch( error => {
-        AnimacionAviso(false, 0)
-        console.error(error);
-        window.location.href = `${URLMadre}/error?mensaje=${error}`;
     });
 }
 function ConseguirFormatoDelPrecioOriginal(precio){
@@ -305,33 +153,38 @@ function AgregarFuncionesACategorias(){
 function SeleccionarMarca(){
     const marcas = document.querySelectorAll('.p-funcionales');
     const formularioFiltro = document.getElementById('formularioFiltro');
+    let estadoConsulta = true;
     let marcaActual;
     for(let i = 0; i < marcas.length; i++){
         marcas[i].addEventListener('click',function(){
-          const entracaOcultaMarca = document.getElementById('entracaOcultaMarca');
-          if(marcaActual != marcas[i].dataset.id){
-              marcaActual = marcas[i].dataset.id;
-              entracaOcultaMarca.value = marcas[i].innerText;
-              marcas[i].style = 'font-weight: 600;'
-              for(let j = 0; j < marcas.length; j++){
-                  if(j != i){
-                      marcas[j].style = 'font-weight: 400;'
-                  }
-                  if(marcas[j].innerText == marcas[i].innerText){
-                      marcas[j].style = 'font-weight: 600;'
-                  }
-              }
-          }else{
-              marcaActual = null;
-              entracaOcultaMarca.value = '';
-              marcas[i].style = 'font-weight: 400;'
-              for(let j = 0; j < marcas.length; j++){
-                  if(marcas[j].innerText == marcas[i].innerText){
-                      marcas[j].style = 'font-weight: 400;'
-                  }
-              }
+          if(estadoConsulta){
+            estadoConsulta = false;
+            const entracaOcultaMarca = document.getElementById('entracaOcultaMarca');
+            if(marcaActual != marcas[i].dataset.id){
+                marcaActual = marcas[i].dataset.id;
+                entracaOcultaMarca.value = marcas[i].innerText;
+                marcas[i].style = 'font-weight: 600;'
+                for(let j = 0; j < marcas.length; j++){
+                    if(j != i){
+                        marcas[j].style = 'font-weight: 400;'
+                    }
+                    if(marcas[j].innerText == marcas[i].innerText){
+                        marcas[j].style = 'font-weight: 600;'
+                    }
+                }
+            }else{
+                marcaActual = null;
+                entracaOcultaMarca.value = 'Ninguna';
+                marcas[i].style = 'font-weight: 400;'
+                for(let j = 0; j < marcas.length; j++){
+                    if(marcas[j].innerText == marcas[i].innerText){
+                        marcas[j].style = 'font-weight: 400;'
+                    }
+                }
+            }
+            estadoConsulta = true;
+            formularioFiltro.requestSubmit();
           }
-          formularioFiltro.requestSubmit();
         });
     }
 }
@@ -546,6 +399,21 @@ function ObtenerURLConParametros(){
   url.pathname  = 'admin/obtener-productos';// A la ruta raiz le añadis donde hacer al consulta
   url.search = parametros.toString();// Añadis los parametros convirtiendolos a texto
   return url;
+}
+async function ObtenerTodosLosProductos(){
+  fetch('admin/obtener-todos-productos')
+  .then(respuesta =>{
+    if(!respuesta.ok)
+      throw new Error('Error en la solicitud'); 
+    return respuesta.json();    
+  }).then(async ({Productos})=> {
+      if(Productos && Productos.length > 0){
+        CargarSlider(Productos);
+      }
+    }).catch( error => {
+        console.error(error);
+        window.location.href = `${URLMadre}/error?mensaje=${error}`;
+    });
 }
 function VerProducto(clase){
   const contenedores = document.querySelectorAll(`.ver-producto-${clase}`);

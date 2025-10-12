@@ -70,22 +70,8 @@ main{
     z-index: -10;
 }
 .imagen-logo-principal{
-    width: 18em;
-    height: 18em;
-    position: absolute; 
-    top: 50%;
-    left: 50%;
-    color: var(--fondo-blanco2);
-    border-radius: 9em;
-    cursor:  pointer;
-    transform: translate(-50%, -50%);
-    transform-origin: center center;
-    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.15);
-    transition: transform .5s ease, box-shadow .5s ease;
-}
-.imagen-logo-principal:hover{
-    transform: translate(-50%, -50%) scale(1.1);
-    box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.1);
+    width: 100%;
+    height: 100%;
 }
 .lista-principal{
     display: none;
@@ -113,16 +99,25 @@ main{
 .icono-separador{
     width: 8px;
 }
-.titulo-marca{
-    font-family: "Bebas", 'Arial', 'Helvetica', sans-serif;
-    margin: 0;
-    font-size: 4em;
-    position: absolute; 
-    top: 0.7em;
+.titulo-principal{
+    width: 13em;
+    height: 13em;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    margin: 0;
     color: var(--fondo-blanco2);
+    border-radius: 6.5em;
     cursor:  pointer;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.15);
+    transition: transform .5s ease, box-shadow .5s ease;
+}
+.titulo-principal:hover{
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 0 20px 1px rgba(255, 255, 255, 0.1);
 }
 .links-principales-finos{
     position: relative;
@@ -190,8 +185,8 @@ main{
 }
 .icono-x-absolute{
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: 10px;
+    right: 10px;
     width: 1em;
     height: 1em;
     z-index: 60;
@@ -237,7 +232,6 @@ main{
     justify-content: center;
     align-items: center;
     z-index: 10;
-
 }
 .imagen-menu{
     width:  2em;
@@ -316,20 +310,15 @@ main{
     .menu-hijo-desplazable{
         width: 50%;
     }
-    .titulo-marca{
-        width: 100%;
-        text-align: center;
-        z-index: 0;
+    .titulo-principal{
+        width: 12em;
+        height: 12em;
+        border-radius: 6em;
     }
 }
 @media(max-width:820px){
     .menu-hijo-desplazable{
         width: 70%;
-    }
-    
-    .titulo-marca{
-        font-size: 3.5em;
-        top:0.85em
     }
 }
 @media(max-width: 600px){
@@ -346,17 +335,23 @@ main{
     .menu-hijo-desplazable{
         width: 100%;
     }
-    .titulo-marca{
-        display: none;
-    }
-    .imagen-logo-principal{
-        width: 20em;
-        width: 20em;
-        height: 9em;
-    }
 }
 @media(max-width: 500px){
     body{
         font-size: 0.95em;
+    }
+}
+@media(max-width:450px){
+    .titulo-principal{
+        width: 10em;
+        height: 10em;
+        border-radius: 5em;
+    }
+}
+@media(max-width:350px){
+    .titulo-principal{
+        width: 8em;
+        height: 8em;
+        border-radius: 4em;
     }
 }

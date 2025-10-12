@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function(){
     CerrarMenus();
     AgregarLinksCategorias();
     MenuPrincipalAdaptable();
-    LinkImportados();
     IrAut();
     SalirDeLaSession();
 });
@@ -116,7 +115,7 @@ function CargarConfiguracionVisual(){
     const ancho = window.innerWidth;
     const contenedorMenu = document.getElementById('contenedorMenu');
     const padreDeListaNavegador = document.getElementById('navegadorPrincipal');
-    const tituloMarca = this.document.getElementById('tituloMarca');
+    const listaAdmin = this.document.getElementById('listaAdmin');
     if (ancho <= 1280) {
         if (listaDelNavegador.parentElement !== contenedorMenu) {
             contenedorMenu.appendChild(listaDelNavegador);
@@ -124,7 +123,7 @@ function CargarConfiguracionVisual(){
         listaDelNavegador.style.display = 'flex';
     } else {
         if (listaDelNavegador.parentElement !== padreDeListaNavegador) {
-            padreDeListaNavegador.insertBefore(listaDelNavegador, tituloMarca);
+            padreDeListaNavegador.insertBefore(listaDelNavegador, listaAdmin);
         }
         listaDelNavegador.style.display = 'flex';
     }

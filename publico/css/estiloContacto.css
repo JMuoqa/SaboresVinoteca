@@ -1,0 +1,30 @@
+.seccion-contacto{
+    width: 100%;
+}
+.seccion-primero{
+    width: 100%;
+}
+.subtitulos-contacto{
+    margin-top: 0;
+}
+.informacion-contacto{
+    width: 65%;
+    margin: auto;
+}
+.items-contacto{
+    display: flex; 
+    align-items: center;
+}
+.texto-contacto{
+    margin: 5px 0;
+}
+.link-contacto{
+    color: var(--color-negro);
+    margin-left: 5px;
+}
+.link-contacto:link{
+    color: var(--color-negro);
+}
+.link-contacto:visited{
+    color: var(--color-negro);
+}

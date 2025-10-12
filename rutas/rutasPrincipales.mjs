@@ -12,4 +12,5 @@ enrutador.get('/ver-producto', controladorPrincipal.VistaIndividualProducto);
 enrutador.get('/autenticacion', controladorPrincipal.VistaIniciarSession);
 enrutador.get('/registrarse', controladorPrincipal.VistaRegistrarse);
 enrutador.get('/exito', controladorPrincipal.VistaExito);
+enrutador.get('/contacto', controladorPrincipal.VistaContacto);
 export default enrutador;

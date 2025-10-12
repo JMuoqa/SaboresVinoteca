@@ -1,3 +1,6 @@
+/*!****************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/animacionesGenerales.css ***!
+  \****************************************************************************************/
 @keyframes espiral {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
