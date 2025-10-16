@@ -119,7 +119,7 @@ function ActualizarSeccionCategorias() {
           const articulo = document.createElement('article');
             articulo.innerHTML = `
             <article class="contenedor-categoria contenedor-categoria-funcional" data-id="${Categorias[i].ID}">
-              <img class="imagen-categoria" src="${URLMadre}/Imagenes/${Categorias[i].Imagen}">
+              <img class="imagen-categoria" src="${URLMadre}/Imagenes/${Categorias[i].Imagen}" alt="${Categorias[i].Categoria}">
               <div class="filtro-categoria"></div>
               <h3 class="titulo-categoria">${Categorias[i].Categoria}</h3>
             </article> `;

@@ -1,3 +1,4 @@
+import { Con_ObtenerProductoPorID, Con_ObtenerCategoriaPorID } from '../solicitudes/admin/solicitudesAdmin.mjs' 
 let urlMadre = '';
 if(process.env.NODE_ENV == 'development'){
     urlMadre = 'http://localhost:5111';
@@ -23,6 +24,8 @@ const VistaInicio = (req, res) =>{
         TITULO: tituloInicio,
         Usuario: usuario[0],
         URLMadre : urlMadre,
+        orgURL: req.originalUrl,
+        Descripcion: 'SaboresVinoteca',
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -35,6 +38,8 @@ const VistaCargar = async (req, res) =>{
             TITULO: tituloCargar,
             Usuario: usuario[0],
             URLMadre: urlMadre,
+            orgURL: req.originalUrl,
+            Descripcion: 'SaboresVinoteca | Cargar',
             F_UsuarioActivo: UsuarioActivo,
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
@@ -50,6 +55,8 @@ const VistaEditarProductos = (req, res) =>{
             TITULO: tituloEditar,
             Usuario: usuario[0],
             URLMadre : urlMadre,
+            orgURL: req.originalUrl,
+            Descripcion: 'SaboresVinoteca | Editar productos',
             F_UsuarioActivo: UsuarioActivo,
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
@@ -66,6 +73,8 @@ const VistaError = (req, res)=>{
         Usuario: usuario[0],
         URLMadre: urlMadre,
         Error: mensaje, 
+        orgURL: req.originalUrl,
+        Descripcion: 'SaboresVinoteca | Lo sentimos, ocurrió un error. Volvé a la página de inicio o contactanos si necesitas ayuda.',
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -78,6 +87,8 @@ const VistaEditarCategorias = (req, res) =>{
             TITULO: tituloEditarCategorias,
             Usuario: usuario[0],
             URLMadre: urlMadre,
+            orgURL: req.originalUrl,
+            Descripcion: 'SaboresVinoteca | Editar categorias.',
             F_UsuarioActivo: UsuarioActivo,
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
@@ -93,6 +104,8 @@ const VistaEditarMarcas = (req, res)=>{
             TITULO: tituloEditarMarcas,
             Usuario: usuario[0],
             URLMadre: urlMadre,
+            orgURL: req.originalUrl,
+            Descripcion: 'SaboresVinoteca | Editar marcas.',
             F_UsuarioActivo: UsuarioActivo,
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
@@ -101,27 +114,35 @@ const VistaEditarMarcas = (req, res)=>{
         VistaInicio(req, res);
     }
 }
-const VistaCategoriaSeleccionada = (req, res)=>{
+const VistaCategoriaSeleccionada = async (req, res)=>{
     const _IDCategoria = req.query.IDC;
+    const categoria = await Con_ObtenerCategoriaPorID(_IDCategoria);
+    console.log(categoria.Categoria[0]);
     const usuario = req.user ?? [];
     res.render('cliente/categoriaSelec', {
         TITULO: tituloCategoriaSelec,
         Usuario: usuario[0],
         URLMadre: urlMadre,
         IDCategoria: _IDCategoria,
+        orgURL: req.originalUrl,
+        Descripcion: `SaboresVinoteca | ${categoria.Categoria[0].Categoria} | Descubrí nuestro amplio catálogo de bebidas, con opciones nacionales e importadas para todos los gustos.`,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
     })
 }
-const VistaIndividualProducto = (req, res)=>{
+const VistaIndividualProducto = async (req, res)=>{
     const _IDProducto = req.query.IDP;
+    const producto = await Con_ObtenerProductoPorID(_IDProducto);
+    const categoria = await Con_ObtenerCategoriaPorID(producto.Productos[0].IDCategoria);
     const usuario = req.user ?? [];
     res.render('cliente/vistaIndividual', {
         TITULO: tituloProductoIndividual,
         Usuario: usuario[0],
         URLMadre: urlMadre,
         IDProducto: _IDProducto,
+        orgURL: req.originalUrl,
+        Descripcion: `${categoria.Categoria[0].Categoria} | ${producto.Productos[0].Producto} |  Descubrí nuestro catálogo en SaboresVinoteca.`,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -133,6 +154,8 @@ const VistaIniciarSession = (req, res)=>{
         TITULO: tituloIniciarSession,
         Usuario: usuario[0],
         URLMadre: urlMadre,
+        orgURL: req.originalUrl,
+        Descripcion: `SaboresVinoteca | Inicia sesión.`,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -144,6 +167,8 @@ const VistaRegistrarse = (req, res)=>{
         TITULO: tituloRegistrarse,
         Usuario: usuario[0],
         URLMadre: urlMadre,
+        orgURL: req.originalUrl,
+        Descripcion: `SaboresVinoteca | Registrate.`,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -157,6 +182,8 @@ const VistaExito = (req, res)=>{
         Usuario: usuario[0],
         URLMadre: urlMadre,
         Exito: mensaje, 
+        orgURL: req.originalUrl,
+        Descripcion: `SaboresVinoteca | Exito.`,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -168,6 +195,8 @@ const VistaContacto = (req, res)=>{
         TITULO: tituloContacto,
         Usuario: usuario[0],
         URLMadre: urlMadre,
+        orgURL: req.originalUrl,
+        Descripcion: `SaboresVinoteca | Contactate con nosotros y consultá sobre nuestros vinos y bebidas nacionales e importadas.`,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,

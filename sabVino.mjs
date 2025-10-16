@@ -44,6 +44,20 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
+if(process.env.NODE_ENV != 'development'){
+app.use((req, res, next) => {
+    // Fuerza HTTPS
+    if (!req.secure && req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect('https://' + req.headers.host + req.url);
+    }
+    // Fuerza sin www
+    if (req.headers.host.startsWith('www.')) {
+      const newHost = req.headers.host.replace(/^www\./, '');
+      return res.redirect(301, 'https://' + newHost + req.url);
+    }
+    next();
+});
+}
 app.use('/', rutasPrincipales);
 app.use('/admin', rutasAdmin);rutasAut
 app.use('/aut', rutasAut);
@@ -59,6 +73,8 @@ app.use((req, res, next) => {
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
         Error: error, 
+        Descripcion: 'SaboresVinoteca | Vista no encontrada.',
+        orgURL: req.originalUrl,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -73,6 +89,8 @@ app.use((err, req, res, next) => {
         Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
         URLMadre: urlMadre,
         Error: error, 
+        Descripcion: 'SaboresVinoteca | Error interno.',
+        orgURL: req.originalUrl,
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,

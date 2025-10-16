@@ -1,17 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/dist/css/animacionesGenerales.bundle.css">
-    <link rel="stylesheet" href="/dist/css/fuentes.bundle.css">
-    <link rel="stylesheet" href="/dist/css/estiloGlobal.bundle.css">
+    <meta name="description" content="<%= Descripcion %>.">
     <link rel="stylesheet" href="/dist/css/estiloPrincipal.bundle.css">
     <link rel="icon" href="/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
-    <meta property="og:title" content="Sabores vinoteca">
-    <meta property="og:description" content="Explora nuestro gran catalogo de bebidas.">
+    <link rel="canonical" href="<%= URLMadre %><%= orgURL %>">
+    <meta property="og:title" content="<%= TITULO %>">
+    <meta property="og:description" content="<%= Descripcion %>">
     <meta property="og:image" content="<%= URLMadre %>/carpeta_imagenes/web/logoSabores.jpg">
-    <meta property="og:url" content="https://saboresvinoteca.com">
+    <meta property="og:url" content="<%= URLMadre %><%= orgURL %>">
     <meta property="og:type" content="website">
     <title><%= TITULO %></title>
 </head>
@@ -38,6 +37,9 @@
                     <li class="items-generales items-principales items-principales-variables-admin items-principales-admin" ><a class="links-generales links-principales-finos links-principales-variables-admin" href="/editar-productos">Editar productos</a></li>
                 </ul>
             <% }%>
+            </section>
+            <section class="seccion-muoqa">
+                <a class="links-generales links-pie-redes links-muoqa texto-centrado links-muoqa-blancos"  rel="noopener noreferrer" target="_blank" href="https://muoqa.com">Diseñado y desarrollado por muoqa</a>
             </section>
         </section>
     </dialog>
@@ -80,7 +82,10 @@
                 <h2 class="subtitulos-pie">Vinoteca y Horarios</h2>
                 <ul class="listas-generales lista-secundarias">
                     <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Vinoteca:</strong></br>Barrio: Ameghino Sud.</br>Calle: Aaron Castellanos Nº2273.</br>Córdoba, Argentina 5010</p></li>
-                    <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Lunes a Sabados:</strong></br>11:00 - 23:00</p></li>
+                    <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Lunes: </strong>18:00 - 00:00</p></li>
+                    <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Martes a Jueves: </strong>11:30 - 00:00</p></li>
+                    <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Viernes y Sabados: </strong>11:30 - 04:00</p></li>
+                    <li class="items-generales items-secundarios"><p class="parrafos-pie-horarios"><strong>Domingo: </strong>12:00 - 00:00</p></li>
                 </ul>
             </article>
             <article class="secciones-pie seccion-Redes">
