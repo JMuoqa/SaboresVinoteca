@@ -1,0 +1,17 @@
+# Permite a todos los bots rastrear el sitio
+User-agent: *
+Disallow: /admin/
+Disallow: /aut/
+Disallow: /cargar-productos-categorias/
+Disallow: /editar-productos/
+Disallow: /editar-categorias/
+Disallow: /editar-marcas/
+Disallow: /autenticacion/
+Disallow: /registrarse/
+Disallow: /*?*
+Disallow: /*.mjs$
+Disallow: /*.json$
+Allow: /
+
+# Indica la ubicación del sitemap
+Sitemap: https://saboresvinoteca.com/sitemap.xml

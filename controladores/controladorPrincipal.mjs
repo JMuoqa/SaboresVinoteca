@@ -5,18 +5,18 @@ if(process.env.NODE_ENV == 'development'){
 }else{
     urlMadre = 'https://saboresvinoteca.com';
 }
-const tituloInicio = 'SaboresVinoteca';
-const tituloCargar = 'Cargar productos y categorias';
-const tituloEditar = 'Editar productos';
-const tituloEditarCategorias = 'Editar Categoria';
-const tituloEditarMarcas = 'Editar Marcas';
-const tituloCategoriaSelec = 'Categoria seleccionada';
-const tituloProductoIndividual = 'Ver producto';
-const tituloError = 'Error';
-const tituloExito = 'Exito';
-const tituloIniciarSession = 'Iniciar sessión';
-const tituloRegistrarse = 'Registrarse';
-const tituloContacto = 'Contacto'
+const tituloInicio = 'SaboresVinoteca | Bebidas nacionales e importadas';
+const tituloCargar = 'SaboresVinoteca | Cargar productos y categorias';
+const tituloEditar = 'SaboresVinoteca | Editar productos';
+const tituloEditarCategorias = 'SaboresVinoteca | Editar Categoria';
+const tituloEditarMarcas = 'SaboresVinoteca | Editar Marcas';
+const tituloCategoriaSelec = 'SaboresVinoteca | Categoria';
+const tituloProductoIndividual = 'SaboresVinoteca | Ver producto';
+const tituloError = 'SaboresVinoteca | Error';
+const tituloExito = 'SaboresVinoteca | Exito';
+const tituloIniciarSession = 'SaboresVinoteca | Iniciar sessión';
+const tituloRegistrarse = 'SaboresVinoteca | Registrarse';
+const tituloContacto = 'SaboresVinoteca | Contactate con nosotros'
 const VistaInicio = (req, res) =>{
     const usuario = req.user ?? [];
     console.log(usuario);
@@ -25,7 +25,7 @@ const VistaInicio = (req, res) =>{
         Usuario: usuario[0],
         URLMadre : urlMadre,
         orgURL: req.originalUrl,
-        Descripcion: 'SaboresVinoteca',
+        Descripcion: 'SaboresVinoteca | Bebidas nacionales e importadas',
         F_UsuarioActivo: UsuarioActivo,
         F_AdminActivo: AdminActivo,
         F_DetectarJavaScript: DetectarJavaScript,
@@ -120,7 +120,7 @@ const VistaCategoriaSeleccionada = async (req, res)=>{
     console.log(categoria.Categoria[0]);
     const usuario = req.user ?? [];
     res.render('cliente/categoriaSelec', {
-        TITULO: tituloCategoriaSelec,
+        TITULO: `${tituloCategoriaSelec} ${categoria.Categoria[0].Categoria}`,
         Usuario: usuario[0],
         URLMadre: urlMadre,
         IDCategoria: _IDCategoria,
@@ -137,7 +137,7 @@ const VistaIndividualProducto = async (req, res)=>{
     const categoria = await Con_ObtenerCategoriaPorID(producto.Productos[0].IDCategoria);
     const usuario = req.user ?? [];
     res.render('cliente/vistaIndividual', {
-        TITULO: tituloProductoIndividual,
+        TITULO: `${tituloProductoIndividual} | ${categoria.Categoria[0].Categoria} | ${producto.Productos[0].Producto}`,
         Usuario: usuario[0],
         URLMadre: urlMadre,
         IDProducto: _IDProducto,
@@ -203,14 +203,16 @@ const VistaContacto = (req, res)=>{
     });
 }
 function DetectarJavaScript(titulo){
+    if(titulo.startsWith(tituloCategoriaSelec))
+        return {js: '/dist/js/clienteCategoriaSelect.bundle.js', existe:true};
+    if(titulo.startsWith(tituloProductoIndividual))
+        return {js: '/dist/js/vistaIndividual.bundle.js', existe:true}
     switch(titulo){
         case tituloInicio: return {js:'/dist/js/inicio.bundle.js', existe: true };
         case tituloCargar: return {js:'/dist/js/cargar.bundle.js', existe: true };
         case tituloEditar: return {js:'/dist/js/editar.bundle.js', existe: true };
         case tituloEditarMarcas: return {js:'/dist/js/editarMarcas.bundle.js', existe: true };
         case tituloEditarCategorias: return {js:'/dist/js/editarCategorias.bundle.js', existe: true };
-        case tituloCategoriaSelec: return {js: '/dist/js/clienteCategoriaSelect.bundle.js', existe:true};
-        case tituloProductoIndividual: return {js: '/dist/js/vistaIndividual.bundle.js', existe:true};
         case tituloIniciarSession: return {js: '/dist/js/iniciarSession.bundle.js', existe:true};
         case tituloRegistrarse: return {js: '/dist/js/registrarse.bundle.js', existe:true};
         case tituloExito: return {js: '/dist/js/exito.bundle.js', existe:true};

@@ -5,13 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<%= Descripcion %>.">
     <link rel="stylesheet" href="/dist/css/estiloPrincipal.bundle.css">
-    <link rel="icon" href="/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
+    <link rel="icon" href="<%= URLMadre %>/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
     <link rel="canonical" href="<%= URLMadre %><%= orgURL %>">
     <meta property="og:title" content="<%= TITULO %>">
     <meta property="og:description" content="<%= Descripcion %>">
     <meta property="og:image" content="<%= URLMadre %>/carpeta_imagenes/web/logoSabores.jpg">
     <meta property="og:url" content="<%= URLMadre %><%= orgURL %>">
     <meta property="og:type" content="website">
+    <script type="application/ld+json"> 
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "SaboresVinoteca",
+        "url": "https://saboresvinoteca.com/",
+        "logo": "https://saboresvinoteca.com/carpeta_imagenes/web/Logo128saboresvinoteca.png",
+        "description": "Bebidas nacionales e importadas. Descubrí nuestro amplio catálogo de bebidas",
+        "sameAs": [
+          "https://www.instagram.com/vinoteca.sabores.arg/",
+        ]
+    </script>
     <title><%= TITULO %></title>
 </head>
 <body>

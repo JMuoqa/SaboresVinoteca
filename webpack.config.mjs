@@ -1,6 +1,7 @@
 import path from 'path';
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import RemoveEmptyScriptsPlugin from "webpack-remove-empty-scripts";
+import CssMinimizerPlugin from "css-minimizer-webpack-plugin";
 import { fileURLToPath } from 'url';
 const __nombreDelArchivo = fileURLToPath(import.meta.url); // Obtiene el archivo actual
 const __nombreDelDirectorio = path.dirname(__nombreDelArchivo);       // Obtiene el directorio actual
@@ -18,7 +19,6 @@ export default {
     registrarse: './publico/js/registrarse.js',
     exito: './publico/js/exito.js',
     //css
-    animacionesGenerales: './publico/css/animacionesGenerales.css',
     estiloAdminCargar: './publico/css/estiloAdminDeCargar.css',
     estiloClienteCatSelect: './publico/css/estiloClienteCatSelect.css',
     estiloEditarCategorias: './publico/css/estiloEditarCategorias.css',
@@ -30,8 +30,6 @@ export default {
     estiloPrincipal: './publico/css/estiloPrincipal.css',
     estiloRegistrarse: './publico/css/estiloRegistrarse.css',
     estiloVerProducto: './publico/css/estiloVerProducto.css',
-    fuentes: './publico/css/fuentes.css',
-    estiloGlobal: './publico/css/global.css',
     estiloContacto: './publico/css/estiloContacto.css',
   },
   output: {
@@ -53,6 +51,13 @@ export default {
       filename: "css/[name].bundle.css",
     }),
   ],
-  mode: "production"
+  mode: "production",
+  optimization: {
+    minimize: true,
+    minimizer: [
+      `...`, // mantiene TerserPlugin para JS
+      new CssMinimizerPlugin()
+    ]
+  }
 }
 
