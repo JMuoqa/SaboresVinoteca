@@ -67,10 +67,11 @@ if(process.env.NODE_ENV === 'development'){
     app.use('/Imagenes', express.static('/home/joaquin/Imagenes/SaboresVinoteca'));
 }
 app.use((req, res, next) => {
+    const usuario = req.user ?? [];
     const error = 'Vista no encontrada';
     res.status(404).render('error', {
         TITULO: 'Error',
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario[0],
         URLMadre: urlMadre,
         Error: error, 
         Descripcion: 'SaboresVinoteca | Vista no encontrada.',
@@ -83,10 +84,11 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
     console.error(err);
     console.log('Error - interno: ' + err);
+    const usuario = req.user ?? [];
     const error = err.message;
     res.render('error', {
         TITULO: 'Error',
-        Usuario: {Nombre: "prueba", Jerarquia: "ADMIN"},
+        Usuario: usuario[0],
         URLMadre: urlMadre,
         Error: error, 
         Descripcion: 'SaboresVinoteca | Error interno.',

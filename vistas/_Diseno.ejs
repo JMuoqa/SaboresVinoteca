@@ -6,6 +6,7 @@
     <meta name="description" content="<%= Descripcion %>.">
     <link rel="stylesheet" href="/dist/css/estiloPrincipal.bundle.css">
     <link rel="icon" href="<%= URLMadre %>/carpeta_imagenes/web/Logo128saboresvinoteca.png" type="image/png">
+    <link rel="apple-touch-icon" href="<%= URLMadre %>/carpeta_imagenes/web/Logo540saboresvinoteca.png">
     <link rel="canonical" href="<%= URLMadre %><%= orgURL %>">
     <meta property="og:title" content="<%= TITULO %>">
     <meta property="og:description" content="<%= Descripcion %>">
@@ -87,6 +88,7 @@
     <main>
       <%- body %>
     </main>
+<% if(Pie) { %>
     <footer class="">
         <div class="pie">
             <article class="secciones-pie seccion-horarios">
@@ -104,7 +106,6 @@
                 <ul class="listas-generales lista-secundarias">
                     <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Instagram: </strong></p><img class="iconos-contacto" src="/carpeta_imagenes/web/instagram.png"><a class="links-generales links-pie-redes" rel="noopener noreferrer" href="https://www.instagram.com/vinoteca.sabores.arg/"> @vinoteca.sabores.arg</a></li>
                     <li class="items-generales items-secundarios"><p class="etiquetas-pie-redes"><strong>Whatsapp: </strong></p><img class="iconos-contacto" src="/carpeta_imagenes/web/whatsapp.png" ><a class="links-generales links-pie-redes"  rel="noopener noreferrer" target="_blank" href="https://wa.me/5493516343355"> 54 9 351-634-3355</a></li>
-
                 </ul>
             </article>
         </div>
@@ -112,6 +113,7 @@
             <a class="links-generales links-pie-redes links-muoqa texto-centrado"  rel="noopener noreferrer" target="_blank" href="https://muoqa.com">Diseñado y desarrollado por muoqa</a>
         </aside>
     </footer>
+<% } %>
 <script>
     const URLMadre = "<%= URLMadre %>";
 </script>

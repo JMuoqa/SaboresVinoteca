@@ -57,6 +57,10 @@
 .noUi-connect {
     background: #B83F48 !important;
 }
+.impago{
+    font-size: 2em;
+    font-weight: 700;
+}
 span{
     display: inline-block;
     width: 100%;

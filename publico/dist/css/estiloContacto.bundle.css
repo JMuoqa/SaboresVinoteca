@@ -1,1 +1,3 @@
-.seccion-contacto,.seccion-primero{width:100%}.subtitulos-contacto{margin-top:0}.informacion-contacto{margin:auto;width:65%}.items-contacto{align-items:center;display:flex}.texto-contacto{margin:5px 0}.link-contacto{margin-left:5px}.link-contacto,.link-contacto:link,.link-contacto:visited{color:var(--color-negro)}
+/*!**********************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./publico/css/estiloContacto.css ***!
+  \**********************************************************************************/.seccion-contacto,.seccion-primero{width:100%}.subtitulos-contacto{margin-top:0}.informacion-contacto{margin:auto;width:65%}.items-contacto{align-items:center;display:flex}.texto-contacto{margin:5px 0}.link-contacto{margin-left:5px}.link-contacto,.link-contacto:link,.link-contacto:visited{color:var(--color-negro)}
