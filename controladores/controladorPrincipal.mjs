@@ -17,7 +17,6 @@ const tituloExito = 'SaboresVinoteca | Exito';
 const tituloIniciarSession = 'SaboresVinoteca | Iniciar sessión';
 const tituloRegistrarse = 'SaboresVinoteca | Registrarse';
 const tituloContacto = 'SaboresVinoteca | Contactate con nosotros'
-let pagado = false;
 function VistaServicioImpago(req, res){
     const usuario = req.user ?? [];
     res.render('impago', {
@@ -34,8 +33,6 @@ function VistaServicioImpago(req, res){
 }
 const VistaInicio = (req, res) =>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         res.render('inicio', {
             TITULO: tituloInicio,
             Usuario: usuario[0],
@@ -47,15 +44,9 @@ const VistaInicio = (req, res) =>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         });  
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaCargar = async (req, res) =>{
     const usuario = req.user ?? [];
-    
-    if(pagado)
-    {
         if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
             res.render('administracion/administracionDeCargar', {
                 TITULO: tituloCargar,
@@ -71,14 +62,9 @@ const VistaCargar = async (req, res) =>{
         }else{
             VistaInicio(req, res);
         }
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaEditarProductos = (req, res) =>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
             res.render('administracion/administrarEditarProducto', {
                 TITULO: tituloEditar,
@@ -94,15 +80,10 @@ const VistaEditarProductos = (req, res) =>{
         }else{
             VistaInicio(req, res);
         }
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaError = (req, res)=>{
     const usuario = req.user ??[];
     const mensaje = req.query.mensaje;
-    if(pagado)
-    {
         res.render('error', {
             TITULO: tituloError,
             Usuario: usuario[0],
@@ -115,14 +96,9 @@ const VistaError = (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         });
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaEditarCategorias = (req, res) =>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
             res.render('administracion/adminEditarCategoria', {
                 TITULO: tituloEditarCategorias,
@@ -138,14 +114,9 @@ const VistaEditarCategorias = (req, res) =>{
         }else{
             VistaInicio(req, res);
         }
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaEditarMarcas = (req, res)=>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         if(usuario[0] && usuario[0].Jerarquia && usuario[0].Jerarquia == 'ADMIN'){
             res.render('administracion/adminEditarMarcas', {
                 TITULO: tituloEditarMarcas,
@@ -161,16 +132,11 @@ const VistaEditarMarcas = (req, res)=>{
         }else{
             VistaInicio(req, res);
         }
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaCategoriaSeleccionada = async (req, res)=>{
     const _IDCategoria = req.query.IDC;
     const categoria = await Con_ObtenerCategoriaPorID(_IDCategoria);
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         res.render('cliente/categoriaSelec', {
             TITULO: `${tituloCategoriaSelec} ${categoria.Categoria[0].Categoria}`,
             Usuario: usuario[0],
@@ -183,17 +149,12 @@ const VistaCategoriaSeleccionada = async (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         })
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaIndividualProducto = async (req, res)=>{
     const _IDProducto = req.query.IDP;
     const producto = await Con_ObtenerProductoPorID(_IDProducto);
     const categoria = await Con_ObtenerCategoriaPorID(producto.Productos[0].IDCategoria);
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         res.render('cliente/vistaIndividual', {
             TITULO: `${tituloProductoIndividual} | ${categoria.Categoria[0].Categoria} | ${producto.Productos[0].Producto}`,
             Usuario: usuario[0],
@@ -206,14 +167,9 @@ const VistaIndividualProducto = async (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         })
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaIniciarSession = (req, res)=>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         res.render('autenticacion/iniciarSession', {
             TITULO: tituloIniciarSession,
             Usuario: usuario[0],
@@ -225,14 +181,9 @@ const VistaIniciarSession = (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         })
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaRegistrarse = (req, res)=>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         res.render('autenticacion/registrarse', {
             TITULO: tituloRegistrarse,
             Usuario: usuario[0],
@@ -244,15 +195,10 @@ const VistaRegistrarse = (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         })
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaExito = (req, res)=>{
     const usuario = req.user ?? [];
     const mensaje = req.query.mensaje;
-    if(pagado)
-    {
         res.render('exito', {
             TITULO: tituloExito,
             Usuario: usuario[0],
@@ -265,14 +211,9 @@ const VistaExito = (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         });
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 const VistaContacto = (req, res)=>{
     const usuario = req.user ?? [];
-    if(pagado)
-    {
         res.render('contacto', {
             TITULO: tituloContacto,
             Usuario: usuario[0],
@@ -284,9 +225,6 @@ const VistaContacto = (req, res)=>{
             F_AdminActivo: AdminActivo,
             F_DetectarJavaScript: DetectarJavaScript,
         });
-    }else{
-        VistaServicioImpago(req, res);
-    }
 }
 function DetectarJavaScript(titulo){
     if(titulo.startsWith(tituloCategoriaSelec))
@@ -320,5 +258,5 @@ export default {
     VistaError, VistaEditarCategorias, VistaEditarMarcas,
     VistaCategoriaSeleccionada, VistaIndividualProducto,
     VistaIniciarSession, VistaRegistrarse, VistaExito,
-    VistaContacto
+    VistaContacto, VistaServicioImpago
 };

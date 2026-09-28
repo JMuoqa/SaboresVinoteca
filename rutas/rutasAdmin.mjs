@@ -5,7 +5,7 @@ import controladorAdmin from '../controladores/controladorAdmin.mjs';
 const enrutador = express.Router();
 let rutaDeLaCarpeta = '';
 if(process.env.NODE_ENV === 'development'){
-    rutaDeLaCarpeta = 'C:\\Users\\Joaquin\\Desktop\\Proyectos\\Trabajo\\SaboresVinoteca\\ImagenesSubidas';
+    rutaDeLaCarpeta = 'C:\\Users\\Usuario\\Desktop\\imagenesSubidas';
 }
 else{
     //Configurar direccion donde guardar imagenes 

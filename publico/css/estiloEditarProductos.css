@@ -41,14 +41,24 @@
     width: 50%;
 }
 
-.editar-datos{
+/* ================================
+   EDICIÓN DE PRODUCTOS
+================================ */
+
+.editar-datos {
     border-top: solid 2px var(--verde-profundo);
     margin-top: 3em;
+    padding-bottom: 3em;
 }
-.datos{
+
+.editar-datos > .subtitulo-administrar {
+    margin: 2em 0 1.5em;
+}
+
+.datos {
     width: 70%;
-    margin: auto;
-    padding: 10px;
+    margin: 1.2em auto;
+    padding: 1.5em;
     box-sizing: border-box;
     border: solid 2px var(--verde-profundo-t);
     background-color: var(--fondo-blanco2);
@@ -56,12 +66,150 @@
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    margin-top: 1em;
-    margin-bottom: 1em;
 }
 
-.entradas, .etiquetas{
+/* Datos principales */
+
+.datos-principales > div:not(.contenedor-espiral):not(.contenedor-seguridad) {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.datos-principales > div p {
+    margin: 0.4em 0;
+}
+
+.texto-naranja-edicion {
+    color: var(--naranja-profundo);
+}
+
+/* Etiquetas e inputs de edición */
+
+.editar-datos .entradas,
+.editar-datos .etiquetas {
     margin: 0.5em 0;
+}
+
+.editar-datos input[type="text"],
+.editar-datos input[type="number"],
+.editar-datos select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Formularios */
+
+#formularioEliminarProducto,
+#formularioDatosPrincipales,
+#formularioDatosCategoricos,
+#formularioDatoImagen {
+    gap: 0.2em;
+}
+
+/* Seguridad / eliminación */
+
+.contenedor-seguridad {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 0 1em;
+}
+
+.entrada-seguridad {
+    width: 18px;
+    height: 18px;
+    margin-left: 15px;
+    cursor: pointer;
+}
+
+.boton-elimiar {
+    width: 100%;
+    height: 2.6em;
+    border-radius: 1.3em;
+    background-color: var(--color-rojo);
+    border: none;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: inherit;
+    font-family: inherit;
+    transition: opacity 0.2s ease;
+}
+
+.boton-elimiar:hover {
+    opacity: 0.85;
+}
+
+.boton-desactivado {
+    background-color: var(--muted);
+    color: #444;
+    cursor: not-allowed;
+}
+
+/* Selectores de categoría y marca */
+
+#editarEntradaCategoria,
+#editarEntradaMarcas {
+    min-height: 2.5em;
+}
+
+/* Imagen */
+
+.dato-imagen {
+    overflow: hidden;
+}
+
+.entradas-imagenes {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#vistaPreviaProducto {
+    min-height: 22em;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5em;
+    padding: 1em;
+}
+
+.imagen-del-producto {
+    max-width: 100%;
+    max-height: 20em;
+    object-fit: contain;
+}
+
+.contenedor-informacion-productos {
+    width: 100%;
+}
+
+.texto-marca-precio {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+}
+
+.valor-producto {
+    margin-left: 0.3em;
+}
+
+/* Loaders exclusivamente de edición */
+
+.editar-datos .contenedor-espiral {
+    margin: auto;
+    display: none;
+    align-items: center;
+}
+
+/* Mensajes */
+
+#textoEditarVisibilidad,
+#textoEdicionPrincipal,
+#textoEdicionCategorica,
+#textoEditarImagen {
+    margin: 0.8em 0 0;
+    text-align: center;
 }
 /*Busqueda*/
 .buscar-productos{
@@ -211,6 +359,36 @@
 }
 #vistaPreviaProducto{
     min-height: 22em;
+}
+
+
+/* Responsive edición */
+
+@media(max-width: 900px) {
+    .datos {
+        width: 90%;
+    }
+}
+
+@media(max-width: 550px) {
+    .datos {
+        width: 95%;
+        padding: 1em;
+    }
+
+    .datos-principales > div:not(.contenedor-espiral):not(.contenedor-seguridad) {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0;
+    }
+
+    #vistaPreviaProducto {
+        min-height: 18em;
+    }
+
+    .imagen-del-producto {
+        max-height: 16em;
+    }
 }
 @media(max-width:1024px){
     .formulario-busqueda{

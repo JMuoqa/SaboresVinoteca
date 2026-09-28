@@ -14,7 +14,7 @@ import path from "path";
 import sharp from 'sharp';
 let rutaDeLaCarpeta = '';
 if(process.env.NODE_ENV === 'development'){
-    rutaDeLaCarpeta = 'C:\\Users\\Joaquin\\Desktop\\Proyectos\\Trabajo\\SaboresVinoteca\\ImagenesSubidas';
+    rutaDeLaCarpeta = 'C:\\Users\\Usuario\\Desktop\\imagenesSubidas';
 }
 else{
     //Configurar direccion donde guardar imagenes 
@@ -27,24 +27,21 @@ const InsertarMarca = async (req, res, next) =>{
         const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
         if(!usuarioPermitido)
             throw new Error('Sin permisos');
-        let { marca, categoria } = req.body;
-        const regex = /^[a-zA-Z0-9 @/,+._-]+$/; //hay un espacio(' ' en -> '9 @'), para que permita los espacios ya que es una marca
-        if (!marca || !regex.test(marca)) {
-            return res.json({ estado: 'malo', mensaje: 'La marca contiene caracteres inválidos o está vacía'});
-        }
+        const { marca, categoria } = req.body;
+        if (!marca)
+            return res.json({ estado: 'malo', mensaje: `El campo 'marca' está vacío`});
         if(categoria == 'No seleccionada')
             return res.json({ estado: 'malo', mensaje: 'Selecciona la categoria a la que pertenece la marca'});
-        marca = marca.trim();
-        categoria = categoria.trim();
-        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
-        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
-        const solicitud = await Con_InsertarMarca(marca, IDCategoria);
+        console.log(categoria);
+        const solicitarIDCatecoria = await Con_ObtenerCategoriaPorID(categoria);
+        const IDCategoria = solicitarIDCatecoria.Categoria[0].ID;
+        const solicitud = await Con_InsertarMarca(marca.trim(), IDCategoria);
         if(!solicitud.estado)
             return res.json({ estado: 'malo', mensaje: solicitud.mensaje});
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje });
     }catch(error){
         console.error(error);
-        return res.json({estado: 'muyMalo', mensaje: error.message });
+        return res.json({estado: 'muyMalo', mensaje: 'Ocurrió un error interno, inténtelo más tarde.' });
     }
 }
 const InsertarCategoria = async (req, res) => {
@@ -54,18 +51,15 @@ const InsertarCategoria = async (req, res) => {
         if(!usuarioPermitido)
             throw new Error('Sin permisos');
         const imagen = req.file;
-        if (!imagen)
-            return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
+        if (!imagen) return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
         const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
         const extension = path.extname(imagen.originalname).toLowerCase();
         const imagenProcesada = await ConvertirImagen(imagen, rutaOriginal, extension);
-        let { categoria } = req.body;
-        const regex = /^[a-zA-Z0-9 @/,+._-]+$/;
-        if (!categoria || !regex.test(categoria)) {
-            return res.json({ estado: 'malo', mensaje: 'La categoria contiene caracteres inválidos o está vacía'});
+        const { categoria } = req.body;
+        if (!categoria) {
+            return res.json({ estado: 'malo', mensaje: `El campo 'categoría' está vacío`});
         }
-        categoria = categoria.trim();
-        const solicitud = await Con_InsertarCategoria(categoria.toUpperCase(), imagenProcesada);
+        const solicitud = await Con_InsertarCategoria(categoria.trim().toUpperCase(), imagenProcesada);
         if(!solicitud.estado)
             return res.json({ estado: 'malo', mensaje: solicitud.mensaje});
         return res.json({estado: 'exitoso', mensaje: solicitud.mensaje });
@@ -78,11 +72,9 @@ const InsertarProducto = async (req, res) => {
     try{
         const usuarioLogeado = req.user ?? [];
         const usuarioPermitido = await ComprobarUsuario(usuarioLogeado);
-        if(!usuarioPermitido)
-            throw new Error('Sin permisos');
+        if(!usuarioPermitido) throw new Error('Sin permisos');
         const imagen = req.file;
-        if (!imagen)
-            return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
+        if (!imagen) return res.json({estado: 'malo', mensaje: 'No hay una imagen cargada'});
         const rutaOriginal = path.join(rutaDeLaCarpeta, imagen.filename);
         const extension = path.extname(imagen.originalname).toLowerCase();
         const imagenProcesada = await ConvertirImagen(imagen, rutaOriginal, extension);
@@ -95,13 +87,10 @@ const InsertarProducto = async (req, res) => {
             esImportado = 1;
         else
             esImportado = 0;
-        const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
-        console.log(solicitarIDCatecoria)
-        const IDCategoria = solicitarIDCatecoria.Categoria.ID;
-
-        const solicitarIDMarca = await Con_ObtenerIDDeMarca(marca, IDCategoria);
-        console.log(solicitarIDMarca)
-        const IDMarca = solicitarIDMarca.Marca.ID;
+        const solicitarIDCatecoria = await Con_ObtenerCategoriaPorID(categoria);
+        const IDCategoria = solicitarIDCatecoria.Categoria[0].ID;
+        const solicitarIDMarca = await Con_ObtenerMarcaPorID(marca);
+        const IDMarca = solicitarIDMarca.Marca[0].ID;
         const comprobarProducto = await Con_ComprobarProducto(nombreProducto, IDMarca, IDCategoria);
         if(!comprobarProducto.estado)
             return res.json({ estado: 'malo', mensaje: comprobarProducto.mensaje});
@@ -115,16 +104,15 @@ const InsertarProducto = async (req, res) => {
     }
 }
 function ValidarDatosDelProducto(nombreProducto, categoria, marca, precio){
-    const regex = /^[a-zA-Z0-9 @/,+._-]+$/;
     const regexNumeros = /^[0-9]+$/;
     if(!precio || !regexNumeros.test(precio))
         return 'El precio contiene caracteres invalidos o esta vacio';
-    if(!nombreProducto || !regex.test(nombreProducto))
-        return 'Nombre del producto contiene caracteres invalidos o esta vacio';
-    if(!categoria || !regex.test(categoria) || categoria == 'No seleccionada' )
-        return 'La categoria contiene caracteres invalidos o esta vacia';
-    if(!marca || !regex.test(marca) || marca == 'No seleccionada' || marca == 'Selecciona una categoria para buscar marcas')
-        return 'La marca contiene caracteres invalidos o esta vacia';
+    if(!nombreProducto)
+        return `El campo 'nombre' está vacío`;
+    if(!categoria || categoria == 'No seleccionada' )
+        return `El campo 'categoría' está vacío`;
+    if(!marca || marca == 'No seleccionada' || marca == 'Selecciona una categoria para buscar marcas')
+        return `El campo 'marca' está vacío`;
     return false;
 }
 const ObtenerMarcas = async (req, res) =>{
@@ -149,9 +137,7 @@ const ObtenerMarcasPorCategoria = async (req, res)=>{
         if(iDcategoria)
             obtenerMarcas = await Con_ObtenerMarcasPorCategoria(iDcategoria);
         else{
-            const solicitarIDCatecoria = await Con_ObtenerIDDeCategoria(categoria);
-            const IDCategoria = solicitarIDCatecoria.Categoria.ID;
-            obtenerMarcas = await Con_ObtenerMarcasPorCategoria(IDCategoria);
+            obtenerMarcas = await Con_ObtenerMarcasPorCategoria(categoria);
         }
         let marcas;
         if(obtenerMarcas.Marcas)

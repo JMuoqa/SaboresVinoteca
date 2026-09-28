@@ -129,7 +129,7 @@ function ActualizarSeccionCategorias() {
       const articulo = document.createElement('article');
         articulo.innerHTML = `
         <article class="contenedor-categoria contenedor-categoria-funcional" data-id=${Categorias[i].ID}>
-          <img class="imagen-categoria" src="${URLMadre}/Imagenes/${Categorias[i].Imagen}" loading="lazy" alt="${Categorias[i].Categoria}">
+          <img class="imagen-categoria" src="https://saboresvinoteca.com/Imagenes/${Categorias[i].Imagen}" loading="lazy" alt="${Categorias[i].Categoria}">
           <div class="filtro-categoria"></div>
           <h3 class="titulo-categoria">${Categorias[i].Categoria}</h3>
         </article> `;
@@ -248,7 +248,7 @@ function BuscarProductos(){
               if(precio < 1){
                 articulo.innerHTML = `
                   <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
+                    <img class="imagen-del-producto" src="https://saboresvinoteca.com/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
                     <div class="contenedor-informacion-productos">
                       <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
                       <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
@@ -257,7 +257,7 @@ function BuscarProductos(){
               }else{
                 articulo.innerHTML = `
                   <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
+                    <img class="imagen-del-producto" src="https://saboresvinoteca.com/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
                     <div class="contenedor-informacion-productos">
                       <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
                       <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
@@ -323,7 +323,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
               if(precio < 1){
                 articulo.innerHTML = `
                   <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
+                    <img class="imagen-del-producto" src="https://saboresvinoteca.com/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
                     <div class="contenedor-informacion-productos">
                       <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
                       <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>
@@ -332,7 +332,7 @@ function FetchCambiarPagina(nPagina, url, etiqueta, contenedor){
               }else{
                 articulo.innerHTML = `
                   <div class="contenedor-info-producto ver-producto-todos" data-id="${Productos[i].ID}">
-                    <img class="imagen-del-producto" src="${URLMadre}/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
+                    <img class="imagen-del-producto" src="https://saboresvinoteca.com/Imagenes/${Productos[i].Imagen}" loading="lazy" alt="${Productos[i].Producto}">
                     <div class="contenedor-informacion-productos">
                       <p class="texto-info-producto nombre-del-producto punto-suspensivos"><strong>${Productos[i].Producto}</strong></p>
                       <p class="texto-info-producto marca-del-producto punto-suspensivos"><strong>Marca:</strong>${marcaDelProducto}</p>

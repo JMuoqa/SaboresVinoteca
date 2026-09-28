@@ -3,44 +3,92 @@
     <h2 class="subtitulo-administrar">Editar productos</h2>
     <section class="seccion-seleccionar-edicion">
         <h3>Selecciona qué deseas editar:</h3>
-        <button class="boton boton-elegir" id="botonEditarCategoria">Editar categorias</button>
-        <button class="boton boton-elegir" id="botonEditarMarca">Editar marcas</button>
+        <button class="boton boton-elegir" id="botonEditarCategoria">
+            Editar categorias
+        </button>
+        <button class="boton boton-elegir" id="botonEditarMarca">
+            Editar marcas
+        </button>
     </section>
     <section class="buscar-productos">
         <h3 class="subtitulo-administrar">Busqueda</h3>
         <section class="seccion-introducir-busqueda">
             <form class="formulario-busqueda" id="formularioFiltro">
                 <input type="hidden" id="entradaPagina" name="pagina">
-                <label class="etiquetas etiqueta-de-busuqeda" for="entradaValorBusqueda">Buscar: </label>
+                <label
+                    class="etiquetas etiqueta-de-busuqeda"
+                    for="entradaValorBusqueda">
+                    Buscar:
+                </label>
                 <div class="diseño-entrada-busuqeda">
-                    <input class="entradas entrada-busqueda" type="text" id="entradaValorBusqueda" name="busqueda" placeholder="Vinos malbec">
-                    <img class="imagen-lupa" id="imagenLupa" src="/carpeta_imagenes/web/buscar.png">
+                    <input
+                        class="entradas entrada-busqueda"
+                        type="text"
+                        id="entradaValorBusqueda"
+                        name="busqueda"
+                        placeholder="Vinos malbec">
+                    <img
+                        class="imagen-lupa"
+                        id="imagenLupa"
+                        src="/carpeta_imagenes/web/buscar.png">
                 </div>
                 <fieldset class="campos">
-                    <label class="etiquetas" for="entradaCategorias">Filtrar por categoria</label>
-                    <select class="entradas" id="entradaCategorias" name="categoria">
+                    <label
+                        class="etiquetas"
+                        for="entradaCategorias">
+                        Filtrar por categoria
+                    </label>
+                    <select
+                        class="entradas"
+                        id="entradaCategorias"
+                        name="categoria">
                     </select>
                 </fieldset>
                 <fieldset class="campos">
-                    <label class="etiquetas" for="entradaMarcas">Filtrar por Marca</label>
-                    <select class="entradas" id="entradaMarcas" name="marca">
-                        <option>Selecciona una categoria para buscar marcas</option>
+                    <label
+                        class="etiquetas"
+                        for="entradaMarcas">
+                        Filtrar por Marca
+                    </label>
+                    <select
+                        class="entradas"
+                        id="entradaMarcas"
+                        name="marca">
+                        <option>
+                            Selecciona una categoria para buscar marcas
+                        </option>
                     </select>
                 </fieldset>
-                <button class="boton boton-busqueda boton-elegir" type="submit">Buscar</button>
+                <button
+                    class="boton boton-busqueda boton-elegir"
+                    type="submit">
+                    Buscar
+                </button>
             </form>
         </section>
-        <section class="seccion-productos">     
-            <div class="contenedor-espiral contenedor-espiral-grande"  id="animacionDeCarga">
-                <p><strong>Cargando productos</strong></p> <div class="animacion-espiral animacion-espiral-grande"></div>
+        <section class="seccion-productos">
+            <div
+                class="contenedor-espiral contenedor-espiral-grande"
+                id="animacionDeCarga">
+                <p><strong>Cargando productos</strong></p>
+                <div class="animacion-espiral animacion-espiral-grande"></div>
             </div>
-            <section class="conteendor-productos" id="contenedorProductos">
-               
+            <section
+                class="conteendor-productos"
+                id="contenedorProductos">
             </section>
             <section class="seccion-cambiar-pagina">
-                <img class="imagen-flecha-cambiar-pagina" id="indiceAnterior" src="/carpeta_imagenes/web/flecha-izquierda.png">
-                <p class="indice-de-pagina"><span id="numeroDePagina">1</span></p> 
-                <img class="imagen-flecha-cambiar-pagina" id="indiceSiguiente" src="/carpeta_imagenes/web/flecha-derecha.png">
+                <img
+                    class="imagen-flecha-cambiar-pagina"
+                    id="indiceAnterior"
+                    src="/carpeta_imagenes/web/flecha-izquierda.png">
+                <p class="indice-de-pagina">
+                    <span id="numeroDePagina">1</span>
+                </p>
+                <img
+                    class="imagen-flecha-cambiar-pagina"
+                    id="indiceSiguiente"
+                    src="/carpeta_imagenes/web/flecha-derecha.png">
             </section>
             <fieldset class="campos">
                 <p id="paginaLimite"></p>
@@ -48,83 +96,243 @@
         </section>
     </section>
     <section class="editar-datos">
-        <h3 class="subtitulo-administrar" id="ver-edicion">Editar</h3>
+        <h3
+            class="subtitulo-administrar"
+            id="ver-edicion">
+            Editar
+        </h3>
         <div class="datos datos-principales">
-            <div class="contenedor-espiral"  id="animacionDeCarga">
-                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+            <div class="contenedor-espiral">
+                <p>
+                    <strong>Cargando datos</strong>
+                </p>
+                <div class="animacion-espiral"></div>
             </div>
-            <p><strong>Datos del producto a editar</strong></p>
+            <p>
+                <strong>Datos del producto a editar</strong>
+            </p>
             <div>
-                <p><strong>Nº: </strong></p><p id="numeroProducto" class="texto-naranja-edicion">Ninguno</p>
+                <p>
+                    <strong>Nº: </strong>
+                </p>
+                <p
+                    id="numeroProducto"
+                    class="texto-naranja-edicion">
+                    Ninguno
+                </p>
             </div>
             <div>
-                <p><strong>Nombre de producto: </strong></p><p id="nombreProducto" class="texto-naranja-edicion">Ninguno</p>
+                <p>
+                    <strong>Nombre de producto: </strong>
+                </p>
+                <p
+                    id="nombreProducto"
+                    class="texto-naranja-edicion">
+                    Ninguno
+                </p>
             </div>
         </div>
-        <form class="datos datos-principales" id="formularioEliminarProducto">
-            <div class="contenedor-espiral"  id="animacionDeCarga">
-                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+        <form
+            class="datos datos-principales"
+            id="formularioEliminarProducto">
+            <div class="contenedor-espiral">
+                <p>
+                    <strong>Cargando datos</strong>
+                </p>
+                <div class="animacion-espiral"></div>
             </div>
             <div class="contenedor-seguridad">
-                <label class="etiquetas" for="entradaSeguridad">Voy a eliminar</label>
-                <input class="entrada-seguridad" id="entradaSeguridad" type="checkbox">
+                <label
+                    class="etiquetas"
+                    for="entradaSeguridad">
+                    Voy a eliminar
+                </label>
+                <input
+                    class="entrada-seguridad"
+                    id="entradaSeguridad"
+                    type="checkbox">
             </div>
-            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" required>
-            <button type="submit" class="boton-elimiar" id="botonEliminar">Eliminar</button>
+            <input
+                type="hidden"
+                class="entrada-oculta-id-seleccionado"
+                name="ID"
+                required>
+            <button
+                type="submit"
+                class="boton-elimiar"
+                id="botonEliminar">
+                Eliminar
+            </button>
             <p id="textoEditarVisibilidad"></p>
         </form>
-        <form class="datos datos-principales" id="formularioDatosPrincipales">
-            <div class="contenedor-espiral" >
-                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+        <form
+            class="datos datos-principales"
+            id="formularioDatosPrincipales">
+            <div class="contenedor-espiral">
+                <p>
+                    <strong>Cargando datos</strong>
+                </p>
+
+                <div class="animacion-espiral"></div>
             </div>
-            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" required>
-            <label class="etiquetas" for="entradaNombre">Nombre del producto</label>
-            <input type="text" class="entradas texto-naranja-edicion" min="3" placeholder="Vino Malbec 2L" id="entradaNombre" name="nombre" required>
-            <label class="etiquetas" for="entradaPrecio">Precio del producto</label>
-            <input type="number" class="entradas texto-naranja-edicion" placeholder="10000" id="entradaPrecio" name="precio" required>
-            <button type="submit" class="boton boton-elegir">Guardar nombre y precio</button>
+            <input
+                type="hidden"
+                class="entrada-oculta-id-seleccionado"
+                name="ID"
+                required>
+            <label
+                class="etiquetas"
+                for="entradaNombre">
+                Nombre del producto
+            </label>
+            <input
+                type="text"
+                class="entradas texto-naranja-edicion"
+                min="3"
+                placeholder="Vino Malbec 2L"
+                id="entradaNombre"
+                name="nombre"
+                required>
+            <label
+                class="etiquetas"
+                for="entradaPrecio">
+                Precio del producto
+            </label>
+            <input
+                type="number"
+                class="entradas texto-naranja-edicion"
+                placeholder="10000"
+                id="entradaPrecio"
+                name="precio"
+                required>
+            <button
+                type="submit"
+                class="boton boton-elegir">
+                Guardar nombre y precio
+            </button>
             <p id="textoEdicionPrincipal"></p>
         </form>
-        <form class="datos datos-categoricos" id="formularioDatosCategoricos">
-            <div class="contenedor-espiral" >
-                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+        <form
+            class="datos datos-categoricos"
+            id="formularioDatosCategoricos">
+            <div class="contenedor-espiral">
+                <p>
+                    <strong>Cargando datos</strong>
+                </p>
+                <div class="animacion-espiral"></div>
             </div>
-            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID" required>
-            <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
-            <select class="entradas texto-naranja-edicion" id="editarEntradaCategoria" name="categoria" required>
+            <input
+                type="hidden"
+                class="entrada-oculta-id-seleccionado"
+                name="ID"
+                required>
+            <label
+                class="etiquetas"
+                for="editarEntradaCategoria">
+                Categoria del producto:
+            </label>
+            <select
+                class="entradas texto-naranja-edicion"
+                id="editarEntradaCategoria"
+                name="categoria"
+                required>
             </select>
-            <label class="etiquetas" for="editarEntradaMarcas">Marca del producto:</label>
-            <select class="entradas texto-naranja-edicion" id="editarEntradaMarcas" name="marca" required>
-                <option>Selecciona una categoria para buscar marcas</option>
+            <label
+                class="etiquetas"
+                for="editarEntradaMarcas">
+                Marca del producto:
+            </label>
+            <select
+                class="entradas texto-naranja-edicion"
+                id="editarEntradaMarcas"
+                name="marca"
+                required>
+                <option>
+                    Selecciona una categoria para buscar marcas
+                </option>
             </select>
-            <button type="submit" class="boton boton-elegir">Guardar categoria y marca</button>
+            <button
+                type="submit"
+                class="boton boton-elegir">
+                Guardar categoria y marca
+            </button>
             <p id="textoEdicionCategorica"></p>
         </form>
-        <form class="datos dato-imagen" id="formularioDatoImagen">
-            <div class="contenedor-espiral" >
-                <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+        <form
+            class="datos dato-imagen"
+            id="formularioDatoImagen">
+            <div class="contenedor-espiral">
+                <p>
+                    <strong>Cargando datos</strong>
+                </p>
+                <div class="animacion-espiral"></div>
             </div>
-            <input type="hidden" class="entrada-oculta-id-seleccionado" name="ID">
-            <label class="etiquetas" for="entradaDeImagenesProducto">Seleccionar imagen:</label>
-            <input class="entradas texto-naranja-edicion entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
-            <label class="etiquetas">Imagen seleccionada: </label>
-            <div class="contenedor-info-producto" id="vistaPreviaProducto">
-                <img class="imagen-del-producto" id="imagenVistaPreviaProducto" alt="Imagen del producto a subir">
+            <input
+                type="hidden"
+                class="entrada-oculta-id-seleccionado"
+                name="ID">
+            <label
+                class="etiquetas"
+                for="entradaDeImagenesProducto">
+                Seleccionar imagen:
+            </label>
+            <input
+                class="entradas texto-naranja-edicion entradas-imagenes"
+                type="file"
+                accept="image/*"
+                id="entradaDeImagenesProducto"
+                name="imagen"
+                required>
+            <label class="etiquetas">
+                Imagen seleccionada:
+            </label>
+            <div
+                class="contenedor-info-producto"
+                id="vistaPreviaProducto">
+                <img
+                    class="imagen-del-producto"
+                    id="imagenVistaPreviaProducto"
+                    alt="Imagen del producto a subir">
                 <div class="contenedor-informacion-productos">
-                    <p class="texto-info-producto nombre-del-producto"><strong id="editarEtiquetaNombreProducto">Nombre</strong></p>
+                    <p class="texto-info-producto nombre-del-producto">
+                        <strong id="editarEtiquetaNombreProducto">
+                            Nombre
+                        </strong>
+                    </p>
                     <div class="texto-marca-precio">
-                        <p class="texto-info-producto marca-del-producto"><strong>Marca: </strong> </p>
-                        <p class="texto-info-producto marca-del-producto valor-producto" id="editarEtiquetaMarcaProducto"></p>
+                        <p class="texto-info-producto marca-del-producto">
+                            <strong>
+                                Marca:
+                            </strong>
+                        </p>
+                        <p
+                            class="texto-info-producto marca-del-producto valor-producto"
+                            id="editarEtiquetaMarcaProducto">
+                        </p>
                     </div>
                     <div class="texto-marca-precio">
-                        <p class="texto-info-producto precio-del-producto texto-marca-precio"><strong>Precio: </strong> </p>
-                        <p class="texto-info-producto marca-del-producto valor-producto" id="editarEtiquetaPrecioProducto"></p>
+                        <p class="texto-info-producto precio-del-producto texto-marca-precio">
+                            <strong>
+                                Precio:
+                            </strong>
+                        </p>
+                        <p
+                            class="texto-info-producto marca-del-producto valor-producto"
+                            id="editarEtiquetaPrecioProducto">
+                        </p>
                     </div>
                 </div>
             </div>
-            <button type="submit" class="boton boton-elegir">Guardar imagen</button>
+            <button
+                type="submit"
+                class="boton boton-elegir">
+                Guardar imagen
+            </button>
             <p id="textoEditarImagen"></p>
         </form>
     </section>
 </section>
-<script src="https://unpkg.com/heic2any/dist/heic2any.min.js" defer></script>
+<script
+    src="https://unpkg.com/heic2any/dist/heic2any.min.js"
+    defer>
+</script>

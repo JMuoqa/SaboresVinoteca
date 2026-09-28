@@ -114,15 +114,15 @@ function EventosChangeDeEntradas(){
     const etiquetaMarcaProducto = document.getElementById('etiquetaMarcaProducto');
     entradaMarca.addEventListener('change', function(){
         if(entradaMarca.value.trim() === '' || entradaMarca.value.trim() === 'No seleccionada' || entradaMarca.value.trim() === 'No hay' || entradaMarca.value.trim() === 'Selecciona una categoria para buscar marcas')
-            etiquetaMarcaProducto.innerText = '';
+            etiquetaMarcaProducto.innerText = '-';
         else
-            etiquetaMarcaProducto.innerText = entradaMarca.value.trim();
+            etiquetaMarcaProducto.innerText = entradaMarca.selectedOptions[0]?.text.trim() ?? ''
     })
     const precioProducto = document.getElementById('precioProducto');
     const etiquetaPrecioProducto = document.getElementById('etiquetaPrecioProducto');
     precioProducto.addEventListener('input', function(){
         if(precioProducto.value.trim() === '')
-            etiquetaPrecioProducto.innerText = '';
+            etiquetaPrecioProducto.innerText = '-';
         else
             etiquetaPrecioProducto.innerText = ConseguirFormatoDelPrecioOriginal(precioProducto.value.trim());
     });
@@ -345,7 +345,7 @@ function ActualizarListaMarcas() {
             }).then(({Marcas}) =>{
                 entradaMarca.innerHTML = '<option>No seleccionada</option>';
                 for(let i = 0; i < Marcas.length; i++){
-                    let opcionesDeMarcas = `<option>${Marcas[i].Marca}</option>`;
+                    let opcionesDeMarcas = `<option value="${Marcas[i].ID}">${Marcas[i].Marca}</option>`;
                     entradaMarca.innerHTML += opcionesDeMarcas;
                 }
 
@@ -367,7 +367,7 @@ function ActualizarListaCategorias() {
         entradaCategoriaProducto.innerHTML = '<option>No seleccionada</option>';
         seccMarca_EntCategoria.innerHTML = '<option>No seleccionada</option>';
         for(let i = 0; i < Categorias.length; i++){
-            let opcionesDeCategorias = `<option>${Categorias[i].Categoria}</option>`;
+            let opcionesDeCategorias = `<option value="${Categorias[i].ID}">${Categorias[i].Categoria}</option>`;
             entradaCategoriaProducto.innerHTML += opcionesDeCategorias;
             seccMarca_EntCategoria.innerHTML += opcionesDeCategorias;
         }

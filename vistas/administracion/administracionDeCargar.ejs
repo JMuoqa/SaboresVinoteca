@@ -1,96 +1,358 @@
 <link rel="stylesheet" href="/dist/css/estiloAdminCargar.bundle.css">
 <section class="cargar-productos-categorias">
-    <h2 class="subtitulo-administrar">Cargar productos y categorias</h2>
+    <header class="cabecera-carga">
+        <div>
+            <span class="eyebrow-carga">Administración</span>
+            <h2 class="subtitulo-administrar">Productos y categorías</h2>
+            <p class="descripcion-carga">
+                Gestioná productos, categorías y marcas de la vinoteca.
+            </p>
+        </div>
+    </header>
     <section class="seccion-seleccionar-tipo-carga">
-        <h3>Selecciona qué deseas cargar:</h3>
-        <button class="boton boton-elegir" id="botonCargarProductos">Cargar productos</button>
-        <button class="boton boton-elegir" id="botonCargarCategoria">Cargar categorias</button>
-        <button class="boton boton-elegir" id="botonCargarMarca">Cargar marcas</button>
+        <div class="selector-carga-info">
+            <span class="selector-carga-label">¿Qué querés cargar?</span>
+            <span class="selector-carga-ayuda">
+                Seleccioná una opción para comenzar
+            </span>
+        </div>
+        <div class="selector-carga-botones">
+            <button
+                type="button"
+                class="boton boton-elegir boton-selector activo"
+                id="botonCargarProductos">
+                <span class="icono-boton">+</span>
+                Producto
+            </button>
+            <button
+                type="button"
+                class="boton boton-elegir boton-selector"
+                id="botonCargarCategoria">
+                <span class="icono-boton">+</span>
+                Categoría
+            </button>
+            <button
+                type="button"
+                class="boton boton-elegir boton-selector"
+                id="botonCargarMarca">
+                <span class="icono-boton">+</span>
+                Marca
+            </button>
+        </div>
     </section>
     <section class="seccion-contenedor-formulario seccion-contenedor-formulario-productos">
-        <h3 class="subtitulo-administrar" id="tituloSeccionProducto">Cargar producto</h3>
-        <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaProductos">
-            <fieldset class="fieldset">
-                <div class="contenedor-espiral"  id="animacionDeCarga">
-                    <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+        <div class="titulo-formulario">
+            <div class="numero-seccion">01</div>
+            <div>
+                <h3 id="tituloSeccionProducto">
+                    Cargar producto
+                </h3>
+                <p>
+                    Completá la información del producto y asignale
+                    una categoría y una marca.
+                </p>
+            </div>
+        </div>
+        <form
+            class="formulario formulario-carga formulario-carga-productos"
+            id="seccionCargaProductos">
+            <fieldset class="fieldset fieldset-producto-info">
+                <div
+                    class="contenedor-espiral"
+                    id="animacionDeCargaProducto">
+
+                    <p><strong>Cargando datos</strong></p>
+                    <div class="animacion-espiral"></div>
+
                 </div>
-                <label class="etiquetas" for="nombreProducto">Nombre del producto:</label>
-                <input class="entradas" type="text" id="nombreProducto" name="nombreProducto" min="3" placeholder="Vino Malbec 1L" required>
-                <label class="etiquetas" for="entradaDeImagenesProducto">Seleccionar imagen:</label>
-                <input class="entradas entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenesProducto" name="imagen" required>
-                <label class="etiquetas">Imagen seleccionada: </label>
-                <div class="contenedor-info-producto" id="vistaPreviaProducto">
-                    <img class="imagen-del-producto" id="imagenVistaPreviaProducto" alt="Imagen del producto a subir">
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="nombreProducto">
+                        Nombre del producto
+                    </label>
+                    <input
+                        class="entradas"
+                        type="text"
+                        id="nombreProducto"
+                        name="nombreProducto"
+                        minlength="3"
+                        placeholder="Ej: Vino Malbec 1L"
+                        required>
+                </div>
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="entradaDeImagenesProducto">
+                        Imagen del producto
+                    </label>
+                    <input
+                        class="entradas entradas-imagenes"
+                        type="file"
+                        accept="image/*"
+                        id="entradaDeImagenesProducto"
+                        name="imagen"
+                        required>
+                </div>
+                <div class="preview-header">
+                    <span>Vista previa</span>
+                    <small>Así se verá el producto</small>
+                </div>
+                <div
+                    class="contenedor-info-producto"
+                    id="vistaPreviaProducto">
+                    <div class="preview-imagen-wrapper">
+                        <img
+                            class="imagen-del-producto"
+                            id="imagenVistaPreviaProducto"
+                            alt="Vista previa del producto">
+                        <div class="preview-placeholder">
+                            <span>Sin imagen</span>
+                        </div>
+                    </div>
                     <div class="contenedor-informacion-productos">
-                        <p class="texto-info-producto nombre-del-producto"><strong id="etiquetaNombreProducto">Nombre</strong></p>
+                        <p class="texto-info-producto nombre-del-producto">
+                            <strong id="etiquetaNombreProducto">
+                                Nombre del producto
+                            </strong>
+                        </p>
                         <div class="texto-marca-precio">
-                            <p class="texto-info-producto marca-del-producto"><strong>Marca: </strong> </p>
-                            <p class="texto-info-producto marca-del-producto valor-producto" id="etiquetaMarcaProducto"></p>
+                            <span class="texto-info-producto">
+                                Marca
+                            </span>
+                            <strong
+                                class="valor-producto"
+                                id="etiquetaMarcaProducto">
+                                —
+                            </strong>
                         </div>
                         <div class="texto-marca-precio">
-                            <p class="texto-info-producto precio-del-producto texto-marca-precio"><strong>Precio: </strong> </p>
-                            <p class="texto-info-producto marca-del-producto valor-producto" id="etiquetaPrecioProducto"></p>
+                            <span class="texto-info-producto">
+                                Precio
+                            </span>
+                            <strong
+                                class="valor-producto"
+                                id="etiquetaPrecioProducto">
+                                —
+                            </strong>
                         </div>
                     </div>
                 </div>
-                <div class="contenedor-importado">
-                    <label class="etiquetas" for="entradaImportado">Importado:</label>
-                    <input class="entrada entrada-importado" type="checkbox" name="importado" id="entradaImportado">
-                </div>
+                <label class="checkbox-importado" for="entradaImportado">
+                    <input
+                        type="checkbox"
+                        name="importado"
+                        id="entradaImportado">
+                    <span>
+                        Producto importado
+                    </span>
+                </label>
             </fieldset>
-            <fieldset class="fieldset">
-                <label class="etiquetas" for="entradaCategoriaProducto">Categoria del producto:</label>
-                <select class="entradas" id="entradaCategoriaProducto" name="categoria" required>
-                </select>
-                <label class="etiquetas" for="entradaMarca">Marca del producto:</label>
-                <select class="entradas" id="entradaMarca" name="marca" required>
-                    <option>Selecciona una categoria para buscar marcas</option>
-                </select>
-                <label class="etiquetas" for="precioProducto">Precio del producto:</label>
-                <input class="entradas" type="text" id="precioProducto" name="precio" placeholder="40000" required>
-                <button type="submit" class="boton-admin-cargar boton-elegir">Guardar producto</button>
-                <button type="button" class="boton-admin-cargar boton-elegir">Resetear datos</button>
+            <fieldset class="fieldset fieldset-producto-datos">
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="entradaCategoriaProducto">
+                        Categoría
+                    </label>
+                    <select
+                        class="entradas"
+                        id="entradaCategoriaProducto"
+                        name="categoria"
+                        required>
+                    </select>
+                    <small class="ayuda-campo">
+                        La categoría determina las marcas disponibles.
+                    </small>
+                </div>
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="entradaMarca">
+                        Marca
+                    </label>
+                    <select
+                        class="entradas"
+                        id="entradaMarca"
+                        name="marca"
+                        required>
+                        <option value="">
+                            Seleccioná primero una categoría
+                        </option>
+                    </select>
+                </div>
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="precioProducto">
+                        Precio
+                    </label>
+                    <div class="input-precio">
+                        <span style="width: 20px;">$</span>
+                        <input
+                            class="entradas"
+                            type="text"
+                            id="precioProducto"
+                            name="precio"
+                            placeholder="40000"
+                            required>
+                    </div>
+                </div>
+                <div class="acciones-formulario">
+                    <button
+                        type="submit"
+                        class="boton boton-admin-cargar boton-principal">
+                        Guardar producto
+                    </button>
+                    <button
+                        type="button"
+                        class="boton boton-admin-cargar boton-secundario">
+                        Limpiar
+                    </button>
+                </div>
                 <p id="mensajeDeAlertaProductos"></p>
             </fieldset>
         </form>
     </section>
     <section class="seccion-contenedor-formulario seccion-contenedor-formulario-categorias">
-        <h3 class="subtitulo-administrar" id="tituloSeccionCategoria">Cargar categoria</h3>
-        <form class="formulario formulario-carga formulario-carga-productos" id="seccionCargaCategorias">
+        <div class="titulo-formulario">
+            <div class="numero-seccion">02</div>
+            <div>
+                <h3 id="tituloSeccionCategoria">
+                    Cargar categoría
+                </h3>
+                <p>
+                    Creá una nueva categoría para organizar tus productos.
+                </p>
+            </div>
+        </div>
+        <form
+            class="formulario formulario-carga formulario-carga-categoria"
+            id="seccionCargaCategorias">
             <fieldset class="fieldset">
-                <div class="contenedor-espiral"  id="animacionDeCarga">
-                    <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+                <div
+                    class="contenedor-espiral"
+                    id="animacionDeCargaCategoria">
+                    <p><strong>Cargando datos</strong></p>
+                    <div class="animacion-espiral"></div>
                 </div>
-                <label class="etiquetas" for="nombreCategoria">Nombre de la categoria:</label>
-                <input class="entradas" type="text" id="nombreCategoria" name="categoria" required placeholder="Vinos">
-                <label class="etiquetas" for="entradaDeImagenes">Seleccionar imagen</label>
-                <input class="entradas entradas-imagenes" type="file" accept="image/*" id="entradaDeImagenes" name="imagen" required>
-                <label class="etiquetas">Imagen seleccionada: </label>
-                <div class="vista-previa" id="vistaPreviaCategoria">
-                    <img class="imagen-vista-previa" id="imagenVistaPrevia">
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="nombreCategoria">
+                        Nombre de la categoría
+                    </label>
+                    <input
+                        class="entradas"
+                        type="text"
+                        id="nombreCategoria"
+                        name="categoria"
+                        required
+                        placeholder="Ej: Vinos">
+                </div>
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="entradaDeImagenes">
+                        Imagen de la categoría
+                    </label>
+                    <input
+                        class="entradas entradas-imagenes"
+                        type="file"
+                        accept="image/*"
+                        id="entradaDeImagenes"
+                        name="imagen"
+                        required>
                 </div>
             </fieldset>
-            <fieldset class="fieldset">
-                <button class="boton boton-admin-cargar boton-elegir" type="submit">Guardar categoria</button>
-                <button type="button" class="boton boton-admin-cargar boton-elegir">Resetear datos</button>
+            <fieldset class="fieldset categoria-preview-fieldset">
+                <div class="preview-header">
+                    <span>Vista previa</span>
+                    <small>Imagen de la categoría</small>
+                </div>
+                <div
+                    class="vista-previa"
+                    id="vistaPreviaCategoria">
+                    <img
+                        class="imagen-vista-previa"
+                        id="imagenVistaPrevia"
+                        alt="Vista previa de la categoría">
+                    <div class="preview-placeholder">
+                        <span>Sin imagen</span>
+                    </div>
+                </div>
+                <div class="acciones-formulario">
+                    <button
+                        class="boton boton-admin-cargar boton-principal"
+                        type="submit">
+                        Guardar categoría
+                    </button>
+                    <button
+                        type="button"
+                        class="boton boton-admin-cargar boton-secundario">
+                        Limpiar
+                    </button>
+                </div>
                 <p id="mensajeDeAlertaCategoria"></p>
             </fieldset>
         </form>
     </section>
     <section class="seccion-contenedor-formulario seccion-contenedor-formulario-marcas">
-        <h3 class="subtitulo-administrar" id="tituloSeccionMarca">Cargar marca</h3>
-        <form class="formulario formulario-carga formulario-carga-marca" id="seccionCargarMarcas">
+        <div class="titulo-formulario">
+            <div class="numero-seccion">03</div>
+            <div>
+                <h3 id="tituloSeccionMarca">
+                    Cargar marca
+                </h3>
+                <p>
+                    Asociá una nueva marca a una categoría existente.
+                </p>
+            </div>
+        </div>
+        <form
+            class="formulario formulario-carga formulario-carga-marca"
+            id="seccionCargarMarcas">
             <fieldset class="fieldset fieldset-marca">
-                <div class="contenedor-espiral"  id="animacionDeCarga">
-                    <p><strong>Cargando datos</strong></p> <div class="animacion-espiral"></div>
+                <div
+                    class="contenedor-espiral"
+                    id="animacionDeCargaMarca">
+                    <p><strong>Cargando datos</strong></p>
+                    <div class="animacion-espiral"></div>
                 </div>
-                <label class="etiquetas" for="entradaCargarMarca">Nombre de la marca</label>
-                <input class="entradas" type="text" name="marca" id="entradaCargarMarca" required placeholder="Blue label">
-                <label class="etiquetas" for="seccMarca_EntCategoria">Categoria a la que pertenece</label>
-                <select class="entradas" name="categoria" id="seccMarca_EntCategoria" required>
-
-                </select>
-                <button type="submit" class="boton boton-admin-cargar boton-elegir">Guardar marca</button>
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="entradaCargarMarca">
+                        Nombre de la marca
+                    </label>
+                    <input
+                        class="entradas"
+                        type="text"
+                        name="marca"
+                        id="entradaCargarMarca"
+                        required
+                        placeholder="Ej: Blue Label">
+                </div>
+                <div class="campo">
+                    <label
+                        class="etiquetas"
+                        for="seccMarca_EntCategoria">
+                        Categoría a la que pertenece
+                    </label>
+                    <select
+                        class="entradas"
+                        name="categoria"
+                        id="seccMarca_EntCategoria"
+                        required>
+                    </select>
+                </div>
+                <div class="acciones-formulario">
+                    <button
+                        type="submit"
+                        class="boton boton-admin-cargar boton-principal">
+                        Guardar marca
+                    </button>
+                </div>
                 <p id="mensajeDeAlertaMarca"></p>
             </fieldset>
         </form>

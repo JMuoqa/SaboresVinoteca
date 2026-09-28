@@ -213,10 +213,10 @@ async function Con_ObtenerIDDeCategoria(_categoria) {
     try{
         const obtenerCategorias = 'SELECT ID FROM Categorias WHERE Categoria = ? AND Mostrar = \'si\';';
         const valor = [_categoria];
-        const categoria = await con.execute(obtenerCategorias,valor);
-        if(categoria[0].length == 0)
+        let [categoria] = await con.execute(obtenerCategorias,valor);
+        if(categoria.length == 0)
             return {estado: false, mensaje: 'No se encontro ninguna categoria'};
-        return {estado: true, mensaje: 'exitoso', Categoria: categoria[0][0]};
+        return {estado: true, mensaje: 'exitoso', Categoria: categoria[0]};
     }catch(error){
         console.error(error)
         return {estado: false, mensaje: `${error}`};
@@ -227,7 +227,6 @@ async function Con_ObtenerIDDeCategoria(_categoria) {
 async function Con_ObtenerIDDeMarca(_marca, IDCategoria) {
     const con = await Conexion();
     try{
-        console.log(_marca, IDCategoria);
         const obtenerCategorias = 'SELECT ID FROM Marcas WHERE Marca = ? AND IDCategoria = ? AND Mostrar = \'si\';';
         const valor = [_marca, IDCategoria];
         const marca = await con.execute(obtenerCategorias, valor);
